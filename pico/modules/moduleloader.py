@@ -1,19 +1,41 @@
 import importlib
+import os
+import sys
 
 from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
 from PySide2.QtQml import qmlRegisterType
 
 
 class ModuleLoader(QObject):
+    MODULES_CONFIG_PATH = '/etc/pico/modules.conf'
+
+    _defaultModuleConfig = ['Welcome\n', 'Language\n']
+    _modules = []
+
     loadModule = Signal(QUrl)
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        with open('/etc/pico/modules.conf', 'r') as fd:
-            lines = fd.readlines()
+        try:
+            with open(self.MODULES_CONFIG_PATH, 'r') as fd:
+                lines = fd.readlines()
+        except IOError:
+            lines = self._defaultModuleConfig
 
-        self.modules = [getattr(importlib.import_module('pico.modules'), line.strip()) for line in lines]
+            print("Cannot read", self.MODULES_CONFIG_PATH)
+            print("Using default configuration :\n  " + "  ".join(lines))
+
+        for line in lines:
+            moduleName = line.strip()
+
+            try:
+                self._modules.append(getattr(importlib.import_module('pico.modules'), moduleName))
+            except AttributeError:
+                print("ERROR : Unknown module", moduleName)
+                print("Exiting...")
+                sys.exit(1)
+
         self.currentModuleIndex = -1
 
     @staticmethod
@@ -33,7 +55,7 @@ class ModuleLoader(QObject):
     def nextModule(self):
         if self._hasNext():
             self.currentModuleIndex = self.currentModuleIndex + 1
-            self.loadModule.emit(self.modules[self.currentModuleIndex].qmlPath())
+            self.loadModule.emit(self._modules[self.currentModuleIndex].qmlPath())
 
             self.hasPreviousChanged.emit()
             self.hasNextChanged.emit()
@@ -50,7 +72,7 @@ class ModuleLoader(QObject):
         return self.currentModuleIndex > 0
 
     def _hasNext(self):
-        return self.currentModuleIndex < len(self.modules)-1
+        return self.currentModuleIndex < len(self._modules) - 1
 
     @Signal
     def hasNextChanged(self):
