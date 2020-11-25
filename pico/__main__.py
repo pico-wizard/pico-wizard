@@ -9,7 +9,7 @@ from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from pico.modules.moduleloader import ModuleLoader
 
 
-def register_types():
+def registerTypes():
     qmlRegisterType(ModuleLoader, "Pico", 1, 0, "ModuleLoader")
 
 
@@ -18,7 +18,7 @@ def __main__():
     app.setApplicationName("pico")
     app.setApplicationDisplayName("Pico")
 
-    register_types()
+    registerTypes()
     ModuleLoader.registerModuleTypes()
 
     engine = QQmlApplicationEngine(QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), "start.qml")))

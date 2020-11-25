@@ -5,8 +5,6 @@ import QtQuick.Layouts 1.10
 import Pico 1.0
 
 Item {
-    anchors.fill: parent
-
     WelcomeModule {
         id: welcomeModule
     }
@@ -20,7 +18,7 @@ Item {
             text: "Click Me"
 
             onClicked: {
-                appRoot.nextModule()
+                moduleLoader.nextModule()
             }
         }
     }

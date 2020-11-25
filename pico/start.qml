@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.10
 import Pico 1.0
 
 ApplicationWindow {
+    property alias moduleLoader: moduleLoader
+
     id: appRoot
 
     width: 640
@@ -22,6 +24,7 @@ ApplicationWindow {
                 enabled: moduleLoader.hasPrevious
                 onClicked: {
                     moduleLoader.previousModule()
+                    appStack.pop()
                 }
             }
             Button {
@@ -45,7 +48,7 @@ ApplicationWindow {
     Connections {
         target: moduleLoader
 
-        function onLoadNextModule(url) {
+        function onLoadModule(url) {
             appStack.push("file:///" + url)
         }
     }
@@ -93,9 +96,5 @@ ApplicationWindow {
                 duration: appStack.animationDuration
             }
         }
-    }
-
-    function nextModule() {
-        moduleLoader.nextModule();
     }
 }

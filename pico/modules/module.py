@@ -9,15 +9,30 @@ class Module(QObject):
 
     @staticmethod
     @abc.abstractmethod
-    def qml_module_name() -> str:
+    def qmlModuleUri() -> str:
         pass
 
     @staticmethod
     @abc.abstractmethod
-    def qml_module_description() -> str:
+    def qmlModuleVersionMajor() -> int:
         pass
 
     @staticmethod
     @abc.abstractmethod
-    def qml_path() -> QUrl:
+    def qmlModuleVersionMinor() -> int:
+        pass
+
+    @staticmethod
+    @abc.abstractmethod
+    def qmlModuleName() -> str:
+        pass
+
+    @staticmethod
+    @abc.abstractmethod
+    def qmlPath() -> QUrl:
+        pass
+
+    @staticmethod
+    @abc.abstractmethod
+    def description() -> str:
         pass
