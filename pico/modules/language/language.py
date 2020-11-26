@@ -7,7 +7,7 @@ from pico.modules.module import Module
 
 class Language(Module):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(__file__, parent)
 
     @staticmethod
     def qmlModuleUri() -> str:

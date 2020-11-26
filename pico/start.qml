@@ -9,33 +9,33 @@ ApplicationWindow {
 
     id: appRoot
 
-    width: 640
-    height: 480
+    width: 800
+    height: 1000
     visible: true
 
-    header: Rectangle {
-        width: parent.width
-        height: 40
-        color: "#ffffff"
+//    header: Rectangle {
+//        width: parent.width
+//        height: 40
+//        color: "#ffffff"
 
-        RowLayout {
-            Button {
-                text: "<-"
-                enabled: moduleLoader.hasPrevious
-                onClicked: {
-                    moduleLoader.previousModule()
-                    appStack.pop()
-                }
-            }
-            Button {
-                text: "->"
-                enabled: moduleLoader.hasNext
-                onClicked: {
-                    moduleLoader.nextModule()
-                }
-            }
-        }
-    }
+//        RowLayout {
+//            Button {
+//                text: "<-"
+//                enabled: moduleLoader.hasPrevious
+//                onClicked: {
+//                    moduleLoader.previousModule()
+//                    appStack.pop()
+//                }
+//            }
+//            Button {
+//                text: "->"
+//                enabled: moduleLoader.hasNext
+//                onClicked: {
+//                    moduleLoader.nextModule()
+//                }
+//            }
+//        }
+//    }
 
     ModuleLoader {
         id: moduleLoader

@@ -1,13 +1,13 @@
 import os
 
-from PySide2.QtCore import QUrl
+from PySide2.QtCore import QUrl, Slot
 
 from pico.modules.module import Module
 
 
 class Welcome(Module):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(__file__, parent)
 
     @staticmethod
     def qmlModuleUri() -> str:
