@@ -1,14 +1,14 @@
 import importlib
-import os
 import sys
+import os
 
 from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
 from PySide2.QtQml import qmlRegisterType
 
+from pico.utils.constants import CONFIG_FILE_PATH
+
 
 class ModuleLoader(QObject):
-    MODULES_CONFIG_PATH = '/etc/pico/modules.conf'
-
     _defaultModuleConfig = ['Welcome\n', 'Language\n']
     _modules = []
 
@@ -18,12 +18,12 @@ class ModuleLoader(QObject):
         super().__init__(parent)
 
         try:
-            with open(self.MODULES_CONFIG_PATH, 'r') as fd:
+            with open(CONFIG_FILE_PATH, 'r') as fd:
                 lines = fd.readlines()
         except IOError:
             lines = self._defaultModuleConfig
 
-            print("Cannot read", self.MODULES_CONFIG_PATH)
+            print("Cannot read", CONFIG_FILE_PATH)
             print("Using default configuration :\n  " + "  ".join(lines))
 
         for line in lines:
