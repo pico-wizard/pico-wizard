@@ -3,6 +3,8 @@ from . import constants as conf
 
 
 class Config:
+    # TODO: Check if this should be singleton class or static implementation is fine
+
     config = None
 
     @staticmethod
