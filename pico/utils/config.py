@@ -1,3 +1,4 @@
+import sys
 import configparser
 from . import constants as conf
 
@@ -14,7 +15,8 @@ class Config:
             read_files = Config.config.read(conf.CONFIG_FILE_PATH)
             if len(read_files) == 0:
                 raise ValueError('Could not find or open config file ' + conf.CONFIG_FILE_PATH)
-
+                sys.exit(1)
+                
         return Config.config[config_section][config_name]
 
     @staticmethod
