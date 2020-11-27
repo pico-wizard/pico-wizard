@@ -19,6 +19,7 @@ class ModuleLoader(QObject):
 
         modules = Config.get_modules()
         modules.insert(0, "Welcome")
+        modules.append("Finish")
 
         for moduleName in modules:
             try:

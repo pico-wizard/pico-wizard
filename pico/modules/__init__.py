@@ -5,3 +5,4 @@ from .sim import Sim
 from .wifi import Wifi
 from .user import User
 from .personalization import Personalization
+from .finish import Finish
