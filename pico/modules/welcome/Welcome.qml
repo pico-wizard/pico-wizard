@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.7 as Kirigami
 
 import Pico 1.0
+import ".."
 
 Item {
     WelcomeModule {
@@ -21,30 +22,17 @@ Item {
         color: "#444"
     }
 
-    RoundButton {
-        width: 64
-        height: 64
+    NextButton {
+//        anchors {
+//            horizontalCenter: labelWelcome.horizontalCenter
+//            top: labelWelcome.bottom
+//            topMargin: 48
+//        }
 
         anchors {
-            horizontalCenter: labelWelcome.horizontalCenter
-            top: labelWelcome.bottom
-            topMargin: 48
-        }
-        flat: true
-        onClicked: {
-            moduleLoader.nextModule()
-        }
-
-        Material.background: Material.color(Material.Blue, Material.Shade500)
-        Material.elevation: 0
-
-        Kirigami.Icon {
-            width: 24
-            height: 24
-
-            anchors.centerIn: parent
-            source: "draw-arrow-forward" //welcomeModule.dir() + "/assets/next.svg"
-            color: "#ffffffff"
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 16
         }
     }
 }

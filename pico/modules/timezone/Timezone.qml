@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Controls.Material.impl 2.15
 
@@ -9,36 +10,31 @@ import Pico 1.0
 import ".."
 
 Module {
+    id: root
     moduleName: timezoneModule.moduleName()
+    moduleIcon: timezoneModule.dir() + "/assets/timezone.svg"
+    moduleIconColor: "#ff999999"
+
+    delegate: Item {
+        RowLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            ComboBox {
+                Layout.preferredWidth: root.width * 0.4
+                model: [1, 2, 3, 4, 5]
+            }
+        }
+
+        NextButton {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: 16
+            }
+        }
+    }
 
     TimezoneModule {
         id: timezoneModule
-    }
-
-    RoundButton {
-        width: 64
-        height: 64
-
-        anchors {
-            horizontalCenter: labelWelcome.horizontalCenter
-            top: labelWelcome.bottom
-            topMargin: 48
-        }
-        flat: true
-        onClicked: {
-            moduleLoader.nextModule()
-        }
-
-        Material.background: Material.color(Material.Grey, Material.Shade100)
-        Material.elevation: 0
-
-        Kirigami.Icon {
-            width: 24
-            height: 24
-
-            anchors.centerIn: parent
-            source: "draw-arrow-forward"
-            color: labelWelcome.color
-        }
     }
 }

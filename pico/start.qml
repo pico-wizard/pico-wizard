@@ -15,29 +15,25 @@ ApplicationWindow {
     ///////////////////
     width: 700
     height: 900
-    x: 1920-500
+    x: 1921
     ///////////////////
+
+    onClosing: {
+        if (appStack.depth > 1) {
+            moduleLoader.back()
+            close.accepted = false
+        }
+    }
 
     visible: true
 
-//    header: Rectangle {
-//        width: parent.width
-//        height: 40
-//        color: "#ffffff"
-
-//        RowLayout {
-//            Button {
-//                text: "->"
-//                enabled: moduleLoader.hasNext
-//                onClicked: {
-//                    moduleLoader.nextModule()
-//                }
-//            }
-//        }
-//    }
-
     ModuleLoader {
         id: moduleLoader
+
+        function back() {
+            moduleLoader.previousModule()
+            appStack.pop()
+        }
     }
 
     Connections {

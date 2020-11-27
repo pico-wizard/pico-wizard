@@ -19,45 +19,17 @@ Module {
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            Kirigami.Icon {
-                width: 56
-                height: 56
-
-                source: "input-keyboard"
-            }
-
             ComboBox {
-                Layout.minimumWidth: root.width * 0.3
-                Layout.maximumWidth: root.width * 0.3
+                Layout.preferredWidth: root.width * 0.4
                 model: [1, 2, 3, 4, 5]
             }
         }
 
-        RoundButton {
-            width: 64
-            height: 64
-
+        NextButton {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
                 bottomMargin: 16
-            }
-            flat: true
-            onClicked: {
-                console.log(root.width)
-                moduleLoader.nextModule()
-            }
-
-            Material.background: Material.color(Material.Blue, Material.Shade500)
-            Material.elevation: 0
-
-            Kirigami.Icon {
-                width: 24
-                height: 24
-
-                anchors.centerIn: parent
-                source: "draw-arrow-forward"
-                color: "#ffffffff"
             }
         }
     }

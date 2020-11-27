@@ -26,8 +26,7 @@ Item {
         }
         flat: true
         onClicked: {
-            moduleLoader.previousModule()
-            appStack.pop()
+            moduleLoader.back()
         }
         visible: moduleLoader.hasPrevious
         z: 100
@@ -35,7 +34,7 @@ Item {
         Kirigami.Icon {
             anchors.fill: parent
             anchors.centerIn: parent
-            source: "draw-arrow-back" //Qt.resolvedUrl("../assets/back.svg")
+            source: "draw-arrow-back"
             color: "#ffffffff"
             anchors.margins: 12
         }
