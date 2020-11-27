@@ -4,7 +4,7 @@ from . import constants as conf
 
 class Config:
     def __init__(self):
-        if self.instance is None:
+        if self.config is None:
             self.config = configparser.ConfigParser()
             read_files = self.config.read(conf.CONFIG_FILE_PATH)
             if len(read_files) == 0:
