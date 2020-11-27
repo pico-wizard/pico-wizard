@@ -5,7 +5,7 @@ from PySide2.QtCore import QUrl, Slot
 from pico.modules.module import Module
 
 
-class Language(Module):
+class User(Module):
     def __init__(self, parent=None):
         super().__init__(__file__, parent)
 
@@ -23,11 +23,11 @@ class Language(Module):
 
     @staticmethod
     def qmlModuleName() -> str:
-        return "LanguageModule"
+        return "UserModule"
 
     @staticmethod
     def qmlPath() -> QUrl:
-        return QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), "Language.qml"))
+        return QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), "User.qml"))
 
     @staticmethod
     def description() -> str:
@@ -35,4 +35,4 @@ class Language(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Language and Input"
+        return "User Configuration"

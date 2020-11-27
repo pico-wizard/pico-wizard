@@ -32,3 +32,7 @@ class Welcome(Module):
     @staticmethod
     def description() -> str:
         return None
+
+    @Slot(None, result=str)
+    def moduleName(self) -> str:
+        return "Welcome"

@@ -1,24 +1,18 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
-import QtQuick.Layouts 1.15
+import QtQuick.Controls.Material.impl 2.15
 
 import org.kde.kirigami 2.7 as Kirigami
 
 import Pico 1.0
+import ".."
 
-Item {
-    WelcomeModule {
-        id: welcomeModule
-    }
+Module {
+    moduleName: wifiModule.moduleName()
 
-    Label {
-        id: labelWelcome
-        font.weight: Font.Light
-        font.pointSize: 32
-        text: "Welcome"
-        anchors.centerIn: parent
-        color: "#444"
+    WifiModule {
+        id: wifiModule
     }
 
     RoundButton {
@@ -35,7 +29,7 @@ Item {
             moduleLoader.nextModule()
         }
 
-        Material.background: Material.color(Material.Blue, Material.Shade500)
+        Material.background: Material.color(Material.Grey, Material.Shade100)
         Material.elevation: 0
 
         Kirigami.Icon {
@@ -43,8 +37,8 @@ Item {
             height: 24
 
             anchors.centerIn: parent
-            source: "draw-arrow-forward" //welcomeModule.dir() + "/assets/next.svg"
-            color: "#ffffffff"
+            source: "draw-arrow-forward"
+            color: labelWelcome.color
         }
     }
 }

@@ -1,6 +1,7 @@
-import QtQuick 2.10
-import QtQuick.Controls 2.10
-import QtQuick.Layouts 1.10
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls.Material 2.15
 
 import Pico 1.0
 
@@ -9,8 +10,14 @@ ApplicationWindow {
 
     id: appRoot
 
-    width: 800
-    height: 1000
+    ///////////////////
+    // DEVELOPMENT
+    ///////////////////
+    width: 700
+    height: 900
+    x: 1920-500
+    ///////////////////
+
     visible: true
 
 //    header: Rectangle {
@@ -19,14 +26,6 @@ ApplicationWindow {
 //        color: "#ffffff"
 
 //        RowLayout {
-//            Button {
-//                text: "<-"
-//                enabled: moduleLoader.hasPrevious
-//                onClicked: {
-//                    moduleLoader.previousModule()
-//                    appStack.pop()
-//                }
-//            }
 //            Button {
 //                text: "->"
 //                enabled: moduleLoader.hasNext
@@ -39,10 +38,6 @@ ApplicationWindow {
 
     ModuleLoader {
         id: moduleLoader
-
-        Component.onCompleted: {
-            moduleLoader.nextModule()
-        }
     }
 
     Connections {
@@ -53,12 +48,25 @@ ApplicationWindow {
         }
     }
 
+    Image {
+        fillMode: Image.PreserveAspectFit
+        anchors {
+            left: parent.left
+            top: parent.top
+            right: parent.right
+        }
+
+        /* Background provided by loading.io */
+        source: Qt.resolvedUrl("assets/background.svg")
+    }
+
     StackView {
         property int animationDuration: 300
         property int easingType: Easing.InOutExpo
 
         id: appStack
         anchors.fill: parent
+        initialItem: "file:///" + moduleLoader.welcomeModule()
 
         pushEnter: Transition {
             PropertyAnimation {

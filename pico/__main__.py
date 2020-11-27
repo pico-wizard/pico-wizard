@@ -3,6 +3,7 @@ import sys
 import signal
 
 from PySide2.QtCore import QUrl
+from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 
@@ -14,6 +15,8 @@ def registerTypes():
 
 
 def __main__():
+    QQuickStyle.setStyle("Material")
+
     app = QApplication(sys.argv)
     app.setApplicationName("pico")
     app.setApplicationDisplayName("Pico")

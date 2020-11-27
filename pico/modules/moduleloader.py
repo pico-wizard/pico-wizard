@@ -5,38 +5,28 @@ import os
 from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
 from PySide2.QtQml import qmlRegisterType
 
-from pico.utils.constants import CONFIG_FILE_PATH
+from pico.utils.config import Config
 
 
 class ModuleLoader(QObject):
-    _defaultModuleConfig = ['Welcome\n', 'Language\n']
     _modules = []
+    _currentModuleIndex = 0
 
     loadModule = Signal(QUrl)
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        try:
-            with open(CONFIG_FILE_PATH, 'r') as fd:
-                lines = fd.readlines()
-        except IOError:
-            lines = self._defaultModuleConfig
+        modules = Config.get_modules()
+        modules.insert(0, "Welcome")
 
-            print("Cannot read", CONFIG_FILE_PATH)
-            print("Using default configuration :\n  " + "  ".join(lines))
-
-        for line in lines:
-            moduleName = line.strip()
-
+        for moduleName in modules:
             try:
                 self._modules.append(getattr(importlib.import_module('pico.modules'), moduleName))
             except AttributeError:
                 print("ERROR : Unknown module", moduleName)
                 print("Exiting...")
                 sys.exit(1)
-
-        self.currentModuleIndex = -1
 
     @staticmethod
     def registerModuleTypes():
@@ -51,11 +41,15 @@ class ModuleLoader(QObject):
                     cls.qmlModuleName()
                 )
 
+    @Slot(None, result=QUrl)
+    def welcomeModule(self):
+        return self._modules[0].qmlPath()
+
     @Slot(None, result=None)
     def nextModule(self):
         if self._hasNext():
-            self.currentModuleIndex = self.currentModuleIndex + 1
-            self.loadModule.emit(self._modules[self.currentModuleIndex].qmlPath())
+            self._currentModuleIndex = self._currentModuleIndex + 1
+            self.loadModule.emit(self._modules[self._currentModuleIndex].qmlPath())
 
             self.hasPreviousChanged.emit()
             self.hasNextChanged.emit()
@@ -63,16 +57,16 @@ class ModuleLoader(QObject):
     @Slot(None, result=None)
     def previousModule(self):
         if self._hasPrevious():
-            self.currentModuleIndex = self.currentModuleIndex - 1
+            self._currentModuleIndex = self._currentModuleIndex - 1
 
             self.hasPreviousChanged.emit()
             self.hasNextChanged.emit()
 
     def _hasPrevious(self):
-        return self.currentModuleIndex > 0
+        return self._currentModuleIndex > 0
 
     def _hasNext(self):
-        return self.currentModuleIndex < len(self._modules) - 1
+        return self._currentModuleIndex < len(self._modules) - 1
 
     @Signal
     def hasNextChanged(self):

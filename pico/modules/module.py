@@ -45,3 +45,7 @@ class Module(QObject):
     def dir(self):
         path, _ = os.path.split(os.path.abspath(self._filename))
         return path
+
+    @Slot(None, result=str)
+    def moduleName(self) -> str:
+        pass
