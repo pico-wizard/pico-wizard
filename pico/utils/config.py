@@ -3,15 +3,21 @@ from . import constants as conf
 
 
 class Config:
-    def __init__(self):
+    config = None
+
+    @staticmethod
+    def __get_cofig(self, config_section, config_name):
         if self.config is None:
             self.config = configparser.ConfigParser()
             read_files = self.config.read(conf.CONFIG_FILE_PATH)
             if len(read_files) == 0:
                 raise ValueError('Could not find or open config file ' + conf.CONFIG_FILE_PATH)
 
+        return self.config[config_section][config_name]
+
+    @staticmethod
     def get_modules(self):
-        modules = self.config['GENERAL']['MODULES']
-        modules = [x.strip() for x in modules.split(",")]
+        modules_value = self.__get_config()
+        modules = [x.strip() for x in modules_value.split(",")]
 
         return modules
