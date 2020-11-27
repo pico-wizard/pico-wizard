@@ -12,53 +12,57 @@ import ".."
 Module {
     id: root
     moduleName: languageModule.moduleName()
+    moduleIcon: languageModule.dir() + "/assets/language.svg"
+    moduleIconColor: "#ff999999"
+
+    delegate: Item {
+        RowLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Kirigami.Icon {
+                width: 56
+                height: 56
+
+                source: "input-keyboard"
+            }
+
+            ComboBox {
+                Layout.minimumWidth: root.width * 0.3
+                Layout.maximumWidth: root.width * 0.3
+                model: [1, 2, 3, 4, 5]
+            }
+        }
+
+        RoundButton {
+            width: 64
+            height: 64
+
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: 16
+            }
+            flat: true
+            onClicked: {
+                console.log(root.width)
+                moduleLoader.nextModule()
+            }
+
+            Material.background: Material.color(Material.Blue, Material.Shade500)
+            Material.elevation: 0
+
+            Kirigami.Icon {
+                width: 24
+                height: 24
+
+                anchors.centerIn: parent
+                source: "draw-arrow-forward"
+                color: "#ffffffff"
+            }
+        }
+    }
 
     LanguageModule {
         id: languageModule
-    }
-
-    RowLayout {
-        anchors.centerIn: parent
-
-        Kirigami.Icon {
-            width: 56
-            height: 56
-
-            source: "input-keyboard"
-        }
-
-        ComboBox {
-            Layout.minimumWidth: root.width * 0.3
-            Layout.maximumWidth: root.width * 0.3
-            model: [1, 2, 3, 4, 5]
-        }
-    }
-
-    RoundButton {
-        width: 64
-        height: 64
-
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 96
-        }
-        flat: true
-        onClicked: {
-            console.log(root.width)
-            moduleLoader.nextModule()
-        }
-
-        Material.background: Material.color(Material.Blue, Material.Shade500)
-        Material.elevation: 0
-
-        Kirigami.Icon {
-            width: 24
-            height: 24
-
-            anchors.centerIn: parent
-            source: "draw-arrow-forward"
-            color: "#ffffffff"
-        }
     }
 }

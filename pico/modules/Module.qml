@@ -1,7 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Controls.Material.impl 2.15
+import QtGraphicalEffects 1.0
 
 import org.kde.kirigami 2.7 as Kirigami
 
@@ -9,6 +11,9 @@ import Pico 1.0
 
 Item {
     property alias moduleName: labelModuleName.text
+    property alias moduleIcon: icon.source
+    property alias moduleIconColor: colorOverlay.color
+    property alias delegate: delegateLoader.sourceComponent
 
     RoundButton {
         width: 48
@@ -67,5 +72,32 @@ Item {
             }
         }
         Material.elevation: 6
+
+        ColumnLayout {
+            anchors.fill: parent
+
+            Kirigami.Icon {
+                id: icon
+
+                Layout.preferredWidth: 196
+                Layout.preferredHeight: 196
+                Layout.alignment: Layout.Center
+                Layout.topMargin: 64
+                Layout.bottomMargin: 64
+
+                ColorOverlay {
+                    id: colorOverlay
+
+                    anchors.fill: parent
+                    source: parent
+                }
+            }
+
+            Loader {
+                id: delegateLoader
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+        }
     }
 }
