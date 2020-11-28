@@ -21,7 +21,8 @@ Module {
 
             ComboBox {
                 Layout.preferredWidth: root.width * 0.4
-                model: [1, 2, 3, 4, 5]
+                Layout.preferredHeight: 64
+                model: ["English (India)", "English (US)", "Bengali", "Hindi"]
             }
         }
 
