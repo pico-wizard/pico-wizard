@@ -6,16 +6,21 @@ from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
 from PySide2.QtQml import qmlRegisterType
 
 from pico.utils.config import Config
+from pico.utils.logger import Logger
 
 
 class ModuleLoader(QObject):
     _modules = []
     _currentModuleIndex = 0
 
+    log = Logger.getLogger(__name__)
+
     loadModule = Signal(QUrl)
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self.log.info('Initializing ModuleLoader')
 
         modules = Config.get_modules()
         modules.insert(0, "Welcome")
