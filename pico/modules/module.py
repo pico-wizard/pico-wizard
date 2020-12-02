@@ -13,32 +13,12 @@ class Module(QObject):
 
     @staticmethod
     @abc.abstractmethod
-    def qmlModuleUri() -> str:
-        pass
-
-    @staticmethod
-    @abc.abstractmethod
-    def qmlModuleVersionMajor() -> int:
-        pass
-
-    @staticmethod
-    @abc.abstractmethod
-    def qmlModuleVersionMinor() -> int:
-        pass
-
-    @staticmethod
-    @abc.abstractmethod
-    def qmlModuleName() -> str:
+    def registerTypes() -> None:
         pass
 
     @staticmethod
     @abc.abstractmethod
     def qmlPath() -> QUrl:
-        pass
-
-    @staticmethod
-    @abc.abstractmethod
-    def description() -> str:
         pass
 
     @Slot(None, result=str)

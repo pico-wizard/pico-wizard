@@ -15,9 +15,6 @@ from pico.utils.logger import Logger
 def registerTypes():
     qmlRegisterType(ModuleLoader, 'Pico', 1, 0, 'ModuleLoader')
 
-    # TODO: Check how to dynamically load qml components for individual modules
-    qmlRegisterType(LanguageModel, 'Pico', 1, 0, 'LanguageModel')
-
 
 def __main__():
     QQuickStyle.setStyle("Material")

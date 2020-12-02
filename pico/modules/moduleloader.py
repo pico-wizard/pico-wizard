@@ -1,9 +1,7 @@
 import importlib
 import sys
-import os
 
 from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
-from PySide2.QtQml import qmlRegisterType
 
 from pico.utils.config import Config
 from pico.utils.logger import Logger
@@ -39,13 +37,7 @@ class ModuleLoader(QObject):
         _modules = importlib.import_module('pico.modules')
         for name, cls in _modules.__dict__.items():
             if isinstance(cls, type):
-                qmlRegisterType(
-                    cls,
-                    cls.qmlModuleUri(),
-                    cls.qmlModuleVersionMajor(),
-                    cls.qmlModuleVersionMinor(),
-                    cls.qmlModuleName()
-                )
+                cls.registerTypes()
 
     @Slot(None, result=QUrl)
     def welcomeModule(self):
