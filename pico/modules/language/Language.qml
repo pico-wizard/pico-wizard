@@ -22,7 +22,8 @@ Module {
             ComboBox {
                 Layout.preferredWidth: root.width * 0.4
                 Layout.preferredHeight: 64
-                model: ["English (India)", "English (US)", "Bengali", "Hindi"]
+                model: LanguageModel {}
+                textRole: "name"
             }
         }
 

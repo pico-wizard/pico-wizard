@@ -8,11 +8,15 @@ from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 
+from pico.modules.language.LanguageModel import LanguageModel
 from pico.utils.logger import Logger
 
 
 def registerTypes():
     qmlRegisterType(ModuleLoader, 'Pico', 1, 0, 'ModuleLoader')
+
+    # TODO: Check how to dynamically load qml components for individual modules
+    qmlRegisterType(LanguageModel, 'Pico', 1, 0, 'LanguageModel')
 
 
 def __main__():
