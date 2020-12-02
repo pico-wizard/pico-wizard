@@ -22,6 +22,6 @@ class Config:
     @staticmethod
     def get_modules():
         modules_value = Config.__get_config('GENERAL', 'MODULES')
-        modules = [x.strip() for x in modules_value.split(",")]
+        modules = [x.strip() for x in modules_value.split(",") if len(x) > 0]
 
         return modules
