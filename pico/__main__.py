@@ -1,17 +1,18 @@
+import argparse
 import os
-import sys
 import signal
+import sys
 
 from PySide2.QtCore import QUrl
+from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
-from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 
-from pico.modules.moduleloader import ModuleLoader
+from pico.utils.logger import Logger
 
 
 def registerTypes():
-    qmlRegisterType(ModuleLoader, "Pico", 1, 0, "ModuleLoader")
+    qmlRegisterType(ModuleLoader, 'Pico', 1, 0, 'ModuleLoader')
 
 
 def __main__():
@@ -35,5 +36,16 @@ def __main__():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog='pico-wizard', description='Pico Wizard')
+    parser.add_argument('--debug', dest='debug', action='store_true', help='Enable debug mode')
+    parser.set_defaults(debug=False)
+    args = parser.parse_args()
+
+    if args.debug:
+        Logger.setLogMode(Logger.Mode.DEBUG)
+
+    # Import ModuleLoader after setting debug mode
+    from pico.modules.moduleloader import ModuleLoader
+
     # execute only if run as the entry point into the program
     __main__()
