@@ -29,7 +29,11 @@ class ModuleLoader(QObject):
         sys.path.insert(1, '/etc')
 
         importedModules = importlib.import_module('pico.modules')
-        importedCustomModules = importlib.import_module('pico-wizard.custom-modules')
+
+        try:
+            importedCustomModules = importlib.import_module('pico-wizard.custom-modules')
+        except ModuleNotFoundError:
+            pass
 
         for moduleName in modules:
             if hasattr(importedModules, moduleName):
