@@ -22,7 +22,7 @@ Module {
                 Layout.preferredWidth: root.width * 0.4
                 Layout.preferredHeight: 64
                 model: TimezoneModel {}
-                textRole: "text"
+                textRole: "tz"
             }
         }
 

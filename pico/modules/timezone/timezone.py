@@ -5,6 +5,7 @@ from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
 from pico.module import Module
+from pico.modules.timezone.timezonemodel import TimezoneModel
 
 
 class Timezone(Module):
@@ -16,6 +17,7 @@ class Timezone(Module):
     @staticmethod
     def registerTypes() -> None:
         qmlRegisterType(Timezone, 'PicoWizard', 1, 0, 'TimezoneModule')
+        qmlRegisterType(TimezoneModel, 'PicoWizard', 1, 0, 'TimezoneModel')
 
     @staticmethod
     def qmlPath() -> QUrl:
