@@ -26,14 +26,21 @@ class ModuleLoader(QObject):
         modules.insert(0, "Welcome")
         modules.append("Finish")
 
+        sys.path.insert(1, '/etc')
+
         importedModules = importlib.import_module('pico.modules')
+        importedCustomModules = importlib.import_module('pico-wizard.custom-modules')
 
         for moduleName in modules:
-            try:
+            if hasattr(importedModules, moduleName):
                 cls = getattr(importedModules, moduleName)
                 ModuleLoader.__modules.append(cls)
                 cls.registerTypes()
-            except AttributeError:
+            elif hasattr(importedCustomModules, moduleName):
+                cls = getattr(importedCustomModules, moduleName)
+                ModuleLoader.__modules.append(cls)
+                cls.registerTypes()
+            else:
                 print("ERROR : Unknown module", moduleName)
                 print("Exiting...")
                 sys.exit(1)
