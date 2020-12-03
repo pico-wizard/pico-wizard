@@ -8,7 +8,7 @@ from pico.utils.logger import Logger
 
 
 class ModuleLoader(QObject):
-    _modules = []
+    __modules = []
     _currentModuleIndex = 0
 
     log = Logger.getLogger(__name__)
@@ -18,36 +18,35 @@ class ModuleLoader(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.log.info('Initializing ModuleLoader')
+    @staticmethod
+    def registerModuleTypes():
+        ModuleLoader.log.info('Initializing ModuleLoader')
 
         modules = Config.get_modules()
         modules.insert(0, "Welcome")
         modules.append("Finish")
 
+        importedModules = importlib.import_module('pico.modules')
+
         for moduleName in modules:
             try:
-                self._modules.append(getattr(importlib.import_module('pico.modules'), moduleName))
+                cls = getattr(importedModules, moduleName)
+                ModuleLoader.__modules.append(cls)
+                cls.registerTypes()
             except AttributeError:
                 print("ERROR : Unknown module", moduleName)
                 print("Exiting...")
                 sys.exit(1)
 
-    @staticmethod
-    def registerModuleTypes():
-        _modules = importlib.import_module('pico.modules')
-        for name, cls in _modules.__dict__.items():
-            if isinstance(cls, type):
-                cls.registerTypes()
-
     @Slot(None, result=QUrl)
     def welcomeModule(self):
-        return self._modules[0].qmlPath()
+        return self.__modules[0].qmlPath()
 
     @Slot(None, result=None)
     def nextModule(self):
         if self._hasNext():
             self._currentModuleIndex = self._currentModuleIndex + 1
-            self.loadModule.emit(self._modules[self._currentModuleIndex].qmlPath())
+            self.loadModule.emit(self.__modules[self._currentModuleIndex].qmlPath())
 
             self.hasPreviousChanged.emit()
             self.hasNextChanged.emit()
@@ -64,7 +63,7 @@ class ModuleLoader(QObject):
         return self._currentModuleIndex > 0
 
     def _hasNext(self):
-        return self._currentModuleIndex < len(self._modules) - 1
+        return self._currentModuleIndex < len(self.__modules) - 1
 
     @Signal
     def hasNextChanged(self):
