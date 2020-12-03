@@ -4,7 +4,7 @@ from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
 from pico.modules.language.languagemodel import LanguageModel
-from pico.modules.module import Module
+from pico.module import Module
 
 
 class Language(Module):
@@ -13,8 +13,8 @@ class Language(Module):
 
     @staticmethod
     def registerTypes() -> None:
-        qmlRegisterType(Language, 'Pico', 1, 0, 'LanguageModule')
-        qmlRegisterType(LanguageModel, 'Pico', 1, 0, 'LanguageModel')
+        qmlRegisterType(Language, 'PicoWizard', 1, 0, 'LanguageModule')
+        qmlRegisterType(LanguageModel, 'PicoWizard', 1, 0, 'LanguageModel')
 
     @staticmethod
     def qmlPath() -> QUrl:

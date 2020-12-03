@@ -7,7 +7,7 @@ import QtGraphicalEffects 1.0
 
 import org.kde.kirigami 2.7 as Kirigami
 
-import Pico 1.0
+import PicoWizard 1.0
 
 Item {
     property alias moduleName: labelModuleName.text

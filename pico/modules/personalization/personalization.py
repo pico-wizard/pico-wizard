@@ -3,7 +3,7 @@ import os
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
-from pico.modules.module import Module
+from pico.module import Module
 
 
 class Personalization(Module):
@@ -12,7 +12,7 @@ class Personalization(Module):
 
     @staticmethod
     def registerTypes() -> None:
-        qmlRegisterType(Personalization, 'Pico', 1, 0, 'PersonalizationModule')
+        qmlRegisterType(Personalization, 'PicoWizard', 1, 0, 'PersonalizationModule')
 
     @staticmethod
     def qmlPath() -> QUrl:

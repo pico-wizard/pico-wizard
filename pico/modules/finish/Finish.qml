@@ -5,8 +5,8 @@ import QtQuick.Layouts 1.15
 
 import org.kde.kirigami 2.7 as Kirigami
 
-import Pico 1.0
-import ".."
+import PicoWizard 1.0
+
 
 Item {
     FinishModule {

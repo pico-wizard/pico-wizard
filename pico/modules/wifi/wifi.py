@@ -3,7 +3,7 @@ import os
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
-from pico.modules.module import Module
+from pico.module import Module
 
 
 class Wifi(Module):
@@ -12,7 +12,7 @@ class Wifi(Module):
 
     @staticmethod
     def registerTypes() -> None:
-        qmlRegisterType(Wifi, 'Pico', 1, 0, 'WifiModule')
+        qmlRegisterType(Wifi, 'PicoWizard', 1, 0, 'WifiModule')
 
     @staticmethod
     def qmlPath() -> QUrl:

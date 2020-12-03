@@ -3,7 +3,7 @@ import os
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
-from pico.modules.module import Module
+from pico.module import Module
 
 
 class User(Module):
@@ -12,7 +12,7 @@ class User(Module):
 
     @staticmethod
     def registerTypes() -> None:
-        qmlRegisterType(User, 'Pico', 1, 0, 'UserModule')
+        qmlRegisterType(User, 'PicoWizard', 1, 0, 'UserModule')
 
     @staticmethod
     def qmlPath() -> QUrl:

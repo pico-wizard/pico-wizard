@@ -12,20 +12,22 @@ from pico.utils.logger import Logger
 
 
 def registerTypes():
-    qmlRegisterType(ModuleLoader, 'Pico', 1, 0, 'ModuleLoader')
+    qmlRegisterType(ModuleLoader, 'PicoWizard', 1, 0, 'ModuleLoader')
 
 
 def __main__():
     QQuickStyle.setStyle("Material")
 
     app = QApplication(sys.argv)
-    app.setApplicationName("pico")
-    app.setApplicationDisplayName("Pico")
+    app.setApplicationName("pico-wizard")
+    app.setApplicationDisplayName("Pico Wizard")
 
     registerTypes()
     ModuleLoader.registerModuleTypes()
 
-    engine = QQmlApplicationEngine(QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), "start.qml")))
+    engine = QQmlApplicationEngine()
+    engine.addImportPath(os.path.dirname(os.path.realpath(__file__)))
+    engine.load(QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), "start.qml")))
 
     if not engine.rootObjects():
         sys.exit(-1)
@@ -45,7 +47,7 @@ if __name__ == "__main__":
         Logger.setLogMode(Logger.Mode.DEBUG)
 
     # Import ModuleLoader after setting debug mode
-    from pico.modules.moduleloader import ModuleLoader
+    from pico.moduleloader import ModuleLoader
 
     # execute only if run as the entry point into the program
     __main__()

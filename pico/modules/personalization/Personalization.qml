@@ -6,8 +6,7 @@ import QtQuick.Controls.Material.impl 2.15
 
 import org.kde.kirigami 2.7 as Kirigami
 
-import Pico 1.0
-import ".."
+import PicoWizard 1.0
 
 Module {
     id: root

@@ -24,7 +24,7 @@ class Logger:
             dirs = AppDirs(Constants.APP_NAME)
 
             Logger.LOG_LEVEL = 'DEBUG'
-            Logger.LOG_FILE_PATH = os.path.join(dirs.user_log_dir, 'pico.log')
+            Logger.LOG_FILE_PATH = os.path.join(dirs.user_log_dir, Constants.LOG_FILE)
 
             print("Debug mode enabled. Logging to `{}`".format(Logger.LOG_FILE_PATH))
 

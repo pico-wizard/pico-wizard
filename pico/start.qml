@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
 
-import Pico 1.0
+import PicoWizard 1.0
 
 ApplicationWindow {
     property alias moduleLoader: moduleLoader
