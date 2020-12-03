@@ -1,11 +1,13 @@
 import sys
 import configparser
 from . import constants as conf
+from pico.utils.logger import Logger
 
 
 class Config:
     # TODO: Check if this should be singleton class or static implementation is fine
 
+    log = Logger.getLogger(__name__)
     config = None
 
     @staticmethod
@@ -14,7 +16,7 @@ class Config:
             Config.config = configparser.ConfigParser()
             read_files = Config.config.read(conf.CONFIG_FILE_PATH)
             if len(read_files) == 0:
-                raise ValueError('Could not find or open config file ' + conf.CONFIG_FILE_PATH)
+                Config.log.error('Could not find or open config file ' + conf.CONFIG_FILE_PATH)
                 sys.exit(1)
                 
         return Config.config[config_section][config_name]

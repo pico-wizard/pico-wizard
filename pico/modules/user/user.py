@@ -1,12 +1,17 @@
 import os
+import subprocess
+import sys
 
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
 from pico.module import Module
 
+from pico.utils.logger import Logger
 
 class User(Module):
+    log = Logger.getLogger(__name__)
+
     def __init__(self, parent=None):
         super().__init__(__file__, parent)
 
@@ -21,3 +26,10 @@ class User(Module):
     @Slot(None, result=str)
     def moduleName(self) -> str:
         return "User Configuration"
+
+    @Slot(str, str, result=None)
+    def createUser(self, username, password):
+        try:
+            subprocess.run(['useradd', '--create-home', '-p', password, username])
+        except:
+            User.log.error('Could not create user')

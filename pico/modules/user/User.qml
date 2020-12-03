@@ -27,6 +27,7 @@ Module {
             }
 
             PlasmaComponents.TextField {
+                id: username
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 placeholderText: "Username"
@@ -42,6 +43,7 @@ Module {
             }
 
             PlasmaComponents.TextField {
+                id: password
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 placeholderText: "Confirm Password"
@@ -49,6 +51,14 @@ Module {
                 revealPasswordButtonShown: true
                 echoMode: "Password"
             }
+
+            /*Button {
+                Layout.fillWidth: true
+                text: "Create User"
+                onClicked: {
+                    userModule.createUser(username.text, password.text)
+                }
+            }*/
         }
 
         NextButton {
