@@ -3,7 +3,7 @@ import os
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
-from pico.modules.language.LanguageModel import LanguageModel
+from pico.modules.language.languagemodel import LanguageModel
 from pico.modules.module import Module
 
 

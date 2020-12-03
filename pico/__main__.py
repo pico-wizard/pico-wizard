@@ -8,7 +8,6 @@ from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 
-from pico.modules.language.LanguageModel import LanguageModel
 from pico.utils.logger import Logger
 
 
