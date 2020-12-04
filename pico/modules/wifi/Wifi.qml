@@ -15,90 +15,94 @@ Module {
     moduleIconColor: "#ff999999"
 
     delegate: Item {
-        Kirigami.ScrollablePage {
-            id: page
+        Rectangle {
+            id: wifiContainer
             width: root.width * 0.6
-            supportsRefreshing: true
-            padding: 16
-            bottomPadding: 8
-
             anchors {
                 top: parent.top
                 bottom: nextButton.top
-                bottomMargin: 24
+                bottomMargin: 16
                 horizontalCenter: parent.horizontalCenter
             }
-            background: Rectangle {
-                width: parent.width - 16
-                radius: 4
-                border.width: 2
-                border.color: "#fff0f0f0"
-                color: "#fff5f5f5"
+
+            radius: 4
+            border.width: 2
+            border.color: "#fff0f0f0"
+            color: "#fff5f5f5"
+
+            ScrollIndicator {
+                id: wifiScroll
+                width: 12
+                anchors {
+                    top: wifiContainer.top
+                    right: wifiContainer.right
+                    bottom: wifiContainer.bottom
+                }
             }
 
-            ColumnLayout {
-                width: parent.width
+            ListView {
+                anchors.fill: parent
+                anchors.margins: 16
+
                 spacing: 4
+                model: [0, 1, 2, 3, 4, 5]
+                clip: true
+                ScrollIndicator.vertical: wifiScroll
 
-                Repeater {
-                    model: [0,1,2,3,4,5]
-                    delegate: Rectangle {
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: 80
-//                        color: "#ffe5e5e5"
+                delegate: Rectangle {
+                    width: parent ? parent.width : 0
+                    height: 80
 
-                        RowLayout {
-                            anchors {
-                                verticalCenter: parent.verticalCenter
-                                left: parent.left
-                                leftMargin: 12
-                            }
-
-                            Kirigami.Icon {
-                                Layout.leftMargin: 12
-                                Layout.rightMargin: 12
-                                width: 16
-                                height: width
-                                opacity: 0.7
-                                source: wifiModule.getWifiIcon(Math.floor(Math.random() * 100))
-                            }
-
-                            ColumnLayout {
-
-                                Label {
-                                    text: "Tp Link 92B3"
-                                    font.pointSize: 12
-                                }
-
-                                Label {
-                                    text: "WPA / WPA2"
-                                    color: "#aaaaaa"
-                                    font.pointSize: 8
-                                }
-                            }
+                    RowLayout {
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            left: parent.left
+                            leftMargin: 12
                         }
 
-                        RoundButton {
-                            width: 32
-                            height: 32
-                            anchors {
-                                right: parent.right
-                                verticalCenter: parent.verticalCenter
-                                rightMargin: 12
-                            }
-                            flat: true
-                            Material.elevation: 2
+                        Kirigami.Icon {
+                            Layout.leftMargin: 12
+                            Layout.rightMargin: 12
+                            width: 16
+                            height: width
+                            opacity: 0.7
+                            source: wifiModule.getWifiIcon(Math.floor(Math.random() * 100))
+                        }
 
-                            Kirigami.Icon {
-                                anchors.fill: parent
-                                source: "draw-arrow-forward"
-                                color: "#ffcccccc"
+                        ColumnLayout {
+
+                            Label {
+                                text: "Tp Link 92B3"
+                                font.pointSize: 12
                             }
+
+                            Label {
+                                text: "WPA / WPA2"
+                                color: "#aaaaaa"
+                                font.pointSize: 8
+                            }
+                        }
+                    }
+
+                    RoundButton {
+                        width: 32
+                        height: 32
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                            rightMargin: 12
+                        }
+                        flat: true
+                        Material.elevation: 2
+
+                        Kirigami.Icon {
+                            anchors.fill: parent
+                            source: "draw-arrow-forward"
+                            color: "#ffcccccc"
                         }
                     }
                 }
             }
-
         }
 
         NextButton {
