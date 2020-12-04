@@ -82,8 +82,23 @@ Module {
             }
         }
 
+        Timer {
+            id: testTimer
+            repeat: false
+            interval: 3000
+            onTriggered: {
+                nextButton.next()
+                // nextButton.cancel()
+            }
+        }
+
         NextButton {
             id: nextButton
+            onNextClicked: {
+                accepted = true
+                testTimer.start()
+            }
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
