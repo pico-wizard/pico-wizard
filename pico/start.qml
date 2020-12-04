@@ -15,7 +15,7 @@ ApplicationWindow {
     ///////////////////
     width: 700
     height: 900
-    x: 1921
+    // x: 1921
     ///////////////////
 
     onClosing: {
