@@ -11,8 +11,6 @@ import PicoWizard 1.0
 
 Module {
     id: root
-    moduleName: timezoneModule.moduleName()
-    moduleIcon: timezoneModule.dir() + "/assets/timezone.svg"
     moduleIconColor: "#ff999999"
 
     delegate: Item {
@@ -77,18 +75,15 @@ Module {
 
                             text: tz
                         }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                searchText.text = tz
+                            }
+                        }
                     }
                 }
-            }
-        }
-
-        Timer {
-            id: testTimer
-            repeat: false
-            interval: 3000
-            onTriggered: {
-                nextButton.next()
-                // nextButton.cancel()
             }
         }
 
@@ -96,7 +91,7 @@ Module {
             id: nextButton
             onNextClicked: {
                 accepted = true
-                testTimer.start()
+                timezoneModule.setTimezone(searchText.text)
             }
 
             anchors {
@@ -105,9 +100,22 @@ Module {
                 bottomMargin: 16
             }
         }
-    }
 
-    TimezoneModule {
-        id: timezoneModule
+        TimezoneModule {
+            id: timezoneModule
+
+            Component.onCompleted: {
+                root.moduleName = timezoneModule.moduleName()
+                root.moduleIcon = timezoneModule.dir() + "/assets/timezone.svg"
+            }
+
+            onSetTimezoneSuccess: {
+                nextButton.next()
+            }
+
+            onSetTimezoneFailed: {
+                nextButton.cancel()
+            }
+        }
     }
 }

@@ -1,21 +1,22 @@
 import os
 import subprocess
-from typing import Any
+import time
 
-from PySide2.QtCore import QUrl, Slot, Property, Signal, QObject, QSortFilterProxyModel, Qt
+from PySide2.QtCore import QUrl, Slot, Property, Signal, QObject, QSortFilterProxyModel, Qt, QProcess
 from PySide2.QtQml import qmlRegisterType
 
 from pico.module import Module
 from pico.modules.timezone.timezonemodel import TimezoneModel
+from pico.utils.logger import Logger
 
 
 class Timezone(Module):
+    log = Logger.getLogger(__name__)
     _filterText = ''
 
     def __init__(self, parent=None):
         super().__init__(__file__, parent)
 
-        self.__setTimezonesCommand = 'ln -sf /usr/share/zoneinfo/Asia/Bangkok /etc/localtime'
         self._timezoneModel = TimezoneModel(parent)
         self._timezoneProxyModel = QSortFilterProxyModel(parent)
 
@@ -59,6 +60,31 @@ class Timezone(Module):
         return self._timezoneProxyModel
 
     filterText = Property(str, _getFilterText, _setFilterText, notify=filterTextChanged)
+
+    @Slot(str, result=None)
+    def setTimezone(self, tz):
+        process = QProcess(self)
+        args = ['-sf', os.path.join('/usr', 'share', 'zoneinfo', tz), '/etc/localtime']
+
+        process.start('/usr/bin/ln', args)
+        process.finished.connect(self.setTimezoneProcessFinished)
+
+        process.error.connect(lambda err: (
+            self.setTimezoneFailed.emit()
+        ))
+
+    @Slot(int, result=None)
+    def setTimezoneProcessFinished(self, exitCode):
+        time.sleep(5)
+        self.setTimezoneSuccess.emit()
+
+    @Signal
+    def setTimezoneSuccess(self):
+        pass
+
+    @Signal
+    def setTimezoneFailed(self):
+        pass
 
 
 if __name__ == "__main__":
