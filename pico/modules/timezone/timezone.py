@@ -1,6 +1,4 @@
 import os
-import subprocess
-import time
 
 from PySide2.QtCore import QUrl, Slot, Property, Signal, QObject, QSortFilterProxyModel, Qt, QProcess
 from PySide2.QtQml import qmlRegisterType
@@ -67,16 +65,13 @@ class Timezone(Module):
         args = ['-sf', os.path.join('/usr', 'share', 'zoneinfo', tz), '/etc/localtime']
 
         process.start('/usr/bin/ln', args)
-        process.finished.connect(self.setTimezoneProcessFinished)
 
+        process.finished.connect(lambda exitCode: (
+            self.setTimezoneSuccess.emit()
+        ))
         process.error.connect(lambda err: (
             self.setTimezoneFailed.emit()
         ))
-
-    @Slot(int, result=None)
-    def setTimezoneProcessFinished(self, exitCode):
-        time.sleep(5)
-        self.setTimezoneSuccess.emit()
 
     @Signal
     def setTimezoneSuccess(self):
