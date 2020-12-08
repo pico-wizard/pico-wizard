@@ -54,6 +54,7 @@ Module {
                 }
 
                 ListView {
+                    id: tzListView
                     anchors.fill: parent
                     anchors.margins: 16
 
@@ -66,12 +67,15 @@ Module {
                         width: parent ? parent.width : 0
                         height: 60
 
+                        color: ListView.isCurrentItem ? Material.color(Material.Blue) : "#ffffffff"
+
                         Label {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 left: parent.left
                                 leftMargin: 12
                             }
+                            color: parent.ListView.isCurrentItem ? "#ffffffff" : "#ff444444"
 
                             text: tz
                         }
@@ -79,7 +83,7 @@ Module {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                searchText.text = tz
+                                tzListView.currentIndex = index
                             }
                         }
                     }
@@ -91,7 +95,7 @@ Module {
             id: nextButton
             onNextClicked: {
                 accepted = true
-                timezoneModule.setTimezone(searchText.text)
+                timezoneModule.setTimezone(tzListView.currentIndex)
             }
 
             anchors {

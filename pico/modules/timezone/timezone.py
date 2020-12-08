@@ -59,19 +59,39 @@ class Timezone(Module):
 
     filterText = Property(str, _getFilterText, _setFilterText, notify=filterTextChanged)
 
-    @Slot(str, result=None)
-    def setTimezone(self, tz):
+    @Slot(int, result=None)
+    def setTimezone(self, tzIndex):
+        timezone = self._timezoneProxyModel.data(self._timezoneProxyModel.index(tzIndex, 0), TimezoneModel.TzRole)
+        self.log.debug(f'Selected Timezone : {timezone}')
+
         process = QProcess(self)
-        args = ['-sf', os.path.join('/usr', 'share', 'zoneinfo', tz), '/etc/localtime']
+        args = [
+            '-sf',
+            os.path.join(
+                '/usr',
+                'share',
+                'zoneinfo',
+                timezone
+            ),
+            '/etc/localtime'
+        ]
 
         process.start('/usr/bin/ln', args)
 
-        process.finished.connect(lambda exitCode: (
-            self.setTimezoneSuccess.emit()
-        ))
-        process.error.connect(lambda err: (
+        process.finished.connect(self.tzCmdSuccess)
+        process.error.connect(self.tzCmdFailed)
+
+    def tzCmdSuccess(self, exitCode):
+        self.log.info('Setting Timezone')
+
+        if exitCode != 0:
             self.setTimezoneFailed.emit()
-        ))
+        else:
+            self.setTimezoneSuccess.emit()
+
+    def tzCmdFailed(self, err):
+        print(err)
+        self.setTimezoneFailed.emit()
 
     @Signal
     def setTimezoneSuccess(self):
