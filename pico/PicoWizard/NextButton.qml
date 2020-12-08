@@ -40,7 +40,7 @@ RoundButton {
         height: 24
 
         anchors.centerIn: parent
-        source: "draw-arrow-forward"
+        source: Qt.resolvedUrl("./assets/next.svg")
         color: "#ffffffff"
 
         states: [

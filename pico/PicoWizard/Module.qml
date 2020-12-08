@@ -34,7 +34,7 @@ Item {
         Kirigami.Icon {
             anchors.fill: parent
             anchors.centerIn: parent
-            source: "draw-arrow-back"
+            source: Qt.resolvedUrl("./assets/back.svg")
             color: "#ffffffff"
             anchors.margins: 12
         }
