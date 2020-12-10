@@ -36,7 +36,7 @@ class Timezone(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Timezone"
+        return self.tr("Timezone")
 
     @Signal
     def modelChanged(self):
@@ -85,11 +85,13 @@ class Timezone(Module):
         self.log.info('Setting Timezone')
 
         if exitCode != 0:
+            self.log.error('Failed to set timezone')
             self.setTimezoneFailed.emit()
         else:
             self.setTimezoneSuccess.emit()
 
     def tzCmdFailed(self, err):
+        self.log.error('Failed to set timezone')
         self.log.error(err)
         self.setTimezoneFailed.emit()
 

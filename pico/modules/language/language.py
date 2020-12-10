@@ -22,4 +22,4 @@ class Language(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Language and Input"
+        return self.tr("Language and Input")

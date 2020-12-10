@@ -20,4 +20,4 @@ class Sim(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Sim Configuration"
+        return self.tr("Sim Configuration")

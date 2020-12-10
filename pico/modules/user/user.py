@@ -25,7 +25,7 @@ class User(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "User Configuration"
+        return self.tr("User Configuration")
 
     @Slot(str, str, result=None)
     def createUser(self, username, password):

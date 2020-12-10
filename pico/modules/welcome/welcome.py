@@ -20,4 +20,4 @@ class Welcome(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Welcome"
+        return self.tr("Welcome")

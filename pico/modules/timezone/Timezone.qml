@@ -26,7 +26,7 @@ Module {
                 id: searchText
                 Layout.preferredWidth: root.width * 0.6
                 Layout.preferredHeight: 64
-                placeholderText: "Timezone"
+                placeholderText: qsTr("Timezone")
 
                 onTextChanged: {
                     timezoneModule.filterText = text

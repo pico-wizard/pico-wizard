@@ -16,7 +16,7 @@ Item {
         id: labelWelcome
         font.weight: Font.Light
         font.pointSize: 32
-        text: "Welcome"
+        text: qsTr("Welcome")
         anchors.centerIn: parent
         color: "#444"
     }

@@ -17,7 +17,7 @@ Item {
         id: labelComplete
         font.weight: Font.Light
         font.pointSize: 32
-        text: "Setup complete"
+        text: qsTr("Setup complete")
         anchors.centerIn: parent
         color: "#444"
     }

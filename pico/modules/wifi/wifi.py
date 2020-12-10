@@ -20,4 +20,4 @@ class Wifi(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Wifi"
+        return self.tr("Wifi")

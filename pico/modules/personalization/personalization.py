@@ -20,4 +20,4 @@ class Personalization(Module):
 
     @Slot(None, result=str)
     def moduleName(self) -> str:
-        return "Personalization"
+        return self.tr("Personalization")

@@ -72,12 +72,12 @@ Module {
                         ColumnLayout {
 
                             Label {
-                                text: "Tp Link 92B3"
+                                text: qsTr("Tp Link 92B3")
                                 font.pointSize: 12
                             }
 
                             Label {
-                                text: "WPA / WPA2"
+                                text: qsTr("WPA / WPA2")
                                 color: "#aaaaaa"
                                 font.pointSize: 8
                             }
