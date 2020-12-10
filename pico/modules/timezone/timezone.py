@@ -90,7 +90,7 @@ class Timezone(Module):
             self.setTimezoneSuccess.emit()
 
     def tzCmdFailed(self, err):
-        print(err)
+        self.log.error(err)
         self.setTimezoneFailed.emit()
 
     @Signal

@@ -17,11 +17,10 @@ class ModuleLoader(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        ModuleLoader.log.info('Initializing ModuleLoader')
 
     @staticmethod
     def registerModuleTypes():
-        ModuleLoader.log.info('Initializing ModuleLoader')
-
         modules = Config.get_modules()
         modules.insert(0, "Welcome")
         modules.append("Finish")
@@ -37,16 +36,20 @@ class ModuleLoader(QObject):
 
         for moduleName in modules:
             if hasattr(importedModules, moduleName):
+                ModuleLoader.log.info(f'Importing module {moduleName}')
+
                 cls = getattr(importedModules, moduleName)
                 ModuleLoader.__modules.append(cls)
                 cls.registerTypes()
             elif hasattr(importedCustomModules, moduleName):
+                ModuleLoader.log.info(f'Importing module {moduleName}')
+
                 cls = getattr(importedCustomModules, moduleName)
                 ModuleLoader.__modules.append(cls)
                 cls.registerTypes()
             else:
-                print("ERROR : Unknown module", moduleName)
-                print("Exiting...")
+                ModuleLoader.log.error(f"ERROR : Unknown module {moduleName}")
+                ModuleLoader.log.error("Exiting...")
                 sys.exit(1)
 
     @Slot(None, result=QUrl)
