@@ -57,8 +57,6 @@ class Timezone(Module):
     def model(self):
         return self._timezoneProxyModel
 
-    filterText = Property(str, _getFilterText, _setFilterText, notify=filterTextChanged)
-
     @Slot(int, result=None)
     def setTimezone(self, tzIndex):
         timezone = self._timezoneProxyModel.data(self._timezoneProxyModel.index(tzIndex, 0), TimezoneModel.TzRole)
@@ -102,6 +100,8 @@ class Timezone(Module):
     @Signal
     def setTimezoneFailed(self):
         pass
+
+    filterText = Property(str, _getFilterText, _setFilterText, notify=filterTextChanged)
 
 
 if __name__ == "__main__":

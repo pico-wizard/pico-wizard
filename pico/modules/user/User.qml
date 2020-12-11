@@ -21,6 +21,7 @@ Module {
             width: root.width * 0.5
 
             PlasmaComponents.TextField {
+                id: fullname
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 placeholderText: qsTr("Full Name")
@@ -62,15 +63,34 @@ Module {
         }
 
         NextButton {
+            id: nextButton
+            onNextClicked: {
+                accepted = true
+                userModule.createUser(fullname.text, username.text, password.text)
+            }
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
                 bottomMargin: 16
             }
         }
-    }
 
-    UserModule {
-        id: userModule
+        UserModule {
+            id: userModule
+
+            Component.onCompleted: {
+                root.moduleName = userModule.moduleName()
+                root.moduleIcon = userModule.dir() + "/assets/user.svg"
+            }
+
+            onCreateUserSuccess: {
+                nextButton.next()
+            }
+
+            onCreateUserFailed: {
+                nextButton.cancel()
+            }
+        }
     }
 }

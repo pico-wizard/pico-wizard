@@ -2,12 +2,13 @@ import os
 import subprocess
 import sys
 
-from PySide2.QtCore import QUrl, Slot
+from PySide2.QtCore import QUrl, Slot, Signal, QProcess, QByteArray
 from PySide2.QtQml import qmlRegisterType
 
 from pico.module import Module
 
 from pico.utils.logger import Logger
+
 
 class User(Module):
     log = Logger.getLogger(__name__)
@@ -27,9 +28,66 @@ class User(Module):
     def moduleName(self) -> str:
         return self.tr("User Configuration")
 
-    @Slot(str, str, result=None)
-    def createUser(self, username, password):
-        try:
-            subprocess.run(['useradd', '--create-home', '-p', password, username])
-        except:
-            User.log.error('Could not create user')
+    @Slot(str, str, str, result=None)
+    def createUser(self, fullname, username, password):
+        process = QProcess(self)
+        args = [
+            '--create-home',
+            '--comment',
+            fullname,
+            username
+        ]
+        process.start('useradd', args)
+
+        process.finished.connect(lambda exitCode: self.createUserCmdSuccess(exitCode, username, password))
+        process.error.connect(self.createUserCmdFailed)
+
+    def createUserCmdSuccess(self, exitCode, username, password):
+        if exitCode != 0:
+            self.log.error('Failed to create user')
+            self.createUserFailed.emit()
+        else:
+            self.log.info('User successfully created')
+            process = QProcess(self)
+            args = [
+                username
+            ]
+            process.start('passwd', args)
+
+            inputPassword = QByteArray(f"{password}\n{password}\n".encode())
+            process.write(inputPassword)
+            #process.write(inputPassword)
+
+            process.finished.connect(self.passwordCmdSuccess)
+            process.error.connect(self.passwordCmdFailed)
+
+    def createUserCmdFailed(self, err):
+        self.log.error('Failed to create user')
+        self.log.error(err)
+        self.createUserFailed.emit()
+
+    def passwordCmdSuccess(self, exitCode):
+        if exitCode != 0:
+            self.log.error('Failed to set password')
+            self.createUserFailed.emit()
+        else:
+            self.log.info('Password successfully set')
+            self.createUserSuccess.emit()
+
+    def passwordCmdFailed(self, err):
+        self.log.error('Failed to set password')
+        self.log.error(err)
+        self.createUserFailed.emit()
+
+    @Signal
+    def createUserSuccess(self):
+        pass
+
+    @Signal
+    def createUserFailed(self):
+        pass
+
+
+if __name__ == "__main__":
+    obj = User()
+    obj.createUser("Test User", "test", "password")
