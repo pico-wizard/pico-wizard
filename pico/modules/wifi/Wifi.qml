@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Controls.Material.impl 2.15
 
 import org.kde.kirigami 2.7 as Kirigami
+import org.kde.plasma.components 3.0 as PlasmaComponents
 
 import PicoWizard 1.0
 
@@ -72,6 +73,7 @@ Module {
                         ColumnLayout {
 
                             Label {
+                                id: wifiName
                                 text: qsTr("Tp Link 92B3")
                                 font.pointSize: 12
                             }
@@ -84,21 +86,24 @@ Module {
                         }
                     }
 
-                    RoundButton {
-                        width: 32
-                        height: 32
+                    Kirigami.Icon {
+                        width: 28
+                        height: 28
                         anchors {
                             right: parent.right
                             verticalCenter: parent.verticalCenter
                             rightMargin: 12
                         }
-                        flat: true
-                        Material.elevation: 2
+                        source: wifiModule.dir() + "/assets/next.svg"
+                        color: "#ffcccccc"
+                    }
 
-                        Kirigami.Icon {
-                            anchors.fill: parent
-                            source: "draw-arrow-forward"
-                            color: "#ffcccccc"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            passwordDialog.wifiName = wifiName.text
+                            passwordDialog.open()
+                            console.log("Connecting to wifi")
                         }
                     }
                 }
@@ -115,21 +120,75 @@ Module {
         }
     }
 
+    Dialog {
+        property string wifiName
+
+        id: passwordDialog
+        modal: true
+        implicitWidth: 400
+        z: 10
+
+        font.pixelSize: 10
+
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        footer: DialogButtonBox {
+            Button {
+                flat: true
+                text: "Connect"
+                DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+                font.pixelSize: 10
+                font.bold: true
+                hoverEnabled: true
+                Material.foreground: Material.color(Material.Blue, Material.Shade500)
+            }
+        }
+
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            Label {
+                text: `Connect to ${passwordDialog.wifiName}`
+                color: "#444444"
+                font.pointSize: 14
+                font.bold: true
+                topPadding: 16
+                bottomPadding: 16
+            }
+
+            PlasmaComponents.TextField {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                Layout.topMargin: 16
+                placeholderText: qsTr("Password")
+                passwordCharacter: "*"
+                revealPasswordButtonShown: true
+                echoMode: "Password"
+            }
+        }
+    }
+
     WifiModule {
         id: wifiModule
 
         function getWifiIcon(strength) {
-            if (strength < 10) {
-                return "network-wireless-signal-none"
-            } else if (strength >= 10 && strength < 30) {
-                return "network-wireless-signal-weak"
-            } else if (strength >= 30 && strength < 50) {
-                return "network-wireless-signal-ok"
+            var icon = ""
+
+            if (strength > 0 && strength < 25) {
+                icon = "signal-25.svg"
+            } else if (strength >= 25 && strength < 50) {
+                icon = "signal-50.svg"
             } else if (strength >= 50 && strength < 75) {
-                return "network-wireless-signal-good"
+                icon = "signal-75.svg"
             } else if (strength >= 75) {
-                return "network-wireless-signal-excellent"
+                icon = "signal-100.svg"
+            } else {
+                icon = "signal-0.svg"
             }
+
+            return wifiModule.dir() + "/assets/" + icon
         }
     }
 }
