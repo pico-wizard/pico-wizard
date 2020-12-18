@@ -11,10 +11,36 @@ import PicoWizard 1.0
 Item {
     FinishModule {
         id: finishModule
+
+        Component.onCompleted: {
+            finishModule.runScripts()
+        }
+    }
+
+    ColumnLayout {
+        visible: !finishModule.isComplete
+        anchors.centerIn: parent
+
+        Label {
+            font.weight: Font.Light
+            font.pointSize: 32
+            text: qsTr("Finalizing")
+            color: "#444"
+        }
+
+        Label {
+            visible: finishModule.totalScriptsCount > 0
+            Layout.topMargin: 48
+            Layout.alignment: Qt.AlignHCenter
+            font.weight: Font.Light
+            font.pointSize: 10
+            text: qsTr(`Running Script [${finishModule.runningScriptIndex + 1}/${finishModule.totalScriptsCount}]`)
+            color: "#888888"
+        }
     }
 
     Label {
-        id: labelComplete
+        visible: finishModule.isComplete
         font.weight: Font.Light
         font.pointSize: 32
         text: qsTr("Setup complete")
@@ -33,19 +59,41 @@ Item {
         }
         flat: true
         onClicked: {
-            Qt.quit()
+            if (finishModule.isComplete) {
+                Qt.quit()
+            }
         }
 
-        Material.background: Material.color(Material.Green, Material.Shade500)
+        Material.background: finishModule.isComplete ? Material.color(Material.Green, Material.Shade500) : Material.color(Material.Grey, Material.Shade100)
         Material.elevation: 0
 
         Kirigami.Icon {
+            visible: finishModule.isComplete
             width: 24
             height: 24
 
             anchors.centerIn: parent
             source: finishModule.dir() + "/assets/done.svg"
             color: "#ffffffff"
+        }
+
+        Kirigami.Icon {
+            anchors.centerIn: parent
+            visible: !finishModule.isComplete
+            width: 24
+            height: 24
+            Layout.alignment: Qt.AlignHCenter
+
+            source: finishModule.dir() + "/assets/spinner.svg"
+            color: "#ff444444"
+
+            RotationAnimation on rotation {
+                loops: Animation.Infinite
+                from: -90
+                to: 270
+                duration: 500
+                running: true
+            }
         }
     }
 }

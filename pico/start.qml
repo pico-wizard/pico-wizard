@@ -62,7 +62,8 @@ ApplicationWindow {
 
         id: appStack
         anchors.fill: parent
-        initialItem: "file:///" + moduleLoader.welcomeModule()
+//        initialItem: "file:///" + moduleLoader.welcomeModule()
+        initialItem: Qt.resolvedUrl("./modules/finish/Finish.qml")
 
         pushEnter: Transition {
             PropertyAnimation {
