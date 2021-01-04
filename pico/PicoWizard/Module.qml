@@ -53,6 +53,26 @@ Item {
         color: "#fff5f5f5"
     }
 
+    Label {
+        anchors {
+            right: parent.right
+            top: parent.top
+            rightMargin: Kirigami.Settings.isMobile ? 40 : 56
+            topMargin: Kirigami.Settings.isMobile ? 14 : 56
+        }
+        font.weight: Font.Light
+        font.pointSize: Kirigami.Settings.isMobile ? 16 : 24
+        color: "#fff5f5f5"
+        text: qsTr("Skip")
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                moduleLoader.nextModule()
+            }
+        }
+    }
+
     Pane {
         id: control
         anchors {
