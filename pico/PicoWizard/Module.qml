@@ -16,8 +16,8 @@ Item {
     property alias delegate: delegateLoader.sourceComponent
 
     RoundButton {
-        width: 48
-        height: 48
+        width: Kirigami.Settings.isMobile ? 40 : 48
+        height: Kirigami.Settings.isMobile ? 40 : 48
 
         anchors {
             right: labelModuleName.left
@@ -45,11 +45,11 @@ Item {
         anchors {
             left: parent.left
             top: parent.top
-            leftMargin: 56
-            topMargin: 56
+            leftMargin: Kirigami.Settings.isMobile ? 40 : 56
+            topMargin: Kirigami.Settings.isMobile ? 14 : 56
         }
         font.weight: Font.Light
-        font.pointSize: 24
+        font.pointSize: Kirigami.Settings.isMobile ? 16 : 24
         color: "#fff5f5f5"
     }
 
@@ -57,9 +57,9 @@ Item {
         id: control
         anchors {
             fill: parent
-            leftMargin: 56
-            rightMargin: 56
-            topMargin: 112
+            leftMargin: Kirigami.Settings.isMobile ? 12 : 56
+            rightMargin: Kirigami.Settings.isMobile ? 12 : 56
+            topMargin: Kirigami.Settings.isMobile ? 48 : 112
         }
         background: Rectangle {
             color: control.Material.backgroundColor
@@ -78,11 +78,11 @@ Item {
             Kirigami.Icon {
                 id: icon
 
-                Layout.preferredWidth: 196
-                Layout.preferredHeight: 196
+                Layout.preferredWidth: Kirigami.Settings.isMobile ? 64 : 196
+                Layout.preferredHeight: Kirigami.Settings.isMobile ? 64 : 196
                 Layout.alignment: Layout.Center
-                Layout.topMargin: 64
-                Layout.bottomMargin: 64
+                Layout.topMargin: Kirigami.Settings.isMobile ? 24 : 64
+                Layout.bottomMargin: Kirigami.Settings.isMobile ? 24 : 64
 
                 ColorOverlay {
                     id: colorOverlay

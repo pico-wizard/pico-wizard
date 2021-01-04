@@ -10,13 +10,8 @@ ApplicationWindow {
 
     id: appRoot
 
-    ///////////////////
-    // DEVELOPMENT
-    ///////////////////
-    width: 700
-    height: 900
-    // x: 1921
-    ///////////////////
+    flags: Qt.FramelessWindowHint | Qt.Window
+    visibility: Qt.WindowFullScreen
 
     onClosing: {
         if (appStack.depth > 1) {

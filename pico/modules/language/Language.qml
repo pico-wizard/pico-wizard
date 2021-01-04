@@ -19,7 +19,7 @@ Module {
             anchors.horizontalCenter: parent.horizontalCenter
 
             ComboBox {
-                Layout.preferredWidth: root.width * 0.4
+                Layout.preferredWidth: Kirigami.Settings.isMobile ? root.width * 0.6 : root.width * 0.4
                 Layout.preferredHeight: 64
                 model: LanguageModel {}
                 textRole: "name"
