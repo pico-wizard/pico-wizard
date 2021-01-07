@@ -1,7 +1,10 @@
 import QtQuick 2.15
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
+
+import org.kde.kirigami 2.7 as Kirigami
 
 import PicoWizard 1.0
 
@@ -9,9 +12,12 @@ ApplicationWindow {
     property alias moduleLoader: moduleLoader
 
     id: appRoot
+    width: 1200
+    height: 800
+    x: Screen.width / 2 - width / 2
+    y: Screen.height / 2 - height / 2
 
-    flags: Qt.FramelessWindowHint | Qt.Window
-    visibility: Qt.WindowFullScreen
+    visibility: Qt.AutomaticVisibility
 
     onClosing: {
         if (appStack.depth > 1) {
