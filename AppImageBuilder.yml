@@ -18,7 +18,7 @@ AppDir:
     exec_args: $@
 
   pacman:
-    Architecture: x86_64
+    Architecture: aarch64
     repositories:
       core:
         - https://mirror.alpix.eu/manjaro/unstable/$repo/$arch
@@ -43,4 +43,4 @@ AppDir:
 AppImage:
   update-information: None
   sign-key: None
-  arch: x86_64
+  arch: aarch64
