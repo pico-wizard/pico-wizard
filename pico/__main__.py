@@ -1,7 +1,13 @@
-import argparse
-import os
-import signal
+#!/usr/bin/env python3
+
 import sys
+import os
+
+# Add current dir to system path for module name resolution
+sys.path.append(os.path.dirname(os.path.realpath(__file__ + '/../')))
+
+import argparse
+import signal
 
 from PySide2.QtCore import QUrl
 from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
