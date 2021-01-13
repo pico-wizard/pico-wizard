@@ -142,3 +142,9 @@ cython_debug/
 
 # VSCode
 settings.json
+
+# AppImage / AppImageBuilder
+AppDir
+appimage-builder-cache
+*.AppImage
+*.appimage
