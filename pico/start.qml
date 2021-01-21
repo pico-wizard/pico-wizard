@@ -12,7 +12,7 @@ ApplicationWindow {
     property alias moduleLoader: moduleLoader
 
     id: appRoot
-    width: 1200
+    width: 500
     height: 800
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
