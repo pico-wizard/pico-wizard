@@ -37,7 +37,7 @@ class Logger:
 
         # Logging settings
         formatter = logging.Formatter(
-            fmt='%(asctime)s %(name)s [%(levelname)-8s] %(message)s',
+            fmt='%(asctime)s %(name)-50s [%(levelname)-8s] %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
         handler = logging.handlers.RotatingFileHandler(Logger.LOG_FILE_PATH, maxBytes=1000*1000*10, backupCount=10)
