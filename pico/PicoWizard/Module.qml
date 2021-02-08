@@ -45,8 +45,8 @@ Item {
         anchors {
             left: parent.left
             top: parent.top
-            leftMargin: Kirigami.Settings.isMobile ? 40 : 56
-            topMargin: Kirigami.Settings.isMobile ? 14 : 56
+            leftMargin: Kirigami.Settings.isMobile ? 54 : 56
+            topMargin: Kirigami.Settings.isMobile ? 32 : 56
         }
         font.weight: Font.Light
         font.pointSize: Kirigami.Settings.isMobile ? 16 : 24
@@ -58,7 +58,7 @@ Item {
             right: parent.right
             top: parent.top
             rightMargin: Kirigami.Settings.isMobile ? 40 : 56
-            topMargin: Kirigami.Settings.isMobile ? 14 : 56
+            topMargin: Kirigami.Settings.isMobile ? 32 : 56
         }
         font.weight: Font.Light
         font.pointSize: Kirigami.Settings.isMobile ? 16 : 24
@@ -77,9 +77,9 @@ Item {
         id: control
         anchors {
             fill: parent
-            leftMargin: Kirigami.Settings.isMobile ? 12 : 56
-            rightMargin: Kirigami.Settings.isMobile ? 12 : 56
-            topMargin: Kirigami.Settings.isMobile ? 48 : 112
+            leftMargin: Kirigami.Settings.isMobile ? 24 : 56
+            rightMargin: Kirigami.Settings.isMobile ? 24 : 56
+            topMargin: Kirigami.Settings.isMobile ? 64 : 112
         }
         background: Rectangle {
             color: control.Material.backgroundColor

@@ -159,13 +159,30 @@ Module {
             }
 
             PlasmaComponents.TextField {
+                id: password
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 Layout.topMargin: 16
-                placeholderText: qsTr("Password")
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: password.text.length <= 0
+                        text: qsTr("Password")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
             }
         }
     }

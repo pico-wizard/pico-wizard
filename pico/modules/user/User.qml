@@ -24,33 +24,98 @@ Module {
                 id: fullname
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                placeholderText: qsTr("Full Name")
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: fullname.text.length <= 0
+                        text: qsTr("Full Name")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
             }
 
             PlasmaComponents.TextField {
                 id: username
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                placeholderText: qsTr("Username")
-            }
 
-            PlasmaComponents.TextField {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                placeholderText: qsTr("Password")
-                passwordCharacter: "*"
-                revealPasswordButtonShown: true
-                echoMode: "Password"
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: username.text.length <= 0
+                        text: qsTr("Username")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
             }
 
             PlasmaComponents.TextField {
                 id: password
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                placeholderText: qsTr("Confirm Password")
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: password.text.length <= 0
+                        text: qsTr("Password")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
+            }
+
+            PlasmaComponents.TextField {
+                id: cnfPassword
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                passwordCharacter: "*"
+                revealPasswordButtonShown: true
+                echoMode: "Password"
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: cnfPassword.text.length <= 0
+                        text: qsTr("Confirm Password")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
             }
 
             /*Button {
@@ -66,7 +131,7 @@ Module {
             id: nextButton
             onNextClicked: {
                 accepted = true
-                userModule.createUser(fullname.text, username.text, password.text)
+                userModule.createUser(fullname.text, username.text, cnfPassword.text)
             }
 
             anchors {

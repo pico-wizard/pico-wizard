@@ -26,7 +26,23 @@ Module {
                 id: searchText
                 Layout.preferredWidth: root.width * 0.6
                 Layout.preferredHeight: 64
-                placeholderText: qsTr("Timezone")
+
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "#f5f5f5"
+
+                    Label {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        visible: searchText.text.length <= 0
+                        text: qsTr("Timezone")
+                        color: "#888888"
+                    }
+                }
+                color: "#222222"
+                selectionColor: "#2196f3"
+                selectedTextColor: "#ffffff"
 
                 onTextChanged: {
                     timezoneModule.filterText = text
