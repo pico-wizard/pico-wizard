@@ -24,7 +24,7 @@ Module {
 
             PlasmaComponents.TextField {
                 id: searchText
-                Layout.preferredWidth: root.width * 0.6
+                Layout.preferredWidth: root.width * 0.7
                 Layout.preferredHeight: 64
 
                 background: Rectangle {
@@ -51,7 +51,7 @@ Module {
 
             Rectangle {
                 id: tzContainer
-                Layout.preferredWidth: root.width * 0.6
+                Layout.preferredWidth: root.width * 0.7
                 Layout.fillHeight: true
 
                 radius: 4
@@ -117,7 +117,7 @@ Module {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: 16
+                bottomMargin: 0
             }
         }
 

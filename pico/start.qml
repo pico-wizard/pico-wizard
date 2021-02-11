@@ -19,12 +19,12 @@ ApplicationWindow {
 
     visibility: Qt.AutomaticVisibility
 
-    onClosing: {
-        if (appStack.depth > 1) {
-            moduleLoader.back()
-            close.accepted = false
-        }
-    }
+//    onClosing: {
+//        if (appStack.depth > 1) {
+//            moduleLoader.back()
+//            close.accepted = false
+//        }
+//    }
 
     visible: true
 

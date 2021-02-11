@@ -25,7 +25,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 16
+            bottomMargin: 8
         }
     }
 }

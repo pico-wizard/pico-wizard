@@ -18,7 +18,7 @@ Module {
     delegate: Item {
         ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: root.width * 0.5
+            width: root.width * 0.7
 
             PlasmaComponents.TextField {
                 id: fullname
@@ -137,7 +137,7 @@ Module {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: 16
+                bottomMargin: 0
             }
         }
 

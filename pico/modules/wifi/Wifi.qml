@@ -16,7 +16,7 @@ Module {
     delegate: Item {
         Rectangle {
             id: wifiContainer
-            width: root.width * 0.6
+            width: root.width * 0.7
             anchors {
                 top: parent.top
                 bottom: nextButton.top
@@ -74,13 +74,13 @@ Module {
                             Label {
                                 id: wifiName
                                 text: qsTr(ssid)
-                                font.pointSize: 12
+                                font.pointSize: 10
                             }
 
                             Label {
                                 text: qsTr(security)
                                 color: "#aaaaaa"
-                                font.pointSize: 8
+                                font.pointSize: 7
                             }
                         }
                     }
@@ -120,7 +120,7 @@ Module {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: 16
+                bottomMargin: 0
             }
         }
 
@@ -129,13 +129,13 @@ Module {
 
             id: passwordDialog
             modal: true
-            implicitWidth: 400
+            implicitWidth: 300
             z: 10
 
             font.pixelSize: 10
 
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
+            x: (Screen.width - width) / 2
+            y: (Screen.height - height) / 2
 
             footer: DialogButtonBox {
                 Button {
@@ -170,10 +170,26 @@ Module {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 50
                     Layout.topMargin: 16
-                    placeholderText: qsTr("Password")
                     passwordCharacter: "*"
                     revealPasswordButtonShown: true
                     echoMode: "Password"
+
+                    background: Rectangle {
+                        anchors.fill: parent
+                        color: "#f5f5f5"
+
+                        Label {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: parent.left
+                            anchors.leftMargin: 8
+                            visible: password.text.length <= 0
+                            text: qsTr("Password")
+                            color: "#888888"
+                        }
+                    }
+                    color: "#222222"
+                    selectionColor: "#2196f3"
+                    selectedTextColor: "#ffffff"
                 }
             }
         }
