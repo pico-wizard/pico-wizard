@@ -25,7 +25,7 @@ Module {
             PlasmaComponents.TextField {
                 id: searchText
                 Layout.preferredWidth: root.width * 0.7
-                Layout.preferredHeight: 64
+                Layout.preferredHeight: 48
 
                 background: Rectangle {
                     anchors.fill: parent
@@ -72,7 +72,7 @@ Module {
                 ListView {
                     id: tzListView
                     anchors.fill: parent
-                    anchors.margins: 16
+                    anchors.margins: 8
 
                     spacing: 4
                     model: timezoneModule.model
@@ -81,7 +81,7 @@ Module {
 
                     delegate: Rectangle {
                         width: parent ? parent.width : 0
-                        height: 60
+                        height: 40
 
                         color: ListView.isCurrentItem ? Material.color(Material.Blue) : "#ffffffff"
 

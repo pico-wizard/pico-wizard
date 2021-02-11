@@ -42,7 +42,7 @@ Module {
             ListView {
                 id: wifiListView
                 anchors.fill: parent
-                anchors.margins: 16
+                anchors.margins: 8
 
                 spacing: 4
                 model: wifiModule.model
@@ -51,7 +51,7 @@ Module {
 
                 delegate: Rectangle {
                     width: parent ? parent.width : 0
-                    height: 80
+                    height: 50
 
                     RowLayout {
                         anchors {
@@ -61,24 +61,31 @@ Module {
                         }
 
                         Kirigami.Icon {
-                            Layout.leftMargin: 12
-                            Layout.rightMargin: 12
-                            width: 16
-                            height: width
+                            Layout.leftMargin: 0
+                            Layout.rightMargin: 4
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                             opacity: 0.7
                             source: wifiModule.getWifiIcon(signal)
                         }
 
                         ColumnLayout {
-
                             Label {
                                 id: wifiName
-                                text: qsTr(ssid)
+                                text: trimName(ssid)
                                 font.pointSize: 10
+
+                                function trimName(name) {
+                                    if (name.length > 18) {
+                                        return name.slice(0, 18) + "..."
+                                    } else {
+                                        return name
+                                    }
+                                }
                             }
 
                             Label {
-                                text: qsTr(security)
+                                text: security
                                 color: "#aaaaaa"
                                 font.pointSize: 7
                             }
@@ -157,12 +164,20 @@ Module {
                 anchors.right: parent.right
 
                 Label {
-                    text: `Connect to ${passwordDialog.wifiName}`
+                    text: `Connect to ${trimName(passwordDialog.wifiName)}`
                     color: "#444444"
-                    font.pointSize: 14
+                    font.pointSize: 11
                     font.bold: true
-                    topPadding: 16
-                    bottomPadding: 16
+                    topPadding: 8
+                    bottomPadding: 8
+
+                    function trimName(name) {
+                        if (name.length > 15) {
+                            return name.slice(0, 15) + "..."
+                        } else {
+                            return name
+                        }
+                    }
                 }
 
                 PlasmaComponents.TextField {
