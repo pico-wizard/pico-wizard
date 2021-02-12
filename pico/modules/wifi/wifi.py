@@ -78,7 +78,6 @@ class Wifi(Module):
         self.log.error(f'Failed to get wifi list : {err}')
 
     def generateWifiList(self, output):
-        self.log.debug(f'Wifi output : {output}')
         self._wifiModel.reset()
         wifiItemRegex = '(.*):(.*):(.*):(.*)'
         matches = re.findall(wifiItemRegex, output)
@@ -117,7 +116,6 @@ class Wifi(Module):
             f'"{bssid}"'
         ]
 
-        self.log.debug(f'Connect wifi command : nmcli {" ".join(args)}')
         process.start('nmcli', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.setWifiCmdSuccess(process, exitCode, exitStatus))
