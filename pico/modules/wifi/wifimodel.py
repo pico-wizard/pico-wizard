@@ -7,7 +7,8 @@ from PySide2.QtCore import QAbstractListModel, Qt, Slot, QProcess
 class WifiModel(QAbstractListModel):
     __wifiList = []
 
-    SsidRole = Qt.UserRole + 1
+    BssidRole = Qt.UserRole + 1
+    SsidRole = BssidRole + 1
     SignalRole = SsidRole + 1
     SecurityRole = SignalRole + 1
 
@@ -16,6 +17,7 @@ class WifiModel(QAbstractListModel):
 
     def roleNames(self) -> typing.Dict:
         roles = dict()
+        roles[self.BssidRole] = b'bssid'
         roles[self.SsidRole] = b'ssid'
         roles[self.SignalRole] = b'signal'
         roles[self.SecurityRole] = b'security'
@@ -23,7 +25,9 @@ class WifiModel(QAbstractListModel):
         return roles
 
     def data(self, index: PySide2.QtCore.QModelIndex, role: int) -> typing.Any:
-        if role == self.SsidRole:
+        if role == self.BssidRole:
+            return self.__wifiList[index.row()]['bssid']
+        elif role == self.SsidRole:
             return self.__wifiList[index.row()]['ssid']
         elif role == self.SignalRole:
             return self.__wifiList[index.row()]['signal']

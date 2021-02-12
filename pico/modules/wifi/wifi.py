@@ -1,4 +1,5 @@
 import os
+import re
 
 from PySide2.QtCore import QUrl, Slot, Signal, Property, QObject, QProcess
 from PySide2.QtQml import qmlRegisterType
@@ -45,7 +46,7 @@ class Wifi(Module):
             '-c',
             'no',
             '-f',
-            'SSID,SIGNAL,SECURITY',
+            'BSSID,SSID,SIGNAL,SECURITY',
             '-t',
             'dev',
             'wifi',
@@ -79,15 +80,16 @@ class Wifi(Module):
     def generateWifiList(self, output):
         self.log.debug(f'Wifi output : {output}')
         self._wifiModel.reset()
+        wifiItemRegex = '(.*):(.*):(.*):(.*)'
+        matches = re.findall(wifiItemRegex, output)
 
-        for item in output.splitlines():
-            item_arr = item.split(":")
-
-            if item_arr[0]:
+        for match in matches:
+            if match[1]:
                 wifiItem = {
-                    'ssid': item_arr[0],
-                    'signal': item_arr[1],
-                    'security': item_arr[2]
+                    'bssid': match[0].replace('\\', ''),
+                    'ssid': match[1],
+                    'signal': match[2],
+                    'security': match[3]
                 }
 
                 self._wifiModel.layoutAboutToBeChanged.emit()
@@ -99,6 +101,7 @@ class Wifi(Module):
 
     @Slot(int, str, result=None)
     def setWifi(self, wifiIndex, password):
+        bssid = self._wifiModel.data(self._wifiModel.index(wifiIndex, 0), WifiModel.BssidRole)
         ssid = self._wifiModel.data(self._wifiModel.index(wifiIndex, 0), WifiModel.SsidRole)
         self.log.debug(f'Selected SSID : {ssid}')
 
@@ -109,7 +112,9 @@ class Wifi(Module):
             'connect',
             ssid,
             'password',
-            password
+            password,
+            'bssid',
+            bssid
         ]
 
         self.log.debug(f'Connect wifi command : nmcli {" ".join(args)}')
