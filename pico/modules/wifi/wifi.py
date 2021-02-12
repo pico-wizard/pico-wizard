@@ -110,11 +110,11 @@ class Wifi(Module):
             'dev',
             'wifi',
             'connect',
-            ssid,
+            f'"{ssid}"',
             'password',
-            password,
+            f'"{password}"',
             'bssid',
-            bssid
+            f'"{bssid}"'
         ]
 
         self.log.debug(f'Connect wifi command : nmcli {" ".join(args)}')
