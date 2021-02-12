@@ -55,7 +55,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 8
+            bottomMargin: 12
         }
         flat: true
         onClicked: {
