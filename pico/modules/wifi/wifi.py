@@ -14,7 +14,6 @@ class Wifi(Module):
     def __init__(self, parent=None):
         super().__init__(__file__, parent)
 
-        self.listWifiProcess = QProcess(self)
         self._wifiModel = WifiModel(parent)
 
         self.listWifi()
@@ -55,28 +54,31 @@ class Wifi(Module):
             'yes'
         ]
 
-        self.listWifiProcess.start('nmcli', args)
+        process = QProcess(self)
+        process.start('nmcli', args)
 
-        self.listWifiProcess.finished.connect(lambda exitCode, exitStatus: self.listWifiProcessFinished(exitCode, exitStatus))
-        self.listWifiProcess.errorOccurred.connect(lambda err: self.listWifiProcessError(err))
+        process.finished.connect(lambda exitCode, exitStatus: self.listWifiProcessFinished(process, exitCode, exitStatus))
+        process.errorOccurred.connect(lambda err: self.listWifiProcessError(process, err))
 
-    def listWifiProcessFinished(self, exitCode, exitStatus):
+    def listWifiProcessFinished(self, process, exitCode, exitStatus):
         self.log.debug(f'List Wifi process status : {exitStatus}[CODE {exitCode}]')
         self.log.info('Listing Wifi')
 
-        if exitCode != 0:
+        output = process.readAll().data().decode()
+
+        if exitCode != 0 or "Error:" in output:
             self.log.error(f'Failed to get wifi list : {exitStatus}')
+            self.errorOccurred.emit("Error listing wifi connections")
         else:
             self.log.debug('Parsing wifi data')
-            self.generateWifiList(self.listWifiProcess.readAll().data().decode())
+            self.generateWifiList(output)
 
-    def listWifiProcessError(self, err):
+    def listWifiProcessError(self, process, err):
         self.log.error(f'Failed to get wifi list : {err}')
 
     def generateWifiList(self, output):
-        index = 0
-
         self.log.debug(f'Wifi output : {output}')
+        self._wifiModel.reset()
 
         for item in output.splitlines():
             item_arr = item.split(":")
@@ -110,23 +112,28 @@ class Wifi(Module):
             password
         ]
 
+        self.log.debug(f'Connect wifi command : nmcli {" ".join(args)}')
         process.start('nmcli', args)
 
-        process.finished.connect(lambda exitCode, exitStatus: self.wifiCmdSuccess(exitCode, exitStatus))
-        process.error.connect(lambda err: self.wifiCmdFailed(err))
+        process.finished.connect(lambda exitCode, exitStatus: self.setWifiCmdSuccess(process, exitCode, exitStatus))
+        process.error.connect(lambda err: self.setWifiCmdFailed(process, err))
 
-    def wifiCmdSuccess(self, exitCode, exitStatus):
+    def setWifiCmdSuccess(self, process, exitCode, exitStatus):
         self.log.debug(f'Connect Wifi process status : {exitStatus} [CODE {exitCode}]')
         self.log.info('Connecting to Wifi')
 
-        if exitCode != 0:
-            self.log.error(f'Failed to connect to wifi : {exitStatus}')
+        output = process.readAll().data().decode()
+
+        if exitCode != 0 or "Error:" in output:
+            self.log.error(f'Failed to connect to wifi : {output} [{exitStatus}]')
+            self.errorOccurred.emit("Failed to connect to wifi. Recheck the password and try again.")
             self.connectWifiFailed.emit()
         else:
             self.connectWifiSuccess.emit()
 
-    def wifiCmdFailed(self, err):
+    def setWifiCmdFailed(self, process, err):
         self.log.error(f'Failed to connect to wifi : {err}')
+        self.errorOccurred.emit("Failed to connect to wifi")
         self.connectWifiFailed.emit()
 
     @Signal

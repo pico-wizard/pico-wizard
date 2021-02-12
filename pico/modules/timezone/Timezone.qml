@@ -129,12 +129,19 @@ Module {
                 root.moduleIcon = timezoneModule.dir() + "/assets/timezone.svg"
             }
 
-            onSetTimezoneSuccess: {
-                nextButton.next()
-            }
+            property var signals: Connections {
+                function onSetTimezoneSuccess() {
+                    nextButton.next()
+                }
 
-            onSetTimezoneFailed: {
-                nextButton.cancel()
+                function onSetTimezoneFailed() {
+                    nextButton.cancel()
+                }
+
+                function onErrorOccurred(err) {
+                    console.log(`TZ ErrorOccurred : ${err}`)
+                    toastManager.show(err, 2000)
+                }
             }
         }
     }

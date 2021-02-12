@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.15
@@ -14,12 +15,14 @@ Module {
     moduleIconColor: "#ff999999"
 
     delegate: Item {
+        id: delegateRoot
+
         Rectangle {
             id: wifiContainer
             width: root.width * 0.7
             anchors {
                 top: parent.top
-                bottom: nextButton.top
+                bottom: parent.bottom
                 bottomMargin: 16
                 horizontalCenter: parent.horizontalCenter
             }
@@ -109,25 +112,43 @@ Module {
                         onClicked: {
                             wifiListView.currentIndex = index
                             passwordDialog.wifiName = wifiName.text
+                            password.text = ""
                             passwordDialog.open()
-                            console.log("Connecting to wifi")
                         }
                     }
                 }
             }
-        }
 
-        NextButton {
-            id: nextButton
+            ColumnLayout {
+                anchors.centerIn: wifiListView
+                Layout.alignment: Qt.AlignHCenter|Qt.AlignVCenter
+                spacing: 12
+                visible: wifiListView.count <= 0
 
-            onNextClicked: {
-                accepted = true
-            }
+                Kirigami.Icon {
+                    width: 18
+                    height: 18
+                    Layout.alignment: Qt.AlignHCenter|Qt.AlignVCenter
 
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: 0
+                    source: wifiModule.dir() + "/assets/spinner.svg"
+                    color: "#ff666666"
+                    opacity: 0.5
+
+                    RotationAnimation on rotation {
+                        loops: Animation.Infinite
+                        from: -90
+                        to: 270
+                        duration: 500
+                        running: true
+                    }
+                }
+
+                Label {
+                    font.italic: true
+                    text: qsTr("Listing Wifi Connections")
+                    color: "#ff666666"
+                    opacity: 0.5
+                }
             }
         }
 
@@ -141,11 +162,14 @@ Module {
 
             font.pixelSize: 10
 
-            x: (Screen.width - width) / 2
-            y: (Screen.height - height) / 2
+            parent: Overlay.overlay
+
+            x: Math.round((parent.width - width) / 2)
+            y: Math.round((parent.height - height) / 2)
 
             footer: DialogButtonBox {
                 Button {
+                    enabled: password.text.length > 0
                     flat: true
                     text: "Connect"
                     DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
@@ -155,6 +179,7 @@ Module {
                     Material.foreground: Material.color(Material.Blue, Material.Shade500)
                     onClicked: {
                         wifiModule.setWifi(wifiListView.currentIndex, password.text)
+                        connectingPopup.open()
                     }
                 }
             }
@@ -209,6 +234,50 @@ Module {
             }
         }
 
+        Popup {
+            id: connectingPopup
+            modal: true
+            implicitWidth: 300
+            z: 10
+            closePolicy: Popup.NoAutoClose
+
+            font.pixelSize: 11
+
+            parent: Overlay.overlay
+
+            x: Math.round((parent.width - width) / 2)
+            y: Math.round((parent.height - height) / 2)
+
+            RowLayout {
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 12
+
+                Kirigami.Icon {
+                    width: 18
+                    height: 18
+
+                    source: wifiModule.dir() + "/assets/spinner.svg"
+                    color: "#ff666666"
+                    opacity: 0.5
+
+                    RotationAnimation on rotation {
+                        loops: Animation.Infinite
+                        from: -90
+                        to: 270
+                        duration: 500
+                        running: true
+                    }
+                }
+
+                Label {
+                    text: qsTr("Connecting")
+                    color: "#ff444444"
+                    opacity: 0.5
+                }
+            }
+        }
+
         WifiModule {
             id: wifiModule
 
@@ -235,12 +304,20 @@ Module {
                 root.moduleIcon = wifiModule.dir() + "/assets/wifi.svg"
             }
 
-            onConnectWifiSuccess: {
-                nextButton.next()
-            }
+            property var signals: Connections {
+                function onConnectWifiSuccess() {
+                    connectingPopup.close()
+                    moduleLoader.nextModule()
+                }
 
-            onConnectWifiFailed: {
-                nextButton.cancel()
+                function onConnectWifiFailed() {
+                    connectingPopup.close()
+                }
+
+                function onErrorOccurred(err) {
+                    console.log(`USER ErrorOccurred : ${err}`)
+                    toastManager.show(err, 2000)
+                }
             }
         }
     }

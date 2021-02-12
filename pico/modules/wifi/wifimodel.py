@@ -36,5 +36,8 @@ class WifiModel(QAbstractListModel):
     def addWifiItem(self, item):
         self.__wifiList.append(item)
 
+    def reset(self):
+        self.__wifiList.clear()
+
     def getWifiList(self):
         return self.__wifiList

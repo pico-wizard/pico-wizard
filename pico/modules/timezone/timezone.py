@@ -76,15 +76,16 @@ class Timezone(Module):
 
         process.start('/usr/bin/ln', args)
 
-        process.finished.connect(self.tzCmdSuccess)
-        process.error.connect(self.tzCmdFailed)
+        process.finished.connect(lambda exitCode, exitStatus: self.tzCmdSuccess(exitCode, exitStatus))
+        process.error.connect(lambda err: self.tzCmdFailed(err))
 
-    def tzCmdSuccess(self, exitCode):
+    def tzCmdSuccess(self, exitCode, exitStatus):
         self.log.info('Setting Timezone')
 
         if exitCode != 0:
             self.log.error('Failed to set timezone')
             self.setTimezoneFailed.emit()
+            self.errorOccurred.emit("Failed to set Timezone")
         else:
             self.setTimezoneSuccess.emit()
 
@@ -92,6 +93,7 @@ class Timezone(Module):
         self.log.error('Failed to set timezone')
         self.log.error(err)
         self.setTimezoneFailed.emit()
+        self.errorOccurred.emit("Failed to set Timezone")
 
     @Signal
     def setTimezoneSuccess(self):
@@ -102,8 +104,3 @@ class Timezone(Module):
         pass
 
     filterText = Property(str, _getFilterText, _setFilterText, notify=filterTextChanged)
-
-
-if __name__ == "__main__":
-    obj = Timezone()
-    obj.getTimezones()

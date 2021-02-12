@@ -149,12 +149,19 @@ Module {
                 root.moduleIcon = userModule.dir() + "/assets/user.svg"
             }
 
-            onCreateUserSuccess: {
-                nextButton.next()
-            }
+            property var signals: Connections {
+                function onCreateUserSuccess() {
+                    nextButton.next()
+                }
 
-            onCreateUserFailed: {
-                nextButton.cancel()
+                function onCreateUserFailed() {
+                    nextButton.cancel()
+                }
+
+                function onErrorOccurred(err) {
+                    console.log(`USER ErrorOccurred : ${err}`)
+                    toastManager.show(err, 2000)
+                }
             }
         }
     }

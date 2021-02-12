@@ -1,3 +1,5 @@
 module PicoWizard
 Module 1.0 Module.qml
 NextButton 1.0 NextButton.qml
+Toast 1.0 Toast.qml
+ToastManager 1.0 ToastManager.qml

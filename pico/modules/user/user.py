@@ -39,12 +39,13 @@ class User(Module):
         ]
         process.start('useradd', args)
 
-        process.finished.connect(lambda exitCode: self.createUserCmdSuccess(exitCode, username, password))
-        process.error.connect(self.createUserCmdFailed)
+        process.finished.connect(lambda exitCode, exitStatus: self.createUserCmdSuccess(exitCode, username, password))
+        process.error.connect(lambda err: self.createUserCmdFailed(err))
 
     def createUserCmdSuccess(self, exitCode, username, password):
         if exitCode != 0:
             self.log.error('Failed to create user')
+            self.errorOccurred.emit("Failed to create user")
             self.createUserFailed.emit()
         else:
             self.log.info('User successfully created')
@@ -64,11 +65,13 @@ class User(Module):
     def createUserCmdFailed(self, err):
         self.log.error('Failed to create user')
         self.log.error(err)
+        self.errorOccurred.emit("Failed to create user")
         self.createUserFailed.emit()
 
     def passwordCmdSuccess(self, exitCode):
         if exitCode != 0:
             self.log.error('Failed to set password')
+            self.errorOccurred.emit("Failed to set password")
             self.createUserFailed.emit()
         else:
             self.log.info('Password successfully set')
@@ -76,6 +79,7 @@ class User(Module):
 
     def passwordCmdFailed(self, err):
         self.log.error('Failed to set password')
+        self.errorOccurred.emit("Failed to set password")
         self.log.error(err)
         self.createUserFailed.emit()
 
