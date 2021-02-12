@@ -37,6 +37,10 @@ ApplicationWindow {
         }
     }
 
+    ToastManager {
+        id: toastManager
+    }
+
     Connections {
         target: moduleLoader
 
