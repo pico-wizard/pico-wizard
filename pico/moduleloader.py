@@ -13,8 +13,6 @@ class ModuleLoader(QObject):
 
     log = Logger.getLogger(__name__)
 
-    loadModule = Signal(QUrl)
-
     def __init__(self, parent=None):
         super().__init__(parent)
         ModuleLoader.log.info('Initializing ModuleLoader')
@@ -89,3 +87,5 @@ class ModuleLoader(QObject):
 
     hasPrevious = Property(bool, _hasPrevious, notify=hasPreviousChanged)
     hasNext = Property(bool, _hasNext, notify=hasNextChanged)
+
+    loadModule = Signal(QUrl)
