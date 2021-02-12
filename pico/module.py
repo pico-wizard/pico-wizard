@@ -1,7 +1,7 @@
 import abc
 import os
 
-from PySide2.QtCore import QObject, QUrl, Slot
+from PySide2.QtCore import QObject, QUrl, Slot, Signal
 
 
 class Module(QObject):
@@ -29,3 +29,5 @@ class Module(QObject):
     @Slot(None, result=str)
     def moduleName(self) -> str:
         pass
+
+    errorOccurred = Signal(str)
