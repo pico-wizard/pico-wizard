@@ -32,7 +32,7 @@ RoundButton {
     }
 
     Material.background: Material.color(Material.Blue, Material.Shade500)
-    Material.elevation: 0
+    Material.elevation: 4
 
     Kirigami.Icon {
         id: nextIcon

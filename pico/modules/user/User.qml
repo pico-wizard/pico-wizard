@@ -103,6 +103,10 @@ Module {
                 background: Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
+                    border.width: cnfPassword.text.length > 0 ? 1 : 0
+                    border.color: cnfPassword.text !== password.text
+                                    ? Material.color(Material.Red, Material.Shade500)
+                                    : Material.color(Material.Green, Material.Shade500)
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
@@ -117,18 +121,15 @@ Module {
                 selectionColor: "#2196f3"
                 selectedTextColor: "#ffffff"
             }
-
-            /*Button {
-                Layout.fillWidth: true
-                text: qsTr("Create User")
-                onClicked: {
-                    userModule.createUser(username.text, password.text)
-                }
-            }*/
         }
 
         NextButton {
             id: nextButton
+            enabled: fullname.text.length > 0 &&
+                     username.text.length > 0 &&
+                     cnfPassword.text.length > 0 &&
+                     cnfPassword.text === password.text
+
             onNextClicked: {
                 accepted = true
                 userModule.createUser(fullname.text, username.text, cnfPassword.text)
