@@ -160,7 +160,6 @@ Module {
                 }
 
                 function onErrorOccurred(err) {
-                    console.log(`USER ErrorOccurred : ${err}`)
                     toastManager.show(err, 2000)
                 }
             }
