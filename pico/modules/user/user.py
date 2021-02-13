@@ -60,8 +60,8 @@ class User(Module):
             inputPassword = QByteArray(f"{password}\n{password}\n".encode())
             process.write(inputPassword)
 
-            process.finished.connect(self.passwordCmdSuccess)
-            process.error.connect(self.passwordCmdFailed)
+            process.finished.connect(lambda exitCode, exitStatus: self.passwordCmdSuccess(exitCode, exitStatus))
+            process.error.connect(lambda err: self.passwordCmdFailed(err))
 
     def createUserCmdFailed(self, err):
         self.log.error('Failed to create user')
@@ -69,7 +69,7 @@ class User(Module):
         self.errorOccurred.emit("Failed to create user")
         self.createUserFailed.emit()
 
-    def passwordCmdSuccess(self, exitCode):
+    def passwordCmdSuccess(self, exitCode, exitStatus):
         if exitCode != 0:
             self.log.error('Failed to set password')
             self.errorOccurred.emit("Failed to set password")
