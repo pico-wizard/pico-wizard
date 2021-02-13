@@ -48,19 +48,19 @@ def __main__():
     sys.exit(app.exec_())
 
 
+parser = argparse.ArgumentParser(prog='pico-wizard', description='Pico Wizard')
+parser.add_argument('--debug', dest='debug', action='store_true', help='Enable debug mode')
+parser.set_defaults(debug=False)
+args = parser.parse_args()
+
+if args.debug:
+    Logger.setLogMode(Logger.Mode.DEBUG)
+
+log = Logger.getLogger(__name__)
+
+# Import ModuleLoader after setting debug mode
+from pico.moduleloader import ModuleLoader
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='pico-wizard', description='Pico Wizard')
-    parser.add_argument('--debug', dest='debug', action='store_true', help='Enable debug mode')
-    parser.set_defaults(debug=False)
-    args = parser.parse_args()
-
-    if args.debug:
-        Logger.setLogMode(Logger.Mode.DEBUG)
-
-    log = Logger.getLogger(__name__)
-
-    # Import ModuleLoader after setting debug mode
-    from pico.moduleloader import ModuleLoader
-
     # execute only if run as the entry point into the program
     __main__()
