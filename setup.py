@@ -13,11 +13,6 @@ setuptools.setup(
             "pico-wizard = pico.__main__:__main__",
         ]
     },
-    options={
-        'build_scripts': {
-            'executable': '/usr/bin/pkexec /usr/bin/python3'
-        }
-    },
     url="https://github.com/pico-wizard/pico-wizard",
     project_urls={
         "Bug Tracker": "https://github.com/pico-wizard/pico-wizard/issues",
