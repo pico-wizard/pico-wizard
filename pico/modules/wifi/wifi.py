@@ -107,7 +107,7 @@ class Wifi(Module):
 
         process = QProcess(self)
         args = [
-            '/usr/bin/nmcli'
+            '/usr/bin/nmcli',
             'dev',
             'wifi',
             'connect',
