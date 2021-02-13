@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/software/polkit/policyconfig-1.dtd">
+<policyconfig>
+
+  <action id="org.archlinux.pkexec.pico-wizard">
+    <message>Authentication is required to run Pico Wizard</message>
+    <icon_name>pico-wizard</icon_name>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_active>yes</allow_active>
+      <allow_inactive>yes</allow_inactive>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/python3</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">/usr/bin/pico-wizard</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+</policyconfig>
