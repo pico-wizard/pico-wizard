@@ -15,6 +15,7 @@ from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 
 from pico.utils.logger import Logger
+import pico.utils.constants as Constants
 
 
 log = None
@@ -57,6 +58,8 @@ if args.debug:
     Logger.setLogMode(Logger.Mode.DEBUG)
 
 log = Logger.getLogger(__name__)
+
+log.info(f'Logging to file {Constants.LOG_FILE_PATH}')
 
 # Import ModuleLoader after setting debug mode
 from pico.moduleloader import ModuleLoader

@@ -2,7 +2,6 @@ import logging
 import logging.handlers
 import os
 from enum import Enum
-from appdirs import AppDirs
 
 import pico.utils.constants as Constants
 
@@ -21,14 +20,12 @@ class Logger:
             Logger.LOG_LEVEL = 'INFO'
             Logger.LOG_FILE_PATH = Constants.LOG_FILE_PATH
         elif mode == Logger.Mode.DEBUG:
-            dirs = AppDirs(Constants.APP_NAME)
-
             Logger.LOG_LEVEL = 'DEBUG'
-            Logger.LOG_FILE_PATH = os.path.join(dirs.user_log_dir, Constants.LOG_FILE)
+            Logger.LOG_FILE_PATH = Constants.LOG_FILE_PATH
 
             log = Logger.getLogger(__name__)
 
-            log.debug(f"Debug mode enabled. Logging to `{Logger.LOG_FILE_PATH}`")
+            log.debug("Debug mode enabled")
 
     @staticmethod
     def getLogger(name):
