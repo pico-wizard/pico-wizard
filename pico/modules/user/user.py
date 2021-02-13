@@ -32,12 +32,13 @@ class User(Module):
     def createUser(self, fullname, username, password):
         process = QProcess(self)
         args = [
+            '/usr/bin/useradd',
             '--create-home',
             '--comment',
             fullname,
             username
         ]
-        process.start('useradd', args)
+        process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.createUserCmdSuccess(exitCode, username, password))
         process.error.connect(lambda err: self.createUserCmdFailed(err))
@@ -51,13 +52,13 @@ class User(Module):
             self.log.info('User successfully created')
             process = QProcess(self)
             args = [
+                '/usr/bin/passwd',
                 username
             ]
-            process.start('passwd', args)
+            process.start('/usr/bin/pkexec', args)
 
             inputPassword = QByteArray(f"{password}\n{password}\n".encode())
             process.write(inputPassword)
-            #process.write(inputPassword)
 
             process.finished.connect(self.passwordCmdSuccess)
             process.error.connect(self.passwordCmdFailed)
@@ -91,7 +92,3 @@ class User(Module):
     def createUserFailed(self):
         pass
 
-
-if __name__ == "__main__":
-    obj = User()
-    obj.createUser("Test User", "test", "password")

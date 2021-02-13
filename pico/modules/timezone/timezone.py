@@ -64,6 +64,7 @@ class Timezone(Module):
 
         process = QProcess(self)
         args = [
+            '/usr/bin/ln',
             '-sf',
             os.path.join(
                 '/usr',
@@ -74,7 +75,7 @@ class Timezone(Module):
             '/etc/localtime'
         ]
 
-        process.start('/usr/bin/ln', args)
+        process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.tzCmdSuccess(exitCode, exitStatus))
         process.error.connect(lambda err: self.tzCmdFailed(err))
