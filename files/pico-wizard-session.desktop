@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=dbus-run-session /usr/bin/pico-wizard-session
+TryExec=/usr/bin/pico-wizard-session
+DesktopNames=KDE
+Name=Pico Wizard
+Comment=A Post Installation Configuration Wizard
+X-KDE-PluginInfo-Version=
