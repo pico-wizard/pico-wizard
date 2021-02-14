@@ -43,6 +43,7 @@ class Wifi(Module):
         self.log.info('Fetching list of wifi')
 
         args = [
+            '/usr/bin/nmcli',
             '-c',
             'no',
             '-f',
@@ -56,7 +57,7 @@ class Wifi(Module):
         ]
 
         process = QProcess(self)
-        process.start('/usr/bin/nmcli', args)
+        process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.listWifiProcessFinished(process, exitCode, exitStatus))
         process.errorOccurred.connect(lambda err: self.listWifiProcessError(process, err))
@@ -106,6 +107,7 @@ class Wifi(Module):
 
         process = QProcess(self)
         args = [
+            '/usr/bin/nmcli',
             'dev',
             'wifi',
             'connect',
@@ -116,7 +118,7 @@ class Wifi(Module):
             f'{bssid}'
         ]
 
-        process.start('/usr/bin/nmcli', args)
+        process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.setWifiCmdSuccess(process, exitCode, exitStatus))
         process.error.connect(lambda err: self.setWifiCmdFailed(process, err))
