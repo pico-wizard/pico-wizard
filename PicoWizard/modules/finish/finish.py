@@ -77,8 +77,10 @@ class Finish(Module):
             self.totalScriptsCountChanged.emit()
 
             for script in scripts:
+                args = [os.path.join(SCRIPTS_DIR, script)]
                 process = QProcess(self)
-                process.setProgram(os.path.join(SCRIPTS_DIR, script))
+                process.setProgram('/usr/bin/pkexec')
+                process.setArguments(args)
 
                 self._scriptsQueue.put(process)
 
