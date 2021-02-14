@@ -1,6 +1,0 @@
-#!/bin/sh
-
-/usr/bin/kded5&
-
-sleep 2
-/usr/bin/pico-wizard
