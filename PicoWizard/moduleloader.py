@@ -3,8 +3,8 @@ import sys
 
 from PySide2.QtCore import QUrl, Slot, QObject, Signal, Property
 
-from pico.utils.config import Config
-from pico.utils.logger import Logger
+from PicoWizard.utils.config import Config
+from PicoWizard.utils.logger import Logger
 
 
 class ModuleLoader(QObject):
@@ -25,7 +25,7 @@ class ModuleLoader(QObject):
 
         sys.path.insert(1, '/etc')
 
-        importedModules = importlib.import_module('pico.modules')
+        importedModules = importlib.import_module('PicoWizard.modules')
 
         try:
             importedCustomModules = importlib.import_module('pico-wizard.custom-modules')

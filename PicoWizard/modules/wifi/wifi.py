@@ -4,9 +4,9 @@ import re
 from PySide2.QtCore import QUrl, Slot, Signal, Property, QObject, QProcess
 from PySide2.QtQml import qmlRegisterType
 
-from pico.module import Module
-from pico.modules.wifi.wifimodel import WifiModel
-from pico.utils.logger import Logger
+from PicoWizard.module import Module
+from PicoWizard.modules.wifi.wifimodel import WifiModel
+from PicoWizard.utils.logger import Logger
 
 
 class Wifi(Module):

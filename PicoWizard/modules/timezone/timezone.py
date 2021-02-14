@@ -3,9 +3,9 @@ import os
 from PySide2.QtCore import QUrl, Slot, Property, Signal, QObject, QSortFilterProxyModel, Qt, QProcess
 from PySide2.QtQml import qmlRegisterType
 
-from pico.module import Module
-from pico.modules.timezone.timezonemodel import TimezoneModel
-from pico.utils.logger import Logger
+from PicoWizard.module import Module
+from PicoWizard.modules.timezone.timezonemodel import TimezoneModel
+from PicoWizard.utils.logger import Logger
 
 
 class Timezone(Module):

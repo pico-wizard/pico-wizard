@@ -5,9 +5,9 @@ import PySide2
 from PySide2.QtCore import QUrl, Slot, Signal, Property, QTimer, QProcess
 from PySide2.QtQml import qmlRegisterType
 
-from pico.module import Module
-from pico.utils.constants import SCRIPTS_DIR
-from pico.utils.logger import Logger
+from PicoWizard.module import Module
+from PicoWizard.utils.constants import SCRIPTS_DIR
+from PicoWizard.utils.logger import Logger
 
 
 class Finish(Module):

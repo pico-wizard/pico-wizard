@@ -1,7 +1,7 @@
 import sys
 import configparser
 from . import constants as conf
-from pico.utils.logger import Logger
+from PicoWizard.utils.logger import Logger
 
 
 class Config:

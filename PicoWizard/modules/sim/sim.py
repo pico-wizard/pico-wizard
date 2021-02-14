@@ -3,7 +3,7 @@ import os
 from PySide2.QtCore import QUrl, Slot
 from PySide2.QtQml import qmlRegisterType
 
-from pico.module import Module
+from PicoWizard.module import Module
 
 
 class Sim(Module):

@@ -3,7 +3,7 @@ import logging.handlers
 import os
 from enum import Enum
 
-import pico.utils.constants as Constants
+import PicoWizard.utils.constants as Constants
 
 
 class Logger:

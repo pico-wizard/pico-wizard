@@ -14,8 +14,8 @@ from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 
-from pico.utils.logger import Logger
-import pico.utils.constants as Constants
+from PicoWizard.utils.logger import Logger
+import PicoWizard.utils.constants as Constants
 
 
 log = None
@@ -62,7 +62,7 @@ log = Logger.getLogger(__name__)
 log.info(f'Logging to file {Constants.LOG_FILE_PATH}')
 
 # Import ModuleLoader after setting debug mode
-from pico.moduleloader import ModuleLoader
+from PicoWizard.moduleloader import ModuleLoader
 
 if __name__ == '__main__':
     # execute only if run as the entry point into the program

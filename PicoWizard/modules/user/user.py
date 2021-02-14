@@ -5,9 +5,8 @@ import sys
 from PySide2.QtCore import QUrl, Slot, Signal, QProcess, QByteArray
 from PySide2.QtQml import qmlRegisterType
 
-from pico.module import Module
-
-from pico.utils.logger import Logger
+from PicoWizard.module import Module
+from PicoWizard.utils.logger import Logger
 
 
 class User(Module):

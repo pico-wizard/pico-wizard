@@ -10,7 +10,7 @@ setuptools.setup(
     long_description_content_type="text/plain",
     entry_points={
         "console_scripts": [
-            "pico-wizard = pico.__main__:__main__",
+            "pico-wizard = PicoWizard.__main__:__main__",
         ]
     },
     url="https://github.com/pico-wizard/pico-wizard",

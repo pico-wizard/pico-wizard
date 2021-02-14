@@ -7,7 +7,7 @@ import os
 from inspect import isclass
 from pathlib import Path
 
-from pico.module import Module
+from PicoWizard.module import Module
 
 packageDir = Path(__file__).resolve().parent
 

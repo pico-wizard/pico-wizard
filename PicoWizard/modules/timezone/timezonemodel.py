@@ -2,7 +2,7 @@ import typing
 
 import PySide2
 from PySide2.QtCore import QAbstractListModel, Qt, Slot
-from pico.modules.timezone.timezoneslist import TIMEZONES_LIST
+from PicoWizard.modules.timezone.timezoneslist import TIMEZONES_LIST
 
 
 class TimezoneModel(QAbstractListModel):
