@@ -120,10 +120,10 @@ class Wifi(Module):
 
         process.start('/usr/bin/pkexec', args)
 
-        process.finished.connect(lambda exitCode, exitStatus: self.setWifiCmdSuccess(process, exitCode, exitStatus))
+        process.finished.connect(lambda exitCode, exitStatus: self.setWifiCmdSuccess(process, exitCode, exitStatus, ssid))
         process.error.connect(lambda err: self.setWifiCmdFailed(process, err))
 
-    def setWifiCmdSuccess(self, process, exitCode, exitStatus):
+    def setWifiCmdSuccess(self, process, exitCode, exitStatus, ssid):
         self.log.debug(f'Connect Wifi process status : {exitStatus} [CODE {exitCode}]')
 
         output = process.readAll().data().decode()
@@ -133,6 +133,8 @@ class Wifi(Module):
             self.errorOccurred.emit("Failed to connect to wifi. Recheck the password and try again.")
             self.connectWifiFailed.emit()
         else:
+            self.log.info("Successfully connected to wifi")
+            Module.__ENV__.insert('PICOWIZARD_WIFI', ssid)
             self.connectWifiSuccess.emit()
 
     def setWifiCmdFailed(self, process, err):

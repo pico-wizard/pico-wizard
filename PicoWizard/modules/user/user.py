@@ -49,6 +49,8 @@ class User(Module):
             self.createUserFailed.emit()
         else:
             self.log.info('User successfully created')
+            Module.__ENV__.insert('PICOWIZARD_USERNAME', username)
+
             process = QProcess(self)
             args = [
                 '/usr/bin/passwd',

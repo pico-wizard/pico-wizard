@@ -70,14 +70,25 @@ class Finish(Module):
     @Slot(None)
     def runScripts(self):
         if os.path.exists(SCRIPTS_DIR):
+            with open("/tmp/pico-wizard.env", "w") as env:
+                for key in Module.__ENV__.keys():
+                    env.writelines(f'export {key}="{Module.__ENV__.value(key)}"\n')
+
             scripts = os.listdir(SCRIPTS_DIR)
             scripts.sort()
 
             self._totalScriptsCount = len(scripts)
             self.totalScriptsCountChanged.emit()
 
+            self.log.debug(Module.__ENV__.toStringList())
+
             for script in scripts:
-                args = [os.path.join(SCRIPTS_DIR, script)]
+                args = [
+                    "/usr/bin/pico-wizard-script-runner",
+                    "/tmp/pico-wizard.env",
+                    os.path.join(SCRIPTS_DIR, script)
+                ]
+
                 process = QProcess(self)
                 process.setProgram('/usr/bin/pkexec')
                 process.setArguments(args)

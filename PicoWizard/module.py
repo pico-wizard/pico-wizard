@@ -1,11 +1,12 @@
 import abc
 import os
 
-from PySide2.QtCore import QObject, QUrl, Slot, Signal
+from PySide2.QtCore import QObject, QUrl, Slot, Signal, QProcessEnvironment
 
 
 class Module(QObject):
     _filename = None
+    __ENV__: QProcessEnvironment = QProcessEnvironment.systemEnvironment()
 
     def __init__(self, filename, parent=None):
         super().__init__(parent)

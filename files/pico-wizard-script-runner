@@ -1,0 +1,8 @@
+#!/bin/sh
+
+###
+# Arg 1 : .env file
+# Arg 2 : Path to script
+###
+source "$1"
+exec "$2"

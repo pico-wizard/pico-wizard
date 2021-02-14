@@ -8,6 +8,7 @@ setuptools.setup(
     description="A Post Installation COnfiguration tool",
     long_description="A Post Installation COnfiguration tool for Linux OSes",
     long_description_content_type="text/plain",
+    scripts=["files/pico-wizard-script-runner"],
     entry_points={
         "console_scripts": [
             "pico-wizard = PicoWizard.__main__:__main__",

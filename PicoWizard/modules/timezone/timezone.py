@@ -61,6 +61,7 @@ class Timezone(Module):
     def setTimezone(self, tzIndex):
         timezone = self._timezoneProxyModel.data(self._timezoneProxyModel.index(tzIndex, 0), TimezoneModel.TzRole)
         self.log.debug(f'Selected Timezone : {timezone}')
+        Module.__ENV__.insert('PICOWIZARD_TZ', timezone)
 
         process = QProcess(self)
         args = [
