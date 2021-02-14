@@ -27,7 +27,6 @@ setuptools.setup(
         ### Pyside2 needs to be installed from manjaro repository
         ### pip doesnt provide prebuilt arm64
         # "pyside2"
-        "appdirs"
     ],
     python_requires=">=3.6",
     package_data = {
