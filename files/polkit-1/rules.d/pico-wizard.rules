@@ -4,7 +4,5 @@
 polkit.addRule(function(action, subject) {
   if (subject.user === "pico-wizard") {
     return polkit.Result.YES;
-  } else {
-    return polkit.Result.NO;
   }
 }); 
