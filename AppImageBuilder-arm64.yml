@@ -2,7 +2,7 @@ version: 1
 script:
   - rm -rf AppDir || true
   - mkdir -p AppDir/usr/share/icons/
-  - cp pico.svg AppDir/usr/share/icons/
+  - cp pico-wizard.svg AppDir/usr/share/icons/
   - mkdir -p AppDir/pico-wizard/
   - cp -r pico/ AppDir/pico-wizard/
 
@@ -12,7 +12,7 @@ AppDir:
   app_info:
     id: pico-wizard
     name: pico-wizard
-    icon: pico
+    icon: pico-wizard
     version: '0.1'
     exec: pico-wizard/pico/__main__.py
     exec_args: $@
