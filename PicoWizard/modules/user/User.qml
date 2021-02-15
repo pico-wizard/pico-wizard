@@ -50,6 +50,8 @@ Module {
 
             PlasmaComponents.TextField {
                 id: username
+                validator: RegExpValidator { regExp: /[a-z_][a-z0-9_-]*[$]?/ }
+                maximumLength: 32
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
 
