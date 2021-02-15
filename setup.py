@@ -27,7 +27,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License"
     ],
+    license="MIT",
     install_requires=[
         ### Pyside2 needs to be installed from manjaro repository
         ### pip doesnt provide prebuilt arm64
