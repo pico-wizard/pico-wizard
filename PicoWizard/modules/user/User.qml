@@ -33,6 +33,8 @@ Module {
                 background: Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
+                    border.width: 1
+                    border.color: Material.color(Material.Grey, Material.Shade300)
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
@@ -58,6 +60,8 @@ Module {
                 background: Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
+                    border.width: 1
+                    border.color: Material.color(Material.Grey, Material.Shade300)
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
@@ -71,6 +75,42 @@ Module {
                 color: "#222222"
                 selectionColor: "#2196f3"
                 selectedTextColor: "#ffffff"
+
+                Popup {
+                    id: usernamePopup
+                    y: -(height+5)
+                    width: parent.width
+                    visible: username.focus
+
+                    closePolicy: Popup.NoAutoClose
+                    Material.elevation: 0
+
+                    background: Rectangle {
+                        radius: 2
+                        color: Material.color(Material.Grey, Material.Shade900)
+                    }
+
+                    ColumnLayout {
+                        anchors.fill: parent
+
+                        Label {
+                            text: "- Should be lowercase"
+                            color: "white"
+                        }
+                        Label {
+                            text: "- Should start with [a-z] or '_'"
+                            color: "white"
+                        }
+                        Label {
+                            text: "- Can contain [a-z], [0-9], '_', and '-'"
+                            color: "white"
+                        }
+                        Label {
+                            text: "- May end with a '$'"
+                            color: "white"
+                        }
+                    }
+                }
             }
 
             PlasmaComponents.TextField {
@@ -84,6 +124,8 @@ Module {
                 background: Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
+                    border.width: 1
+                    border.color: Material.color(Material.Grey, Material.Shade300)
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
@@ -110,10 +152,12 @@ Module {
                 background: Rectangle {
                     anchors.fill: parent
                     color: "#f5f5f5"
-                    border.width: cnfPassword.text.length > 0 ? 1 : 0
-                    border.color: cnfPassword.text !== password.text
-                                    ? Material.color(Material.Red, Material.Shade500)
-                                    : Material.color(Material.Green, Material.Shade500)
+                    border.width: 1
+                    border.color: cnfPassword.text.length > 0
+                                    ? cnfPassword.text !== password.text
+                                        ? Material.color(Material.Red, Material.Shade500)
+                                        : Material.color(Material.Green, Material.Shade500)
+                                    : Material.color(Material.Grey, Material.Shade300)
 
                     Label {
                         anchors.verticalCenter: parent.verticalCenter
