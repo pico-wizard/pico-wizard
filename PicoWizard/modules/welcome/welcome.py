@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Anupam Basak <anupam.basak27@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
 import os
 
 from PySide2.QtCore import QUrl, Slot

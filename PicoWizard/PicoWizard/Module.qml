@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2021 Anupam Basak <anupam.basak27@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
