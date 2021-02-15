@@ -14,6 +14,7 @@ Item {
     property alias moduleIcon: icon.source
     property alias moduleIconColor: colorOverlay.color
     property alias delegate: delegateLoader.sourceComponent
+    property bool hideSkip: false
 
     RoundButton {
         width: Kirigami.Settings.isMobile ? 40 : 48
@@ -54,6 +55,7 @@ Item {
     }
 
     Label {
+        id: labelSkip
         anchors {
             right: parent.right
             top: parent.top
@@ -64,6 +66,7 @@ Item {
         font.pointSize: Kirigami.Settings.isMobile ? 16 : 24
         color: "#fff5f5f5"
         text: qsTr("Skip")
+        visible: !hideSkip
 
         MouseArea {
             anchors.fill: parent
