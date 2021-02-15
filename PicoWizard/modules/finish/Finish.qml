@@ -60,7 +60,7 @@ Item {
         flat: true
         onClicked: {
             if (finishModule.isComplete) {
-                Qt.quit()
+                finishModule.rebootSystem()
             }
         }
 

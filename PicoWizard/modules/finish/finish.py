@@ -97,6 +97,17 @@ class Finish(Module):
 
         self._processScripts()
 
+    @Slot(None)
+    def rebootSystem(self):
+        args = [
+            "/bin/shutdown",
+            "-r",
+            "now"
+        ]
+
+        process = QProcess(self)
+        process.start('/usr/bin/pkexec', args)
+
     @Signal
     def isCompleteChanged(self):
         pass
