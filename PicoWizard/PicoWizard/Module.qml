@@ -16,7 +16,7 @@ import PicoWizard 1.0
 Item {
     property alias moduleName: labelModuleName.text
     property alias moduleIcon: icon.source
-    property alias moduleIconColor: colorOverlay.color
+    property alias moduleIconColor: icon.color
     property alias delegate: delegateLoader.sourceComponent
     property bool hideSkip: false
 
@@ -110,13 +110,6 @@ Item {
                 Layout.alignment: Layout.Center
                 Layout.topMargin: Kirigami.Settings.isMobile ? 24 : 64
                 Layout.bottomMargin: Kirigami.Settings.isMobile ? 24 : 64
-
-                ColorOverlay {
-                    id: colorOverlay
-
-                    anchors.fill: parent
-                    source: parent
-                }
             }
 
             Loader {
