@@ -64,7 +64,7 @@ Item {
         flat: true
         onClicked: {
             if (finishModule.isComplete) {
-                finishModule.rebootSystem()
+                finishModule.runCompleteHook()
             }
         }
 
