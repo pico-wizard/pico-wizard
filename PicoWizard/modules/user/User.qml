@@ -14,6 +14,9 @@ import org.kde.kirigami 2.7 as Kirigami
 import PicoWizard 1.0
 
 Module {
+    property var digitValidator: RegExpValidator { regExp: /[0-9]*/ }
+    property var alphaNumericValidator: RegExpValidator { regExp: /.*/ }
+
     id: root
     moduleName: userModule.moduleName()
     moduleIcon: userModule.dir() + "/assets/user.svg"
@@ -82,7 +85,7 @@ Module {
                     width: parent.width
                     visible: username.focus
 
-                    closePolicy: Popup.NoAutoClose
+                    closePolicy: Popup.CloseOnPressOutsideParent
                     Material.elevation: 0
 
                     background: Rectangle {
@@ -115,6 +118,13 @@ Module {
 
             PlasmaComponents.TextField {
                 id: password
+                validator: {
+                    if (userModule.passwordType === 'digitsonly')
+                        return digitValidator
+                    else if (userModule.passwordType === 'alphanumeric')
+                        return alphaNumericValidator
+                }
+
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 passwordCharacter: "*"
@@ -139,10 +149,39 @@ Module {
                 color: "#222222"
                 selectionColor: "#2196f3"
                 selectedTextColor: "#ffffff"
+
+                Popup {
+                    y: -(height+5)
+                    width: parent.width
+                    visible: password.focus && userModule.passwordType === 'digitsonly'
+                    closePolicy: Popup.CloseOnPressOutsideParent
+                    Material.elevation: 0
+
+                    background: Rectangle {
+                        radius: 2
+                        color: Material.color(Material.Grey, Material.Shade900)
+                    }
+
+                    ColumnLayout {
+                        anchors.fill: parent
+
+                        Label {
+                            text: "- Should be digits only [0-9]"
+                            color: "white"
+                        }
+                    }
+                }
             }
 
             PlasmaComponents.TextField {
                 id: cnfPassword
+                validator: {
+                    if (userModule.passwordType === 'digitsonly')
+                        return digitValidator
+                    else if (userModule.passwordType === 'alphanumeric')
+                        return alphaNumericValidator
+                }
+
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
                 passwordCharacter: "*"

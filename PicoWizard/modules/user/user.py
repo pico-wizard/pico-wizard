@@ -6,10 +6,11 @@ import os
 import subprocess
 import sys
 
-from PySide2.QtCore import QUrl, Slot, Signal, QProcess, QByteArray
+from PySide2.QtCore import QUrl, Slot, Signal, QProcess, QByteArray, Property
 from PySide2.QtQml import qmlRegisterType
 
 from PicoWizard.module import Module
+from PicoWizard.utils.config import Config
 from PicoWizard.utils.logger import Logger
 
 
@@ -18,6 +19,9 @@ class User(Module):
 
     def __init__(self, parent=None):
         super().__init__(__file__, parent)
+
+        self._passwordType = Config.getPasswordType()
+        self.passwordTypeChanged.emit()
 
     @staticmethod
     def registerTypes() -> None:
@@ -97,3 +101,11 @@ class User(Module):
     def createUserFailed(self):
         pass
 
+    def getPasswordType(self):
+        return self._passwordType
+
+    @Signal
+    def passwordTypeChanged(self):
+        pass
+
+    passwordType = Property(str, getPasswordType, notify=passwordTypeChanged)

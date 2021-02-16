@@ -31,3 +31,9 @@ class Config:
         modules = [x.strip() for x in modules_value.split(",") if len(x) > 0]
 
         return modules
+
+    @staticmethod
+    def getPasswordType():
+        passwordType = Config.__get_config('GENERAL', 'PASSWORD_TYPE')
+
+        return passwordType
