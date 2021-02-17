@@ -124,7 +124,6 @@ class Finish(Module):
 
         QApplication.exit(0)
 
-
     @Signal
     def isCompleteChanged(self):
         pass
