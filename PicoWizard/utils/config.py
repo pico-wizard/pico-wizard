@@ -15,7 +15,7 @@ class Config:
     config = None
 
     @staticmethod
-    def __get_config(config_section, config_name):
+    def __getConfig__(config_section, config_name, fallback=''):
         if Config.config is None:
             Config.config = configparser.ConfigParser()
             read_files = Config.config.read(conf.CONFIG_FILE_PATH)
@@ -23,17 +23,24 @@ class Config:
                 Config.log.error('Could not find or open config file ' + conf.CONFIG_FILE_PATH)
                 sys.exit(1)
                 
-        return Config.config[config_section][config_name]
+        return Config.config[config_section].get(config_name, fallback=fallback)
 
     @staticmethod
-    def get_modules():
-        modules_value = Config.__get_config('GENERAL', 'MODULES')
+    def getModules():
+        modules_value = Config.__getConfig__('GENERAL', 'MODULES')
         modules = [x.strip() for x in modules_value.split(",") if len(x) > 0]
 
         return modules
 
     @staticmethod
     def getPasswordType():
-        passwordType = Config.__get_config('GENERAL', 'PASSWORD_TYPE')
+        passwordType = Config.__getConfig__('GENERAL', 'PASSWORD_TYPE', 'alphanumeric')
 
         return passwordType
+
+    @staticmethod
+    def getLogLevel():
+        logLevel = Config.__getConfig__('GENERAL', 'LOGLEVEL', 'info')
+        print(f"loglevel: {logLevel.upper()}")
+
+        return logLevel.upper()

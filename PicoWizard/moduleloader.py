@@ -23,7 +23,7 @@ class ModuleLoader(QObject):
 
     @staticmethod
     def registerModuleTypes():
-        modules = Config.get_modules()
+        modules = Config.getModules()
         modules.insert(0, "Welcome")
         modules.append("Finish")
 
