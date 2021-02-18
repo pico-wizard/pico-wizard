@@ -93,7 +93,8 @@ class Wifi(Module):
                     'bssid': match[0].replace('\\', ''),
                     'ssid': match[1],
                     'signal': match[2],
-                    'security': match[3]
+                    'security': match[3],
+                    'isSecured': True if match[3] else False
                 }
 
                 self._wifiModel.layoutAboutToBeChanged.emit()

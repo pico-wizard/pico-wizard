@@ -15,6 +15,7 @@ class WifiModel(QAbstractListModel):
     SsidRole = BssidRole + 1
     SignalRole = SsidRole + 1
     SecurityRole = SignalRole + 1
+    IsSecuredRole = SecurityRole + 1
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -25,6 +26,7 @@ class WifiModel(QAbstractListModel):
         roles[self.SsidRole] = b'ssid'
         roles[self.SignalRole] = b'signal'
         roles[self.SecurityRole] = b'security'
+        roles[self.IsSecuredRole] = b'isSecured'
 
         return roles
 
@@ -37,6 +39,8 @@ class WifiModel(QAbstractListModel):
             return self.__wifiList[index.row()]['signal']
         elif role == self.SecurityRole:
             return self.__wifiList[index.row()]['security']
+        elif role == self.IsSecuredRole:
+            return self.__wifiList[index.row()]['isSecured']
 
     def rowCount(self, parent: PySide2.QtCore.QModelIndex) -> int:
         return len(self.__wifiList)

@@ -91,10 +91,21 @@ Module {
                                 }
                             }
 
-                            Label {
-                                text: security
-                                color: "#aaaaaa"
-                                font.pointSize: 7
+                            RowLayout {
+                                Kirigami.Icon {
+                                    visible: isSecured
+                                    Layout.leftMargin: 0
+                                    Layout.rightMargin: 0
+                                    Layout.preferredWidth: 10
+                                    Layout.preferredHeight: 10
+                                    source: wifiModule.dir() + "/assets/lock.svg"
+                                }
+
+                                Label {
+                                    text: security
+                                    color: "#aaaaaa"
+                                    font.pointSize: 7
+                                }
                             }
                         }
                     }
@@ -114,10 +125,15 @@ Module {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            wifiListView.currentIndex = index
-                            passwordDialog.wifiName = wifiName.text
-                            password.text = ""
-                            passwordDialog.open()
+                            if (security) {
+                                wifiListView.currentIndex = index
+                                passwordDialog.wifiName = wifiName.text
+                                password.text = ""
+                                passwordDialog.open()
+                            } else {
+                                wifiModule.setWifi(index, '')
+                                connectingPopup.open()
+                            }
                         }
                     }
                 }
