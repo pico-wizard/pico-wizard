@@ -94,6 +94,7 @@ Module {
                             RowLayout {
                                 Kirigami.Icon {
                                     visible: isSecured
+                                    opacity: 0.7
                                     Layout.leftMargin: 0
                                     Layout.rightMargin: 0
                                     Layout.preferredWidth: 10
