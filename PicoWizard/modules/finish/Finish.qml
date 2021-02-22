@@ -13,6 +13,8 @@ import PicoWizard 1.0
 
 
 Item {
+    property bool runningFinishHook: false
+
     FinishModule {
         id: finishModule
 
@@ -64,6 +66,7 @@ Item {
         flat: true
         onClicked: {
             if (finishModule.isComplete) {
+                runningFinishHook = true
                 finishModule.runCompleteHook()
             }
         }
@@ -72,7 +75,7 @@ Item {
         Material.elevation: 0
 
         Kirigami.Icon {
-            visible: finishModule.isComplete
+            visible: finishModule.isComplete && !runningFinishHook
             width: 24
             height: 24
 
@@ -83,7 +86,7 @@ Item {
 
         Kirigami.Icon {
             anchors.centerIn: parent
-            visible: !finishModule.isComplete
+            visible: !finishModule.isComplete || runningFinishHook
             width: 24
             height: 24
             Layout.alignment: Qt.AlignHCenter

@@ -110,7 +110,11 @@ class Finish(Module):
 
         if os.path.isfile("/etc/pico-wizard/scripts.d/finish.hook"):
             self.log.info("Executing finish hook")
-            args = ["/etc/pico-wizard/scripts.d/finish.hook"]
+            args = [
+                "/usr/bin/pico-wizard-script-runner",
+                "/tmp/pico-wizard.env",
+                os.path.join(SCRIPTS_DIR, 'finish.hook')
+            ]
         else:
             self.log.info("Rebooting")
             args = [
@@ -120,9 +124,6 @@ class Finish(Module):
             ]
 
         process.start('/usr/bin/pkexec', args)
-        process.waitForFinished()
-
-        QApplication.exit(0)
 
     @Signal
     def isCompleteChanged(self):
