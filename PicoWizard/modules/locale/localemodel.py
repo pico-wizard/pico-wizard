@@ -61,3 +61,11 @@ class LocaleModel(QAbstractListModel):
         })
 
         self.layoutChanged.emit()
+
+    def getSelectedLocales(self):
+        selectedLocales = []
+        for row in self.__locales__:
+            if row['selected']:
+                selectedLocales.append(row['locale'])
+
+        return selectedLocales

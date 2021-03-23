@@ -128,6 +128,11 @@ Module {
         NextButton {
             id: nextButton
 
+            onNextClicked: {
+                accepted = true
+                localeModule.writeLocaleGenConfig()
+            }
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
@@ -141,6 +146,21 @@ Module {
             Component.onCompleted: {
                 root.moduleName = localeModule.moduleName()
                 root.moduleIcon = localeModule.dir() + "/assets/locale.svg"
+            }
+
+            property var signals: Connections {
+                function onLocaleSetupSuccess() {
+                    nextButton.next()
+                }
+
+                function onLocaleSetupFailed() {
+                    nextButton.cancel()
+                }
+
+                function onErrorOccurred(err) {
+                    console.log(`Locale ErrorOccurred : ${err}`)
+                    toastManager.show(err, 2000)
+                }
             }
         }
     }
