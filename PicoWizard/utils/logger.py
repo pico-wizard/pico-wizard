@@ -4,6 +4,7 @@
 
 import logging
 import logging.handlers
+from systemd.journal import JournalHandler
 import os
 from enum import Enum
 
@@ -38,16 +39,25 @@ class Logger:
 
         # Logging settings
         formatter = logging.Formatter(
-            fmt='%(asctime)s %(name)-50s [%(levelname)-8s] %(message)s',
+            fmt='%(asctime)s %(name)-35s [%(levelname)-5s] %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
+
         handler = logging.handlers.RotatingFileHandler(Logger.LOG_FILE_PATH, maxBytes=1000*1000*10, backupCount=10)
         handler.setFormatter(formatter)
+
         screenHandler = logging.StreamHandler()
         screenHandler.setFormatter(formatter)
+
+        journalHandlerFormatter = logging.Formatter(
+            fmt='%(name)-35s [%(levelname)-5s] %(message)s'
+        )
+        journalHandler = JournalHandler(SYSLOG_IDENTIFIER='pico-wizard')
+        journalHandler.setFormatter(journalHandlerFormatter)
+
         logger = logging.getLogger(name)
         logger.setLevel(logging.getLevelName(Logger.LOG_LEVEL))
-
+        logger.addHandler(journalHandler)
         logger.addHandler(handler)
         logger.addHandler(screenHandler)
 
