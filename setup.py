@@ -42,6 +42,7 @@ setuptools.setup(
             "**/*.qml",
             "**/*.svg",
             "**/*.svg.license",
+            "**/*.sh",
             "**/qmldir",
             "PicoWizard/**/*.svg"
         ]
