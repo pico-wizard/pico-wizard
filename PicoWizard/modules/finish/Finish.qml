@@ -71,6 +71,11 @@ Item {
             }
         }
 
+        background: Rectangle {
+            color: finishModule.isComplete ? Material.color(Material.Green, Material.Shade500) : Material.color(Material.Grey, Material.Shade100)
+            radius: parent.width
+        }
+
         Material.background: finishModule.isComplete ? Material.color(Material.Green, Material.Shade500) : Material.color(Material.Grey, Material.Shade100)
         Material.elevation: 0
 

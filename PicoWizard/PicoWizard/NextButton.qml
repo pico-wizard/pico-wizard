@@ -35,6 +35,11 @@ RoundButton {
         }
     }
 
+    background: Rectangle {
+        color: Material.color(Material.Blue, Material.Shade500)
+        radius: parent.width
+    }
+
     Material.background: Material.color(Material.Blue, Material.Shade500)
     Material.elevation: 4
 

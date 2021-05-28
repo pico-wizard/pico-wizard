@@ -197,6 +197,11 @@ Module {
                     font.pixelSize: 10
                     font.bold: true
                     hoverEnabled: true
+                    background: Rectangle {
+                        color: Material.color(Material.Blue, Material.Shade500)
+                        radius: parent.width
+                    }
+
                     Material.foreground: Material.color(Material.Blue, Material.Shade500)
                     onClicked: {
                         wifiModule.setWifi(wifiListView.currentIndex, password.text)

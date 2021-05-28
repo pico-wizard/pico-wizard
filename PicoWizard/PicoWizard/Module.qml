@@ -36,6 +36,10 @@ Item {
         visible: moduleLoader.hasPrevious
         z: 100
 
+        background: Rectangle {
+            color: "#00ffffff"
+        }
+
         Kirigami.Icon {
             anchors.fill: parent
             anchors.centerIn: parent
