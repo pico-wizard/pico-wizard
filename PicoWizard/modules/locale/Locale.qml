@@ -29,24 +29,10 @@ Module {
             PlasmaComponents.TextField {
                 id: searchText
                 Layout.preferredWidth: root.width * 0.7
-                Layout.preferredHeight: 48
+                topPadding: 16
+                bottomPadding: 16
 
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: searchText.text.length <= 0
-                        text: qsTr("Search locales")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+                placeholderText: qsTr("Search locales")
 
                 onTextChanged: {
                     localeModule.filterText = text

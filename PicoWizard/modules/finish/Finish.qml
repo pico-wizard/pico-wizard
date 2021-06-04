@@ -4,8 +4,9 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.0
+
 
 import org.kde.kirigami 2.7 as Kirigami
 
@@ -72,21 +73,19 @@ Item {
         }
 
         background: Rectangle {
-            color: finishModule.isComplete ? Material.color(Material.Green, Material.Shade500) : Material.color(Material.Grey, Material.Shade100)
+            color: finishModule.isComplete ? "#ff4caf50" : "#f5f5f5"
             radius: parent.width
         }
-
-        Material.background: finishModule.isComplete ? Material.color(Material.Green, Material.Shade500) : Material.color(Material.Grey, Material.Shade100)
-        Material.elevation: 0
 
         Kirigami.Icon {
             visible: finishModule.isComplete && !runningFinishHook
             width: 24
             height: 24
+            color: "#ffffffff"
+            isMask: true
 
             anchors.centerIn: parent
             source: finishModule.dir() + "/assets/done.svg"
-            color: "#ffffffff"
         }
 
         Kirigami.Icon {
@@ -95,9 +94,10 @@ Item {
             width: 24
             height: 24
             Layout.alignment: Qt.AlignHCenter
+            color: "#ff444444"
+            isMask: true
 
             source: finishModule.dir() + "/assets/spinner.svg"
-            color: "#ff444444"
 
             RotationAnimation on rotation {
                 loops: Animation.Infinite

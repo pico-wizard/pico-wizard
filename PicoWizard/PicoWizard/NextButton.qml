@@ -4,9 +4,9 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.15
+import QtGraphicalEffects 1.0
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.9 as Kirigami
 
 RoundButton {
     property bool accepted: false
@@ -36,21 +36,19 @@ RoundButton {
     }
 
     background: Rectangle {
-        color: Material.color(Material.Blue, Material.Shade500)
+        color: Kirigami.Theme.highlightColor
         radius: parent.width
     }
-
-    Material.background: Material.color(Material.Blue, Material.Shade500)
-    Material.elevation: 4
 
     Kirigami.Icon {
         id: nextIcon
         width: 24
         height: 24
+        color: "#ffffffff"
+        isMask: true
 
         anchors.centerIn: parent
         source: Qt.resolvedUrl("./assets/next.svg")
-        color: "#ffffffff"
 
         states: [
             State {
@@ -75,16 +73,18 @@ RoundButton {
                 easing.type: Easing.InOutQuad
             }
         }
+
     }
 
     Kirigami.Icon {
         id: spinnerIcon
         width: 24
         height: 24
+        color: "#ffffffff"
+        isMask: true
 
         anchors.centerIn: parent
         source: Qt.resolvedUrl("./assets/spinner.svg")
-        color: "#ffffffff"
 
         states: [
             State {
