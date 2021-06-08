@@ -93,7 +93,7 @@ Item {
             topMargin: Kirigami.Settings.isMobile ? 64 : 112
         }
         background: Rectangle {
-            color: Kirigami.Theme.backgroundColor
+            color: "#fffafafa"
             radius: 4
             border.width: 1
             border.color: "#ffdfdfdf"
