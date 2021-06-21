@@ -1,3 +1,5 @@
+.. image:: https://github.com/OW-DG/pico-wizard/actions/workflows/python-publish.yml/badge.svg
+
 ===========
 Pico Wizard
 ===========
@@ -20,6 +22,8 @@ Installation
 For the other required files_ we are going to build a shell script which sets up pico-wizard
 
 .. _files: https://gitlab.manjaro.org/manjaro-arm/packages/community/plamo-gear/pico-wizard-git/-/tree/master
+
+[![Upload Python Package](https://github.com/OW-DG/pico-wizard/actions/workflows/python-publish.yml/badge.svg)](https://github.com/OW-DG/pico-wizard/actions/workflows/python-publish.yml)
 
 Official Channels
 -----------------
