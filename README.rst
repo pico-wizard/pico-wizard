@@ -18,6 +18,8 @@ Basic pico-wizard
 
 `pip install pico-wizard`
 
+For the other [!required files(https://gitlab.manjaro.org/manjaro-arm/packages/community/plamo-gear/pico-wizard-git/-/tree/master)] we are going to build a shell script which sets up pico-wizard
+
 Official Channels
 -----------------
 - Telegram  : https://t.me/picowizard
