@@ -14,11 +14,12 @@ Any distro wanting to use PicoWizard as their first boot setup wizard, can start
 Installation
 ------------
 
-Basic pico-wizard
 
 `pip install pico-wizard`
 
-For the other [!required files(https://gitlab.manjaro.org/manjaro-arm/packages/community/plamo-gear/pico-wizard-git/-/tree/master)] we are going to build a shell script which sets up pico-wizard
+For the other required files_ we are going to build a shell script which sets up pico-wizard
+
+.. _files: https://gitlab.manjaro.org/manjaro-arm/packages/community/plamo-gear/pico-wizard-git/-/tree/master
 
 Official Channels
 -----------------
