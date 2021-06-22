@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: 2021 Anupam Basak <anupam.basak27@gmail.com>
+# 
+# SPDX-License-Identifier: MIT
+
+
+###
+# Arg 1 : .env file
+# Arg 2 : Path to script
+###
+source "$1"
+exec "$2"
