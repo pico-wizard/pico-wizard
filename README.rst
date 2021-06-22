@@ -1,3 +1,5 @@
+.. image:: https://github.com/pico-wizard/pico-wizard/actions/workflows/python-publish.yml/badge.svg
+
 ===========
 Pico Wizard
 ===========
