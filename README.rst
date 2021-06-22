@@ -19,7 +19,7 @@ Installation
 Installation over pip in 4 steps is available (run all the commands after being logged in as root user ``sudo su root``): 
 
 
-1. ``pip install pico-wizard``
+1. ``pip install pico-wizard --target=/usr/bin``
 2. ``wget "https://raw.githubusercontent.com/OW-DG/pico-wizard/main/genconfig.sh"``
 3. ``chmod +x genconfig.sh``
 4. ``./genconfig.sh``
