@@ -34,7 +34,7 @@ def registerTypes():
 
 def __main__():
     log.info('Initializing Application')
-    QQuickStyle.setStyle('Material')
+    # QQuickStyle.setStyle('Material')
 
     app = QApplication(sys.argv)
     app.setApplicationName('pico-wizard')

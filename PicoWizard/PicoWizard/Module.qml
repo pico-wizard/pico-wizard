@@ -5,8 +5,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Material 2.15
-import QtQuick.Controls.Material.impl 2.15
 import QtGraphicalEffects 1.0
 
 import org.kde.kirigami 2.7 as Kirigami
@@ -23,6 +21,7 @@ Item {
     RoundButton {
         width: Kirigami.Settings.isMobile ? 40 : 48
         height: Kirigami.Settings.isMobile ? 40 : 48
+        hoverEnabled: false
 
         anchors {
             right: labelModuleName.left
@@ -36,12 +35,17 @@ Item {
         visible: moduleLoader.hasPrevious
         z: 100
 
+        background: Rectangle {
+            color: "transparent"
+        }
+
         Kirigami.Icon {
             anchors.fill: parent
             anchors.centerIn: parent
             source: Qt.resolvedUrl("./assets/back.svg")
-            color: "#ffffffff"
             anchors.margins: 12
+            color: "#ffffffff"
+            isMask: true
         }
     }
 
@@ -89,21 +93,18 @@ Item {
             topMargin: Kirigami.Settings.isMobile ? 64 : 112
         }
         background: Rectangle {
-            color: control.Material.backgroundColor
+            color: "#fffafafa"
             radius: 4
-
-            layer.enabled: true
-            layer.effect: ElevationEffect {
-                elevation: control.Material.elevation
-            }
+            border.width: 1
+            border.color: "#ffdfdfdf"
         }
-        Material.elevation: 6
 
         ColumnLayout {
             anchors.fill: parent
 
             Kirigami.Icon {
                 id: icon
+                isMask: true
 
                 Layout.preferredWidth: Kirigami.Settings.isMobile ? 64 : 196
                 Layout.preferredHeight: Kirigami.Settings.isMobile ? 64 : 196

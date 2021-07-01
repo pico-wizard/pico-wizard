@@ -5,11 +5,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Material 2.15
-import QtQuick.Controls.Material.impl 2.15
 
 import org.kde.plasma.components 3.0 as PlasmaComponents
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.9 as Kirigami
 
 import PicoWizard 1.0
 
@@ -31,26 +29,10 @@ Module {
             PlasmaComponents.TextField {
                 id: fullname
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                topPadding: 16
+                bottomPadding: 16
 
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-                    border.width: 1
-                    border.color: Material.color(Material.Grey, Material.Shade300)
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: fullname.text.length <= 0
-                        text: qsTr("Full Name")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+                placeholderText: qsTr("Full Name")
             }
 
             PlasmaComponents.TextField {
@@ -58,26 +40,10 @@ Module {
                 validator: RegExpValidator { regExp: /[a-z_][a-z0-9_-]*[$]?/ }
                 maximumLength: 32
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                topPadding: 16
+                bottomPadding: 16
 
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-                    border.width: 1
-                    border.color: Material.color(Material.Grey, Material.Shade300)
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: username.text.length <= 0
-                        text: qsTr("Username")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+                placeholderText: qsTr("Username")
 
                 Popup {
                     id: usernamePopup
@@ -86,11 +52,10 @@ Module {
                     visible: username.focus
 
                     closePolicy: Popup.CloseOnPressOutsideParent
-                    Material.elevation: 0
 
                     background: Rectangle {
                         radius: 2
-                        color: Material.color(Material.Grey, Material.Shade900)
+                        color: "#ff212121"
                     }
 
                     ColumnLayout {
@@ -126,40 +91,22 @@ Module {
                 }
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                topPadding: 16
+                bottomPadding: 16
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
-
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-                    border.width: 1
-                    border.color: Material.color(Material.Grey, Material.Shade300)
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: password.text.length <= 0
-                        text: qsTr("Password")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+                placeholderText: qsTr("Password")
 
                 Popup {
                     y: -(height+5)
                     width: parent.width
                     visible: password.focus && userModule.passwordType === 'digitsonly'
                     closePolicy: Popup.CloseOnPressOutsideParent
-                    Material.elevation: 0
 
                     background: Rectangle {
                         radius: 2
-                        color: Material.color(Material.Grey, Material.Shade900)
+                        color: "#ff212121"
                     }
 
                     ColumnLayout {
@@ -183,33 +130,18 @@ Module {
                 }
 
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                topPadding: 16
+                bottomPadding: 16
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
+                placeholderText: qsTr("Confirm Password")
 
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-                    border.width: 1
-                    border.color: cnfPassword.text.length > 0
-                                    ? cnfPassword.text !== password.text
-                                        ? Material.color(Material.Red, Material.Shade500)
-                                        : Material.color(Material.Green, Material.Shade500)
-                                    : Material.color(Material.Grey, Material.Shade300)
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: cnfPassword.text.length <= 0
-                        text: qsTr("Confirm Password")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+//                    border.color: cnfPassword.text.length > 0
+//                                  ? cnfPassword.text !== password.text
+//                                      ? Kirigami.Theme.negativeTextColor
+//                                      : Kirigami.Theme.positiveTextColor
+//                                  : "#ffbdbdbd"
             }
         }
 
