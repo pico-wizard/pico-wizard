@@ -124,7 +124,7 @@ Module {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (security) {
+                            if (isSecured) {
                                 wifiListView.currentIndex = index
                                 passwordDialog.wifiName = wifiName.text
                                 password.text = ""
