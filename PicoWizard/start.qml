@@ -54,6 +54,7 @@ ApplicationWindow {
     }
 
     Image {
+        id: backgroundItem
         fillMode: Image.PreserveAspectFit
         anchors {
             left: parent.left
@@ -68,6 +69,7 @@ ApplicationWindow {
     StackView {
         property int animationDuration: 300
         property int easingType: Easing.InOutExpo
+        property alias backgroundSource: backgroundItem.source
 
         id: appStack
         anchors.fill: parent

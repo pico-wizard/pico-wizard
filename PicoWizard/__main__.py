@@ -16,7 +16,7 @@ import argparse
 import signal
 
 from PySide2.QtCore import QUrl
-from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
+from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType, QQmlFileSelector
 from PySide2.QtQuickControls2 import QQuickStyle
 from PySide2.QtWidgets import QApplication
 
@@ -44,6 +44,7 @@ def __main__():
     ModuleLoader.registerModuleTypes()
 
     engine = QQmlApplicationEngine()
+    selector = QQmlFileSelector(engine);
     engine.addImportPath(os.path.dirname(os.path.realpath(__file__)))
     engine.load(QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'start.qml')))
 
