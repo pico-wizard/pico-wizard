@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2021 Anupam Basak <anupam.basak27@gmail.com>
+// SPDX-FileCopyrightText: 2021 Aditya Mehra <aix.m@outlook.com>
 //
 // SPDX-License-Identifier: MIT
 
@@ -13,8 +14,12 @@ import org.kde.kirigami 2.7 as Kirigami
 import PicoWizard 1.0
 
 
-Item {
+FocusScope {
     property bool runningFinishHook: false
+
+    Component.onCompleted: {
+        welcomeQMLPage.forceActiveFocus()
+    }
 
     FinishModule {
         id: finishModule
@@ -32,7 +37,7 @@ Item {
             font.weight: Font.Light
             font.pointSize: 32
             text: qsTr("Finalizing")
-            color: "#444"
+            color: Kirigami.Theme.textColor
         }
 
         Label {
@@ -42,7 +47,7 @@ Item {
             font.weight: Font.Light
             font.pointSize: 10
             text: qsTr(`Running Script [${finishModule.runningScriptIndex + 1}/${finishModule.totalScriptsCount}]`)
-            color: "#888888"
+            color: Kirigami.Theme.textColor
         }
     }
 
@@ -50,21 +55,26 @@ Item {
         visible: finishModule.isComplete
         font.weight: Font.Light
         font.pointSize: 32
-        text: qsTr("Setup complete")
+        text: qsTr("Setup Complete")
         anchors.centerIn: parent
-        color: "#444"
+        color: Kirigami.Theme.textColor
     }
 
-    RoundButton {
-        width: 64
-        height: 64
+    Button {
+        id: finishBtn
+        width: Kirigami.Units.gridUnit * 4
+        height: Kirigami.Units.gridUnit * 3
+        focus: true
 
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 12
+            bottomMargin: Kirigami.Units.gridUnit * 6
         }
         flat: true
+
+        Keys.onReturnPressed: clicked()
+
         onClicked: {
             if (finishModule.isComplete) {
                 runningFinishHook = true
@@ -74,7 +84,9 @@ Item {
 
         background: Rectangle {
             color: finishModule.isComplete ? "#ff4caf50" : "#f5f5f5"
-            radius: parent.width
+            radius: 2
+            border.width: 1
+            border.color: finishBtn.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
         }
 
         Kirigami.Icon {
@@ -106,6 +118,32 @@ Item {
                 duration: 500
                 running: true
             }
+        }
+    }
+
+    RowLayout {
+        anchors.top: finishBtn.bottom
+        anchors.topMargin: Kirigami.Units.gridUnit
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Kirigami.Icon {
+            source: finishModule.dir() + "/assets/remote.svg"
+            width: 24
+            height: 24
+        }
+
+        Label {
+            id: labelButtonInfo
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.weight: Font.Light
+            minimumPointSize: 5
+            font.pointSize: 20
+            maximumLineCount: 1
+            fontSizeMode: Text.Fit
+            wrapMode: Text.WordWrap
+            text: qsTr("Press Select Button To Continue!")
+            color: Kirigami.Theme.textColor
         }
     }
 }

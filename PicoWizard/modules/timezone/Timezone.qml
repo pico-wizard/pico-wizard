@@ -5,11 +5,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Material 2.15
-import QtQuick.Controls.Material.impl 2.15
 
 import org.kde.plasma.components 3.0 as PlasmaComponents
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.9 as Kirigami
 
 import PicoWizard 1.0
 
@@ -29,24 +27,10 @@ Module {
             PlasmaComponents.TextField {
                 id: searchText
                 Layout.preferredWidth: root.width * 0.7
-                Layout.preferredHeight: 48
-
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "#f5f5f5"
-
-                    Label {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        visible: searchText.text.length <= 0
-                        text: qsTr("Timezone")
-                        color: "#888888"
-                    }
-                }
-                color: "#222222"
-                selectionColor: "#2196f3"
-                selectedTextColor: "#ffffff"
+                topPadding: 16
+                bottomPadding: 16
+                placeholderText: qsTr("Timezone")
+                inputMethodHints: Qt.ImhNoPredictiveText
 
                 onTextChanged: {
                     timezoneModule.filterText = text
@@ -87,7 +71,7 @@ Module {
                         width: parent ? parent.width : 0
                         height: 40
 
-                        color: ListView.isCurrentItem ? Material.color(Material.Blue) : "#ffffffff"
+                        color: ListView.isCurrentItem ? Kirigami.Theme.highlightColor : "#ffffffff"
 
                         Label {
                             anchors {

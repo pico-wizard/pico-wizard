@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2021 Anupam Basak <anupam.basak27@gmail.com>
+// SPDX-FileCopyrightText: 2021 Aditya Mehra <aix.m@outlook.com>
 //
 // SPDX-License-Identifier: MIT
 
@@ -8,10 +9,14 @@ import QtGraphicalEffects 1.0
 
 import org.kde.kirigami 2.9 as Kirigami
 
-RoundButton {
+Button {
+    id: nextButtonComponent
     property bool accepted: false
 
     signal nextClicked()
+
+    icon.name: "go-next"
+    text: "Next"
 
     QtObject {
         id: privateProps
@@ -19,10 +24,10 @@ RoundButton {
         property bool showSpinner: false
     }
 
-    width: 64
-    height: 64
+    Keys.onReturnPressed: {
+        clicked()
+    }
 
-    flat: true
     onClicked: {
         if (!accepted) {
             nextClicked()
@@ -33,47 +38,6 @@ RoundButton {
                 privateProps.showSpinner = true
             }
         }
-    }
-
-    background: Rectangle {
-        color: Kirigami.Theme.highlightColor
-        radius: parent.width
-    }
-
-    Kirigami.Icon {
-        id: nextIcon
-        width: 24
-        height: 24
-        color: "#ffffffff"
-        isMask: true
-
-        anchors.centerIn: parent
-        source: Qt.resolvedUrl("./assets/next.svg")
-
-        states: [
-            State {
-                when: !privateProps.showSpinner;
-                PropertyChanges {
-                    target: nextIcon
-                    opacity: 1.0
-                }
-            },
-            State {
-                when: privateProps.showSpinner;
-                PropertyChanges {
-                    target: nextIcon
-                    opacity: 0.0
-                }
-            }
-        ]
-        transitions: Transition {
-            NumberAnimation {
-                property: "opacity"
-                duration: 200
-                easing.type: Easing.InOutQuad
-            }
-        }
-
     }
 
     Kirigami.Icon {
@@ -90,6 +54,10 @@ RoundButton {
             State {
                 when: privateProps.showSpinner;
                 PropertyChanges {
+                    target: nextButtonComponent
+                    enabled: false
+                }
+                PropertyChanges {
                     target: spinnerIcon
                     opacity: 1.0
                 }
@@ -99,6 +67,10 @@ RoundButton {
                 PropertyChanges {
                     target: spinnerIcon
                     opacity: 0.0
+                }
+                PropertyChanges {
+                    target: nextButtonComponent
+                    enabled: true
                 }
             }
         ]
