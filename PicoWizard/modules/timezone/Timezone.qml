@@ -30,6 +30,7 @@ Module {
                 topPadding: 16
                 bottomPadding: 16
                 placeholderText: qsTr("Timezone")
+                inputMethodHints: Qt.ImhNoPredictiveText
 
                 onTextChanged: {
                     timezoneModule.filterText = text
