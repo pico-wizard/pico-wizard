@@ -46,6 +46,7 @@ def __main__():
     engine = QQmlApplicationEngine()
     selector = QQmlFileSelector(engine);
     engine.addImportPath(os.path.dirname(os.path.realpath(__file__)))
+    engine.rootContext().setContextProperty('maximizeWindow', args.maximize)
     engine.load(QUrl(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'start.qml')))
 
     if not engine.rootObjects():
@@ -58,7 +59,9 @@ def __main__():
 
 parser = argparse.ArgumentParser(prog='pico-wizard', description='Pico Wizard')
 parser.add_argument('--debug', dest='debug', action='store_true', help='Enable debug mode')
+parser.add_argument('--maximize', dest='maximize', action="store_true", help='Maximize window')
 parser.set_defaults(debug=False)
+parser.set_defaults(maximize=False)
 args = parser.parse_args()
 
 Logger.setLogMode(Config.getLogLevel())

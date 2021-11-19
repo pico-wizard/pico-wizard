@@ -38,7 +38,7 @@ ModuleMediaCenter {
                 Layout.fillHeight: true
 
                 radius: 4
-                border.width: 1
+                border.width: wifiContainer.activeFocus ? 3 : 1
                 border.color: wifiContainer.activeFocus ? Kirigami.Theme.highlightColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.5)
                 color: Kirigami.Theme.backgroundColor
 
@@ -75,60 +75,67 @@ ModuleMediaCenter {
                         showClickFeedback: true
                         highlighted: !wifiContainer.activeFocus && !skipButton.activeFocus && !backButton.activeFocus && wifiListView.currentIndex == index
 
-                        RowLayout {
-                            anchors {
-                                verticalCenter: parent.verticalCenter
-                                left: parent.left
-                                leftMargin: 12
-                            }
+                        Rectangle {
+                            anchors.fill: parent
+                            color: wifiListView.currentIndex == index ? Kirigami.Theme.highlightColor : "transparent"
+                            border.width: 0
+                            radius: parent.background.radius
 
-                            Kirigami.Icon {
-                                Layout.leftMargin: 0
-                                Layout.rightMargin: 4
-                                Layout.preferredWidth: 24
-                                Layout.preferredHeight: 24
-                                opacity: 0.7
-                                source: wifiModule.getWifiIcon(signal)
-                                color: Kirigami.Theme.textColor
-                            }
+                            RowLayout {
+                                anchors {
+                                    verticalCenter: parent.verticalCenter
+                                    left: parent.left
+                                    leftMargin: 12
+                                }
 
-                            Label {
-                                id: wifiName
-                                color: Kirigami.Theme.textColor
-                                text: trimName(ssid)
-                                font.pointSize: 10
+                                Kirigami.Icon {
+                                    Layout.leftMargin: 0
+                                    Layout.rightMargin: 4
+                                    Layout.preferredWidth: 24
+                                    Layout.preferredHeight: 24
+                                    opacity: 0.7
+                                    source: wifiModule.getWifiIcon(signal)
+                                    color: Kirigami.Theme.textColor
+                                }
 
-                                function trimName(name) {
-                                    if (name.length > 18) {
-                                        return name.slice(0, 18) + "..."
-                                    } else {
-                                        return name
+                                Label {
+                                    id: wifiName
+                                    color: Kirigami.Theme.textColor
+                                    text: trimName(ssid)
+                                    font.pointSize: 10
+
+                                    function trimName(name) {
+                                        if (name.length > 18) {
+                                            return name.slice(0, 18) + "..."
+                                        } else {
+                                            return name
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        RowLayout {
-                            anchors {
-                                right: parent.right
-                                verticalCenter: parent.verticalCenter
-                                rightMargin: 12
-                            }
-                            Kirigami.Icon {
-                                visible: isSecured
-                                opacity: 0.7
-                                Layout.leftMargin: 0
-                                Layout.rightMargin: 0
-                                Layout.preferredWidth: 10
-                                Layout.preferredHeight: 10
-                                source: "lock"
-                                color: Kirigami.Theme.textColor
-                            }
+                            RowLayout {
+                                anchors {
+                                    right: parent.right
+                                    verticalCenter: parent.verticalCenter
+                                    rightMargin: 12
+                                }
+                                Kirigami.Icon {
+                                    visible: isSecured
+                                    opacity: 0.7
+                                    Layout.leftMargin: 0
+                                    Layout.rightMargin: 0
+                                    Layout.preferredWidth: 10
+                                    Layout.preferredHeight: 10
+                                    source: "lock"
+                                    color: Kirigami.Theme.textColor
+                                }
 
-                            Label {
-                                text: security
-                                color: "#aaaaaa"
-                                font.pointSize: 7
+                                Label {
+                                    text: security
+                                    color: wifiListView.currentIndex == index ? Kirigami.Theme.textColor : "#aaaaaa"
+                                    font.pointSize: 7
+                                }
                             }
                         }
 
@@ -187,42 +194,61 @@ ModuleMediaCenter {
                 Layout.preferredWidth: root.width * 0.7
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
 
-                Button {
-                    id: backButton
+                Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                    color: "transparent"
+                    border.width: backButton.activeFocus ? 3 : 0
+                    border.color: Kirigami.Theme.highlightColor
+                    radius: 3
 
-                    KeyNavigation.right: skipButton
+                    Button {
+                        id: backButton
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        highlighted: backButton.activeFocus ? 1 : 0
+                        KeyNavigation.right: skipButton
 
-                    icon.name: "go-previous"
-                    text: "Back"
+                        icon.name: "go-previous"
+                        text: "Back"
 
-                    Keys.onReturnPressed: clicked()
-                    KeyNavigation.up: wifiContainer
+                        Keys.onReturnPressed: clicked()
+                        KeyNavigation.up: wifiContainer
 
-                    onClicked: {
-                        moduleLoader.back()
+                        onClicked: {
+                            moduleLoader.back()
+                        }
+                        visible: moduleLoader.hasPrevious
                     }
-                    visible: moduleLoader.hasPrevious
                 }
 
-                Button {
-                    id: skipButton
+                Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                    color: "transparent"
+                    border.width: skipButton.activeFocus ? 3 : 0
+                    border.color: Kirigami.Theme.highlightColor
+                    radius: 3
 
-                    KeyNavigation.left: backButton
-                    KeyNavigation.up: wifiContainer
+                    Button {
+                        id: skipButton
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        highlighted: skipButton.activeFocus ? 1 : 0
 
-                    icon.name: "go-next-skip"
-                    text: "Skip"
+                        KeyNavigation.left: backButton
+                        KeyNavigation.up: wifiContainer
 
-                    visible: !hideSkip
+                        icon.name: "go-next-skip"
+                        text: "Skip"
 
-                    Keys.onReturnPressed: clicked()
+                        visible: !hideSkip
 
-                    onClicked: {
-                        moduleLoader.nextModule()
+                        Keys.onReturnPressed: clicked()
+
+                        onClicked: {
+                            moduleLoader.nextModule()
+                        }
                     }
                 }
             }
@@ -240,7 +266,7 @@ ModuleMediaCenter {
             implicitWidth: Kirigami.Units.gridUnit * 30
 
             x: Math.round((parent.width - width) / 2)
-            y: Math.round((parent.height - height) / 2)
+            y: parent.height * 0.10
 
             onVisibleChanged: {
                 if (visible) {
