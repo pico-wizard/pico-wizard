@@ -21,7 +21,7 @@ ApplicationWindow {
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
 
-    visibility: Qt.AutomaticVisibility
+    visibility: maximizeWindow ? "Maximized" : Qt.AutomaticVisibility
 
 //    onClosing: {
 //        if (appStack.depth > 1) {

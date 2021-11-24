@@ -38,7 +38,7 @@ ModuleMediaCenter {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
                 border.color: fullNameContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
-                border.width: fullNameContainer.activeFocus ? 1 : 0
+                border.width: fullNameContainer.activeFocus ? 3 : 0
 
                 Keys.onReturnPressed: fullname.forceActiveFocus()
                 KeyNavigation.down: userNameContainer
@@ -47,6 +47,7 @@ ModuleMediaCenter {
                 PlasmaComponents.TextField {
                     id: fullname
                     anchors.fill: parent
+                    anchors.margins: 3
                     placeholderText: qsTr("Full Name")
                     topPadding: 16
                     bottomPadding: 16
@@ -59,7 +60,7 @@ ModuleMediaCenter {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
                 border.color: userNameContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
-                border.width: userNameContainer.activeFocus ? 1 : 0
+                border.width: userNameContainer.activeFocus ? 3 : 0
 
                 Keys.onReturnPressed: username.forceActiveFocus()
                 KeyNavigation.up: fullNameContainer
@@ -70,6 +71,7 @@ ModuleMediaCenter {
                     validator: RegExpValidator { regExp: /[a-z_][a-z0-9_-]*[$]?/ }
                     maximumLength: 32
                     anchors.fill: parent
+                    anchors.margins: 3
                     topPadding: 16
                     bottomPadding: 16
 
@@ -118,7 +120,7 @@ ModuleMediaCenter {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
                 border.color: passwordContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
-                border.width: passwordContainer.activeFocus ? 1 : 0
+                border.width: passwordContainer.activeFocus ? 3 : 0
 
                 Keys.onReturnPressed: password.forceActiveFocus()
                 KeyNavigation.up: userNameContainer
@@ -134,6 +136,7 @@ ModuleMediaCenter {
                     }
 
                     anchors.fill: parent
+                    anchors.margins: 3
                     topPadding: 16
                     bottomPadding: 16
                     passwordCharacter: "*"
@@ -170,7 +173,7 @@ ModuleMediaCenter {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
                 border.color: cnfPasswordContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
-                border.width: cnfPasswordContainer.activeFocus ? 1 : 0
+                border.width: cnfPasswordContainer.activeFocus ? 3 : 0
 
                 Keys.onReturnPressed: cnfPassword.forceActiveFocus()
                 KeyNavigation.up: passwordContainer
@@ -186,6 +189,7 @@ ModuleMediaCenter {
                     }
 
                     anchors.fill: parent
+                    anchors.margins: 3
                     topPadding: 16
                     bottomPadding: 16
                     passwordCharacter: "*"
@@ -204,40 +208,59 @@ ModuleMediaCenter {
                 bottomMargin: 0
             }
 
-            Button {
-                id: backButton
+            Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                color: "transparent"
+                border.width: backButton.activeFocus ? 3 : 0
+                border.color: Kirigami.Theme.highlightColor
+                radius: 3
 
-                KeyNavigation.right: nextButton
+                Button {
+                    id: backButton
+                    anchors.fill: parent
+                    anchors.margins: 2
+                    highlighted: backButton.activeFocus ? 1 : 0
 
-                icon.name: "go-previous"
-                text: "Back"
+                    KeyNavigation.right: nextButton
 
-                Keys.onReturnPressed: clicked()
+                    icon.name: "go-previous"
+                    text: "Back"
 
-                onClicked: {
-                    moduleLoader.back()
+                    Keys.onReturnPressed: clicked()
+
+                    onClicked: {
+                        moduleLoader.back()
+                    }
+                    visible: moduleLoader.hasPrevious
                 }
-                visible: moduleLoader.hasPrevious
             }
 
-            NextButtonMediaCenter {
-                id: nextButton
+            Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                color: "transparent"
+                border.width: nextButton.activeFocus ? 3 : 0
+                border.color: Kirigami.Theme.highlightColor
+                radius: 3
 
-                enabled: fullname.text.length > 0 &&
-                     username.text.length > 0 &&
-                     cnfPassword.text.length > 0 &&
-                     cnfPassword.text === password.text
+                NextButtonMediaCenter {
+                    id: nextButton
+                    anchors.fill: parent
+                    anchors.margins: 2
+                    highlighted: nextButton.activeFocus ? 1 : 0
 
-                KeyNavigation.left: backButton
-                KeyNavigation.right: skipButton
+                    enabled: fullname.text.length > 0 &&
+                        username.text.length > 0 &&
+                        cnfPassword.text.length > 0 &&
+                        cnfPassword.text === password.text
 
-                onNextClicked: {
-                    accepted = true
-                    userModule.createUser(fullname.text, username.text, cnfPassword.text)
+                    KeyNavigation.left: backButton
+
+                    onNextClicked: {
+                        accepted = true
+                        userModule.createUser(fullname.text, username.text, cnfPassword.text)
+                    }
                 }
             }
         }

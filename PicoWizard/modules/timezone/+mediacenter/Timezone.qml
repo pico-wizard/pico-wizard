@@ -36,7 +36,7 @@ ModuleMediaCenter {
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
                 color: "transparent"
                 border.color: searchFieldFocusBox.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
-                border.width: searchFieldFocusBox.activeFocus ? 1 : 0
+                border.width: searchFieldFocusBox.activeFocus ? 3 : 0
 
                 KeyNavigation.down: tzContainer
                 Keys.onReturnPressed: {
@@ -46,6 +46,7 @@ ModuleMediaCenter {
                 PlasmaComponents.TextField {
                     id: searchText
                     anchors.fill: parent
+                    anchors.margins: 5
                     topPadding: 16
                     bottomPadding: 16
                     placeholderText: qsTr("Search Timezone")
@@ -62,7 +63,7 @@ ModuleMediaCenter {
                 Layout.fillHeight: true
 
                 radius: 4
-                border.width: 1
+                border.width: tzContainer.activeFocus ? 3 : 1
                 border.color: tzContainer.activeFocus ? Kirigami.Theme.highlightColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.5)
                 color: Kirigami.Theme.backgroundColor
 
@@ -112,54 +113,86 @@ ModuleMediaCenter {
                 Layout.preferredWidth: root.width * 0.7
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 3
 
-                Button {
-                    id: backButton
+                Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                    color: "transparent"
+                    border.width: backButton.activeFocus ? 3 : 0
+                    border.color: Kirigami.Theme.highlightColor
+                    radius: 3
 
-                    KeyNavigation.right: nextButton
+                    Button {
+                        id: backButton
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        highlighted: backButton.activeFocus ? 1 : 0
+                        KeyNavigation.right: nextButton
+                        KeyNavigation.up: tzContainer
 
-                    icon.name: "go-previous"
-                    text: "Back"
+                        icon.name: "go-previous"
+                        text: "Back"
 
-                    Keys.onReturnPressed: clicked()
+                        Keys.onReturnPressed: clicked()
 
-                    onClicked: {
-                        moduleLoader.back()
-                    }
-                    visible: moduleLoader.hasPrevious
-                }
-
-                NextButtonMediaCenter {
-                    id: nextButton
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Kirigami.Units.gridUnit * 3
-
-                    KeyNavigation.left: backButton
-                    KeyNavigation.right: skipButton
-
-                    onNextClicked: {
-                        accepted = true
-                        timezoneModule.setTimezone(tzListView.currentIndex)
+                        onClicked: {
+                            moduleLoader.back()
+                        }
+                        visible: moduleLoader.hasPrevious
                     }
                 }
 
-                Button {
-                    id: skipButton
+                Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                    color: "transparent"
+                    border.width: nextButton.activeFocus ? 3 : 0
+                    border.color: Kirigami.Theme.highlightColor
+                    radius: 3
 
-                    KeyNavigation.left: nextButton
+                    NextButtonMediaCenter {
+                        id: nextButton
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        highlighted: nextButton.activeFocus ? 1 : 0
 
-                    icon.name: "go-next-skip"
-                    text: "Skip"
+                        KeyNavigation.left: backButton
+                        KeyNavigation.right: skipButton
+                        KeyNavigation.up: tzContainer
 
-                    visible: !hideSkip
+                        onNextClicked: {
+                            accepted = true
+                            timezoneModule.setTimezone(tzListView.currentIndex)
+                        }
+                    }
+                }
 
-                    Keys.onReturnPressed: clicked()
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                    color: "transparent"
+                    border.width: skipButton.activeFocus ? 3 : 0
+                    border.color: Kirigami.Theme.highlightColor
+                    radius: 3
 
-                    onClicked: {
-                        moduleLoader.nextModule()
+                    Button {
+                        id: skipButton
+                        anchors.fill: parent
+                        anchors.margins: 2
+                        highlighted: skipButton.activeFocus ? 1 : 0
+
+                        KeyNavigation.left: nextButton
+                        KeyNavigation.up: tzContainer
+
+                        icon.name: "go-next-skip"
+                        text: "Skip"
+
+                        visible: !hideSkip
+
+                        Keys.onReturnPressed: clicked()
+
+                        onClicked: {
+                            moduleLoader.nextModule()
+                        }
                     }
                 }
             }
