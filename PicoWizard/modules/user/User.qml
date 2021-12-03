@@ -96,7 +96,7 @@ Module {
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
-                placeholderText: qsTr("Password")
+                placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("PIN") : qsTr("Password")
                 inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
             }
 
@@ -115,7 +115,7 @@ Module {
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
-                placeholderText: qsTr("Confirm Password")
+                placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("Confirm PIN") : qsTr("Confirm Password")
                 inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
 
 //                    border.color: cnfPassword.text.length > 0
