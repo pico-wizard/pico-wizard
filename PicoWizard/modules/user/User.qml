@@ -42,7 +42,7 @@ Module {
                 Layout.fillWidth: true
                 topPadding: 16
                 bottomPadding: 16
-
+                inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                 placeholderText: qsTr("Username")
 
                 Popup {
@@ -96,28 +96,8 @@ Module {
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
-                placeholderText: qsTr("Password")
-
-                Popup {
-                    y: -(height+5)
-                    width: parent.width
-                    visible: password.focus && userModule.passwordType === 'digitsonly'
-                    closePolicy: Popup.CloseOnPressOutsideParent
-
-                    background: Rectangle {
-                        radius: 2
-                        color: "#ff212121"
-                    }
-
-                    ColumnLayout {
-                        anchors.fill: parent
-
-                        Label {
-                            text: "- Should be digits only [0-9]"
-                            color: "white"
-                        }
-                    }
-                }
+                placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("PIN") : qsTr("Password")
+                inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
             }
 
             PlasmaComponents.TextField {
@@ -135,7 +115,8 @@ Module {
                 passwordCharacter: "*"
                 revealPasswordButtonShown: true
                 echoMode: "Password"
-                placeholderText: qsTr("Confirm Password")
+                placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("Confirm PIN") : qsTr("Confirm Password")
+                inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
 
 //                    border.color: cnfPassword.text.length > 0
 //                                  ? cnfPassword.text !== password.text
