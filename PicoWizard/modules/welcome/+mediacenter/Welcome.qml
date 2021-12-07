@@ -89,6 +89,10 @@ FocusScope {
                 Keys.onReturnPressed: {
                     moduleLoader.nextModule()
                 }
+
+                onClicked: {
+                    moduleLoader.nextModule()
+                }
             }
         }
 

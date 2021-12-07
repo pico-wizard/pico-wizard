@@ -74,7 +74,7 @@ ModuleMediaCenter {
                     anchors.margins: 3
                     topPadding: 16
                     bottomPadding: 16
-
+                    inputMethodHints: Qt.ImhLowercaseOnly | Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                     placeholderText: qsTr("Username")
 
                     Popup {
@@ -142,7 +142,8 @@ ModuleMediaCenter {
                     passwordCharacter: "*"
                     revealPasswordButtonShown: true
                     echoMode: "Password"
-                    placeholderText: qsTr("Password")
+                    placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("Pin") : qsTr("Password")
+                    inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
 
                     Popup {
                         y: -(height+5)
@@ -195,7 +196,8 @@ ModuleMediaCenter {
                     passwordCharacter: "*"
                     revealPasswordButtonShown: true
                     echoMode: "Password"
-                    placeholderText: qsTr("Confirm Password")
+                    placeholderText: userModule.passwordType === 'digitsonly' ? qsTr("Confirm Pin") : qsTr("Confirm Password")
+                    inputMethodHints: userModule.passwordType === 'digitsonly' ? Qt.ImhDigitsOnly : Qt.ImhNoAutoUppercase | Qt.ImhNoPredectiveText
                 }
             }
         }
