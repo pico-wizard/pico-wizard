@@ -4,9 +4,13 @@
 
 import logging
 import logging.handlers
-from systemd.journal import JournalHandler
 import os
 from enum import Enum
+try:
+    from systemd.journal import JournalHandler
+    systemd = True
+except Exception:
+    systemd = False
 
 import PicoWizard.utils.constants as Constants
 
@@ -49,16 +53,20 @@ class Logger:
         screenHandler = logging.StreamHandler()
         screenHandler.setFormatter(formatter)
 
-        journalHandlerFormatter = logging.Formatter(
-            fmt='%(name)-35s [%(levelname)-5s] %(message)s'
-        )
-        journalHandler = JournalHandler(SYSLOG_IDENTIFIER='pico-wizard')
-        journalHandler.setFormatter(journalHandlerFormatter)
-
         logger = logging.getLogger(name)
         logger.setLevel(logging.getLevelName(Logger.LOG_LEVEL))
-        logger.addHandler(journalHandler)
+
         logger.addHandler(handler)
         logger.addHandler(screenHandler)
+
+        global systemd
+        if systemd:
+            journalHandlerFormatter = logging.Formatter(
+                fmt='%(name)-35s [%(levelname)-5s] %(message)s'
+            )
+            journalHandler = JournalHandler(SYSLOG_IDENTIFIER='pico-wizard')
+            journalHandler.setFormatter(journalHandlerFormatter)
+
+            logger.addHandler(journalHandler)
 
         return logger
