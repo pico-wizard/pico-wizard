@@ -34,7 +34,7 @@ class Mycroft(Module):
     @Slot(None, result=None)
     def enableMycroftIntegration(self):
         process = QProcess(self)
-        args = [os.path.join(os.path.dirname(os.path.realpath(__file__)), 'EnableMycroft.sh')]
+        args = [os.path.join(os.path.dirname(os.path.realpath(__file__)), 'SetupMycroft.sh'), '--enable']
         process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.enableMycroftSuccess(exitCode))
@@ -51,7 +51,7 @@ class Mycroft(Module):
     @Slot(None, result=None)
     def disableMycroftIntegration(self):
         process = QProcess(self)
-        args = [os.path.join(os.path.dirname(os.path.realpath(__file__)), 'DisableMycroft.sh')]
+        args = [os.path.join(os.path.dirname(os.path.realpath(__file__)), 'SetupMycroft.sh'), ' --disable']
         process.start('/usr/bin/pkexec', args)
 
         process.finished.connect(lambda exitCode, exitStatus: self.disableMycroftSuccess(exitCode))
