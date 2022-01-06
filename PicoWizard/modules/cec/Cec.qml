@@ -183,6 +183,7 @@ ModuleMediaCenter {
                         Keys.onReturnPressed: clicked()
 
                         onClicked: {
+                            cecModule.end_cec_mapping_success()
                             cecModule.close_cec_thread()
                             moduleLoader.nextModule()
                         }

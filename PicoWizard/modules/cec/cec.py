@@ -5,6 +5,7 @@
 import os
 import time
 import cec
+import subprocess
 import threading
 
 from PySide2.QtCore import QUrl, Slot, Signal, QProcess, QByteArray, Property, QObject
@@ -60,6 +61,13 @@ class Cec(Module):
         self.threaded_cec = threading.Thread(target=self.run_cec_in_thread)
         self.threaded_cec.start()
 
+    # End cec mapping process successfully
+    @Slot(None, result=None)
+    def end_cec_mapping_success(self):
+        process = QProcess(self)
+        args = [os.path.join(os.path.dirname(os.path.realpath(__file__)), 'CopyConfig.sh')]
+        process.start('/usr/bin/pkexec', args)
+
     # Restart cec mapping process
     @Slot(None, result=None)
     def restart_cec_mapping(self):
@@ -99,14 +107,11 @@ class Cec(Module):
         except Exception as e:
             self.log.error("Error: {}".format(e))
             self.cec_available = False
-            self.log.info("CEC is not available")
             self.setup_stage = 2
             self.setupStageChanged.emit()
 
     def eventresponse(self, event, key, state):
         if state > 0 and self.keystate == None:
-            print("Got Key", key, "state", state)
-            print("Key Stage", self.key_stage)
             for x in range(1):
                 self.mapKeyToConfig(key)
 
@@ -122,40 +127,33 @@ class Cec(Module):
 
     def mapKeyToConfig(self, key):
         if self.key_stage == 0:
-            print("Key Stage 0 - Mapping Key")
             keyType = "ButtonLeft"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
         
         elif self.key_stage == 1:
             keyType = "ButtonRight"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
 
         elif self.key_stage == 2:
             keyType = "ButtonUp"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
 
         elif self.key_stage == 3:
             keyType = "ButtonDown"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
   
         elif self.key_stage == 4:
             keyType = "ButtonEnter"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
         
         elif self.key_stage == 5:
             keyType = "ButtonBack"
             self.key_stage = self.key_stage + 1
-            print("Key Stage Changed After Map Function", self.key_stage)
             self.keyStageChanged.emit()
 
         elif self.key_stage == 6:
@@ -170,10 +168,9 @@ class Cec(Module):
         configFile = open("/tmp/joyclickrc", "a")
         configFile.write("{}={}\n".format(keyType, key))
         configFile.close()
-        
+
     @Signal
     def setupStageChanged(self):
-        self.log.info("Setup Stage Changed")
         pass
 
     @Signal
