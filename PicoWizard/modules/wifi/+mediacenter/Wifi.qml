@@ -16,6 +16,18 @@ import PicoWizard 1.0
 ModuleMediaCenter {
     id: root
     moduleIconColor: "#ff999999"
+    property var activeFocusedElement
+
+    function switchTextByFocus(){
+        switch(root.activeFocusedElement) {
+            case "wifiContainer":
+                return [qsTr('Remote: Press the "Select|OK" button to start selecting a wireless network from the list'), qsTr('Keyboard: Press the "Enter" button to start selecting a wireless network from the list')]
+            case "wifiSkipButton":
+                return [qsTr('Remote: Press the "Select|OK" button to skip wireless setup and continue'), qsTr('Keyboard: Press the "Enter" button to skip wireless setup and continue')]
+            case "wifiListView":
+                return [qsTr('Remote: Use "Up|Down" buttons to navigate, "Select|OK" button to select a connection'), qsTr('Keyboard: Use "Up|Down" buttons to navigate, "Enter" button to select a connection')]
+        }
+    }
 
     delegate: Item {
         id: delegateRoot
@@ -32,8 +44,133 @@ ModuleMediaCenter {
                 horizontalCenter: parent.horizontalCenter
             }
 
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 6
+                Layout.alignment: Qt.AlignHCenter
+
+                Rectangle {
+                    color: "#1e88e5"
+                    radius: 4
+                    width: Kirigami.Units.gridUnit * 6
+                    height: Kirigami.Units.gridUnit * 1
+                    anchors.top: parent.top
+                    x: infoRectContent.x
+                    y: -2
+                    z: 2
+
+                    Label {
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        minimumPixelSize: 2
+                        font.pixelSize: 72
+                        maximumLineCount: 3
+                        fontSizeMode: Text.Fit
+                        wrapMode: Text.WordWrap
+                        text: qsTr("Setting Up Your WiFi")
+                        color: Kirigami.Theme.textColor
+                    }
+                }
+
+                Rectangle {
+                    id: infoRectContent
+                    color: "#ff212121"
+                    radius: 4
+                    width: parent.width
+                    height: Kirigami.Units.gridUnit * 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Kirigami.Units.smallSpacing
+                    z: 1
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: Kirigami.Units.largeSpacing
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            Item {
+                                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                                Layout.fillHeight: true
+
+                                Kirigami.Icon {
+                                    anchors.fill: parent
+                                    source: wifiModule.dir() + "/assets/remote-ok.svg"
+                                }
+                            }
+
+                            Kirigami.Separator {
+                                Layout.preferredWidth: 1
+                                Layout.fillHeight: true
+                            }
+
+                            Label {
+                                id: labelButtonInfo
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.weight: Font.Light
+                                minimumPixelSize: 2
+                                font.pixelSize: 25
+                                maximumLineCount: 2
+                                fontSizeMode: Text.Fit
+                                wrapMode: Text.WordWrap
+                                text: switchTextByFocus()[0]
+                                color: Kirigami.Theme.textColor
+                            }
+                        }
+
+                        Kirigami.Separator {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 1
+                        }
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            Item {
+                                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                                Layout.fillHeight: true
+
+                                Kirigami.Icon {
+                                    anchors.fill: parent
+                                    source: wifiModule.dir() + "/assets/keyboard-ok.svg"
+                                }
+                            }
+
+                            Kirigami.Separator {
+                                Layout.preferredWidth: 1
+                                Layout.fillHeight: true
+                            }
+
+                            Label {
+                                id: labelButtonInfo2
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.weight: Font.Light
+                                minimumPixelSize: 2
+                                font.pixelSize: 25
+                                maximumLineCount: 2
+                                fontSizeMode: Text.Fit
+                                wrapMode: Text.WordWrap
+                                text: switchTextByFocus()[1]
+                                color: Kirigami.Theme.textColor
+                            }
+                        }
+                    }
+                }
+            }
+
             Rectangle {
                 id: wifiContainer
+                objectName: "wifiContainer"
                 Layout.preferredWidth: root.width * 0.7
                 Layout.fillHeight: true
 
@@ -47,27 +184,32 @@ ModuleMediaCenter {
                     wifiListView.forceActiveFocus()
                 }
 
-                ScrollIndicator {
-                    id: wifiScroll
-                    width: 12
-                    anchors {
-                        top: wifiContainer.top
-                        right: wifiContainer.right
-                        bottom: wifiContainer.bottom
+                onActiveFocusChanged: {
+                    if(activeFocus) {
+                        root.activeFocusedElement = objectName
                     }
                 }
 
                 Kirigami.CardsListView {
                     id: wifiListView
+                    objectName: "wifiListView"
                     anchors.fill: parent
                     anchors.margins: 8
 
                     spacing: 4
                     model: wifiModule.model
                     clip: true
-                    ScrollIndicator.vertical: wifiScroll
+                    ScrollBar.vertical: ScrollBar {
+                        active: true
+                    }
                     keyNavigationEnabled: true
                     highlightFollowsCurrentItem: true
+
+                    onActiveFocusChanged: {
+                        if(activeFocus) {
+                            root.activeFocusedElement = objectName
+                        }
+                    }
 
                     delegate: Kirigami.AbstractCard {
                         width: parent ? parent.width : 0
@@ -141,6 +283,10 @@ ModuleMediaCenter {
 
                         Keys.onReturnPressed: {
                             clicked()
+                        }
+
+                        Keys.onEscapePressed: {
+                            wifiContainer.forceActiveFocus()
                         }
 
                         onClicked: {
@@ -235,6 +381,7 @@ ModuleMediaCenter {
                         anchors.fill: parent
                         anchors.margins: 2
                         highlighted: skipButton.activeFocus ? 1 : 0
+                        objectName: "wifiSkipButton"
 
                         KeyNavigation.left: backButton
                         KeyNavigation.up: wifiContainer
@@ -248,6 +395,12 @@ ModuleMediaCenter {
 
                         onClicked: {
                             moduleLoader.nextModule()
+                        }
+
+                        onActiveFocusChanged: {
+                            if(activeFocus) {
+                                root.activeFocusedElement = objectName
+                            }
                         }
                     }
                 }

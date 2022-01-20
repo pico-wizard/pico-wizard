@@ -8,7 +8,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 import QtQuick.Layouts 1.15
 
-import org.kde.kirigami 2.9 as Kirigami
+import org.kde.kirigami 2.12 as Kirigami
 
 import PicoWizard 1.0
 
@@ -55,34 +55,182 @@ FocusScope {
         }
 
         Item {
+            Layout.preferredWidth: Kirigami.Units.gridUnit * 18
+            Layout.preferredHeight: Kirigami.Units.gridUnit * 6
+            Layout.alignment: Qt.AlignHCenter
+
+            Rectangle {
+                color: "#1e88e5"
+                radius: 4
+                width: Kirigami.Units.gridUnit * 6
+                height: Kirigami.Units.gridUnit * 1
+                anchors.top: parent.top
+                x: infoRectContent.x
+                y: -2
+                z: 2
+
+                Label {
+                    anchors.fill: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    minimumPixelSize: 2
+                    font.pixelSize: 72
+                    maximumLineCount: 3
+                    fontSizeMode: Text.Fit
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Getting Started")
+                    color: Kirigami.Theme.textColor
+                }
+            }
+
+            Rectangle {
+                id: infoRectContent
+                color: "#ff212121"
+                radius: 4
+                width: Kirigami.Units.gridUnit * 17.5
+                height: Kirigami.Units.gridUnit * 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Kirigami.Units.smallSpacing
+                z: 1
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: Kirigami.Units.largeSpacing
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        Item {
+                            Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                            Layout.fillHeight: true
+
+                            Kirigami.Icon {
+                                anchors.fill: parent
+                                source: welcomeModule.dir() + "/assets/remote-ok.svg"
+                            }
+                        }
+
+                        Kirigami.Separator {
+                            Layout.preferredWidth: 1
+                            Layout.fillHeight: true
+                        }
+
+                        Label {
+                            id: labelButtonInfo
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.weight: Font.Light
+                            minimumPixelSize: 2
+                            font.pixelSize: 25
+                            maximumLineCount: 2
+                            fontSizeMode: Text.Fit
+                            wrapMode: Text.WordWrap
+                            text: qsTr('Remote: Press the "Select|OK" button to continue')
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
+
+                    Kirigami.Separator {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 1
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        Item {
+                            Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                            Layout.fillHeight: true
+
+                            Kirigami.Icon {
+                                anchors.fill: parent
+                                source: welcomeModule.dir() + "/assets/keyboard-ok.svg"
+                            }
+                        }
+
+                        Kirigami.Separator {
+                            Layout.preferredWidth: 1
+                            Layout.fillHeight: true
+                        }
+
+                        Label {
+                            id: labelButtonInfo2
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.weight: Font.Light
+                            minimumPixelSize: 2
+                            font.pixelSize: 25
+                            maximumLineCount: 2
+                            fontSizeMode: Text.Fit
+                            wrapMode: Text.WordWrap
+                            text: qsTr('Keyboard: Press the "Enter" button to continue')
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
+                }
+            }
+        }
+
+        Item {
             Layout.fillWidth: true
             Layout.preferredHeight: parent.height * 0.25
             Layout.alignment: Qt.AlignHCenter
 
-            RoundButton {
+            Button {
                 id: nextBtn
                 focus: true
-                width: parent.height * 0.6
-                height: width
+                width: Kirigami.Units.gridUnit * 7 //parent.height * 0.6
+                height: parent.height * 0.6
                 anchors.centerIn: parent
 
                 background: Rectangle {
-                    color: nextBtn.activeFocus ? Kirigami.Theme.backgroundColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.2)
+                    color: nextBtn.activeFocus ? Kirigami.Theme.highlightColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.2)
                     border.color: nextBtn.activeFocus ? Kirigami.Theme.highlightColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.2)
                     border.width: nextBtn.activeFocus ? 4 : 0
-                    radius: parent.width
+                    radius: 4
                 }
 
                 contentItem: Item {
-                    Kirigami.Icon {
-                        id: nextIcon
-                        width: parent.width * 0.9
-                        height: width
-                        color: "#ffffffff"
-                        isMask: true
+                    anchors.fill: parent
+                    anchors.margins: Kirigami.Units.smallSpacing
 
-                        anchors.centerIn: parent
-                        source: welcomeModule.dir() + "/assets/next.svg"
+                    Item {
+                        id: nextBtnTextItem
+                        anchors.left: parent.left
+                        width: parent.width * 0.75
+                        height: parent.height
+
+                        Label {
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignRight
+                            verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: parent.width * 0.22
+                            wrapMode: Text.WordWrap
+                            text: qsTr("Continue")
+                            color: Kirigami.Theme.textColor
+                        }
+                    }
+                    Item {
+                        id: nextBtnIconItem
+                        anchors.left: nextBtnTextItem.right
+                        width: parent.width * 0.25
+                        height: parent.height
+
+                        Kirigami.Icon {
+                            id: nextIcon
+                            anchors.fill: parent
+                            anchors.margins: -Kirigami.Units.gridUnit
+                            color: "#ffffffff"
+                            isMask: true
+                            source: welcomeModule.dir() + "/assets/next.svg"
+                        }
                     }
                 }
 
@@ -93,32 +241,6 @@ FocusScope {
                 onClicked: {
                     moduleLoader.nextModule()
                 }
-            }
-        }
-
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.alignment: Qt.AlignHCenter
-
-            Kirigami.Icon {
-                source: welcomeModule.dir() + "/assets/remote.svg"
-                width: 24
-                height: 24
-            }
-
-            Label {
-                id: labelButtonInfo
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.weight: Font.Light
-                minimumPixelSize: 2
-                font.pixelSize: 25
-                maximumLineCount: 2
-                fontSizeMode: Text.Fit
-                wrapMode: Text.WordWrap
-                text: qsTr("Press Select Button To Continue!")
-                color: Kirigami.Theme.textColor
             }
         }
     }
