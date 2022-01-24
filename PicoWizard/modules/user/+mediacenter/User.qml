@@ -13,14 +13,29 @@ import org.kde.kirigami 2.9 as Kirigami
 import PicoWizard 1.0
 
 ModuleMediaCenter {
-    property var digitValidator: RegExpValidator { regExp: /[0-9]*/ }
-    property var alphaNumericValidator: RegExpValidator { regExp: /.*/ }
-
     id: root
     moduleName: userModule.moduleName()
     moduleIcon: userModule.dir() + "/assets/user.svg"
     moduleIconColor: "#ff999999"
     hideSkip: true
+    property var digitValidator: RegExpValidator { regExp: /[0-9]*/ }
+    property var alphaNumericValidator: RegExpValidator { regExp: /.*/ }
+    property var activeFocusedElement
+
+    function switchTextByFocus(){
+        switch(root.activeFocusedElement) {
+            case "fullNameContainer":
+                return [qsTr('Remote: Press the "Select|OK" button to enter your full name details'), qsTr('Keyboard: Press the "Enter" button to enter your full name details')]
+            case "userNameContainer":
+                return [qsTr('Remote: Press the "Select|OK" button to enter your username details'), qsTr('Keyboard: Press the "Enter" button to enter your username details')]
+            case "passwordContainer":
+                return [qsTr('Remote: Press the "Select|OK" button to enter your secure password details'), qsTr('Keyboard: Press the "Enter" button to enter your secure password details')]
+            case "cnfPasswordContainer":
+                return [qsTr('Remote: Press the "Select|OK" button to enter confirm password details'), qsTr('Keyboard: Press the "Enter" button to confirm password details')]
+            case "nextButton":
+                return [qsTr('Remote: Press the "Select|OK" button to continue'), qsTr('Keyboard: Press the "Enter" button to continue')]
+        }
+    }
 
     delegate: Item {
 
@@ -31,18 +46,151 @@ ModuleMediaCenter {
         ColumnLayout {
             anchors.horizontalCenter: parent.horizontalCenter
             width: root.width * 0.7
+            spacing: Kirigami.Units.smallSpacing
+
+            Item {
+                Layout.fillWidth: true
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 6
+                Layout.alignment: Qt.AlignHCenter
+
+                Rectangle {
+                    color: "#1e88e5"
+                    radius: 4
+                    width: Kirigami.Units.gridUnit * 8
+                    height: Kirigami.Units.gridUnit * 1
+                    anchors.top: parent.top
+                    x: infoRectContent.x
+                    y: -2
+                    z: 2
+
+                    Label {
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        minimumPixelSize: 2
+                        font.pixelSize: 72
+                        maximumLineCount: 3
+                        fontSizeMode: Text.Fit
+                        wrapMode: Text.WordWrap
+                        text: qsTr("Setting Up Your User Account")
+                        color: Kirigami.Theme.textColor
+                    }
+                }
+
+                Rectangle {
+                    id: infoRectContent
+                    color: "#ff212121"
+                    radius: 4
+                    width: parent.width
+                    height: Kirigami.Units.gridUnit * 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Kirigami.Units.smallSpacing
+                    z: 1
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: Kirigami.Units.largeSpacing
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            Item {
+                                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                                Layout.fillHeight: true
+
+                                Kirigami.Icon {
+                                    anchors.fill: parent
+                                    source: userModule.dir() + "/assets/remote-ok.svg"
+                                }
+                            }
+
+                            Kirigami.Separator {
+                                Layout.preferredWidth: 1
+                                Layout.fillHeight: true
+                            }
+
+                            Label {
+                                id: labelButtonInfo
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.weight: Font.Light
+                                minimumPixelSize: 2
+                                font.pixelSize: 25
+                                maximumLineCount: 2
+                                fontSizeMode: Text.Fit
+                                wrapMode: Text.WordWrap
+                                text: root.switchTextByFocus()[0]
+                                color: Kirigami.Theme.textColor
+                            }
+                        }
+
+                        Kirigami.Separator {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 1
+                        }
+
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            Item {
+                                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                                Layout.fillHeight: true
+
+                                Kirigami.Icon {
+                                    anchors.fill: parent
+                                    source: userModule.dir() + "/assets/keyboard-ok.svg"
+                                }
+                            }
+
+                            Kirigami.Separator {
+                                Layout.preferredWidth: 1
+                                Layout.fillHeight: true
+                            }
+
+                            Label {
+                                id: labelButtonInfo2
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.weight: Font.Light
+                                minimumPixelSize: 2
+                                font.pixelSize: 25
+                                maximumLineCount: 2
+                                fontSizeMode: Text.Fit
+                                wrapMode: Text.WordWrap
+                                text: root.switchTextByFocus()[1]
+                                color: Kirigami.Theme.textColor
+                            }
+                        }
+                    }
+                }
+            }
 
             Rectangle {
                 id: fullNameContainer
+                objectName: "fullNameContainer"
                 color: "transparent"
                 Layout.fillWidth: true
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 2.25
                 border.color: fullNameContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
                 border.width: fullNameContainer.activeFocus ? 3 : 0
+                Layout.alignment: Qt.AlignTop
 
                 Keys.onReturnPressed: fullname.forceActiveFocus()
                 KeyNavigation.down: userNameContainer
                 KeyNavigation.up: nextButton.enabled ? nextButton : backButton
+
+                onActiveFocusChanged: {
+                    if(activeFocus) {
+                        root.activeFocusedElement = objectName
+                    }
+                }
 
                 PlasmaComponents.TextField {
                     id: fullname
@@ -56,15 +204,23 @@ ModuleMediaCenter {
 
             Rectangle {
                 id: userNameContainer
+                objectName: "userNameContainer"
                 color: "transparent"
                 Layout.fillWidth: true
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 2.25
+                Layout.alignment: Qt.AlignTop
                 border.color: userNameContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
                 border.width: userNameContainer.activeFocus ? 3 : 0
 
                 Keys.onReturnPressed: username.forceActiveFocus()
                 KeyNavigation.up: fullNameContainer
                 KeyNavigation.down: passwordContainer
+
+                onActiveFocusChanged: {
+                    if(activeFocus) {
+                        root.activeFocusedElement = objectName
+                    }
+                }
 
                 PlasmaComponents.TextField {
                     id: username
@@ -116,15 +272,23 @@ ModuleMediaCenter {
 
             Rectangle {
                 id: passwordContainer
+                objectName: "passwordContainer"
                 color: "transparent"
                 Layout.fillWidth: true
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 2.25
                 border.color: passwordContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
                 border.width: passwordContainer.activeFocus ? 3 : 0
+                Layout.alignment: Qt.AlignTop
 
                 Keys.onReturnPressed: password.forceActiveFocus()
                 KeyNavigation.up: userNameContainer
                 KeyNavigation.down: cnfPasswordContainer
+
+                onActiveFocusChanged: {
+                    if(activeFocus) {
+                        root.activeFocusedElement = objectName
+                    }
+                }
 
                 PlasmaComponents.TextField {
                     id: password
@@ -170,11 +334,19 @@ ModuleMediaCenter {
 
             Rectangle {
                 id: cnfPasswordContainer
+                objectName: "cnfPasswordContainer"
                 color: "transparent"
                 Layout.fillWidth: true
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 3
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 2.25
                 border.color: cnfPasswordContainer.activeFocus ? Kirigami.Theme.highlightColor : "transparent"
                 border.width: cnfPasswordContainer.activeFocus ? 3 : 0
+                Layout.alignment: Qt.AlignTop
+
+                onActiveFocusChanged: {
+                    if(activeFocus) {
+                        root.activeFocusedElement = objectName
+                    }
+                }
 
                 Keys.onReturnPressed: cnfPassword.forceActiveFocus()
                 KeyNavigation.up: passwordContainer
@@ -248,14 +420,11 @@ ModuleMediaCenter {
 
                 NextButtonMediaCenter {
                     id: nextButton
+                    objectName: "nextButton"
                     anchors.fill: parent
                     anchors.margins: 2
                     highlighted: nextButton.activeFocus ? 1 : 0
-
-                    enabled: fullname.text.length > 0 &&
-                        username.text.length > 0 &&
-                        cnfPassword.text.length > 0 &&
-                        cnfPassword.text === password.text
+                    enabled: fullname.text.length > 0 && username.text.length > 0 && cnfPassword.text.length > 0 && cnfPassword.text === password.text ? 1 : 0
 
                     KeyNavigation.left: backButton
 
