@@ -1,5 +1,12 @@
 .. image:: https://github.com/pico-wizard/pico-wizard/actions/workflows/python-publish.yml/badge.svg
 
+====
+NOTE
+====
+Pico Wizard is now a KDE project and the codebase has been moved to https://invent.kde.org/plasma/pico-wizard
+
+Further development will be continued in KDE Invent
+
 ===========
 Pico Wizard
 ===========
